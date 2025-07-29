@@ -28,56 +28,61 @@ const renderGaugeChart = (value, title, description, color, max = 100) => {
     circumference: 360,
     cutout: '80%',
     plugins: {
-      tooltip: {
-        enabled: true,
-      },
-      legend: {
-        display: true,
-      },
+      tooltip: { enabled: true },
+      legend: { display: false }, // Disable legend for a cleaner UI
     },
-    maintainAspectRatio: true,
+    maintainAspectRatio: false,
     responsive: true,
   };
 
   return (
-    <div>
-      <Typography variant="h6" component="h3" >
+    <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+      <Typography variant="h6" component="h3">
         {title}
       </Typography>
-      <Box >
+      <Box sx={{ position: 'relative', width: '100%', maxWidth: 200, height: 200 }}>
         <Doughnut data={data} options={options} />
-        <Typography variant="h5" >
+        <Typography
+          variant="h5"
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
           {value}%
         </Typography>
       </Box>
-      <Typography variant="body2">
+      <Typography variant="body2" textAlign="center">
         {description}
       </Typography>
-    </div>
+    </Box>
   );
 };
 
+
 // Custom SVG-based Speedometer chart
 const renderSpeedometerChart = () => {
-  const missionImpactValue = 0;
+  const missionImpactValue = 2.22;
 
   return (
-    <div>
+    <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
       <Typography variant="h6" component="h3">
         Mission-wide Impact Index
       </Typography>
-      <Box  sx={{ height: 160 }}>
+      <Box sx={{ height: 160 }}>
         <ReactSpeedometer
           value={missionImpactValue}
           maxValue={100}
-          needleColor="#8A2BE2" 
+          needleColor="#8A2BE2"
           startColor="#E0E0E0"
           endColor="#D8B4FE"
           segments={1}
           forceRender={true}
           currentValueText={`${missionImpactValue}/100`}
-          valueTextFontSize="30px"
-          labelFontSize="0px" 
+          valueTextFontSize="22px"
+          labelFontSize="0px"
           needleTransitionDuration={1000}
           needleTransition="easeElastic"
           ringWidth={20}
@@ -85,10 +90,10 @@ const renderSpeedometerChart = () => {
           width={250}
         />
       </Box>
-      <Typography variant="body2" className="text-sm text-gray-600 text-center mt-auto">
-        It is estimated that TheLight's missional impact contributes an additional 2.22% to all of Melbourne's Wellbeing
+      <Typography variant="body2" textAlign="center">
+        It is estimated that TheLight's missional impact contributes an additional 2.22% to all of Melbourne's Wellbeing.
       </Typography>
-  </div>
+    </Box>
   );
 };
 
@@ -97,46 +102,67 @@ const ImpactIndex = () => {
   const contributionScoreValue = 25;
 
   return (
-    <Grid container spacing={2} direction="column" sx={{ padding: 2, width: '100%' }}>
-         <Grid item xs={12} sm={12} md={12}>
-                <Grid container direction="row" spacing={2}>
-                    <Grid item xs={6} sm={6} md={6} justifyContent="center" alignItems="center">
-                        <Typography variant="h4" component="h1">
-                            IMPACT INDEX
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={6} sm={6} md={6} justifyContent="center" alignItems="center">
-                        <Typography variant="body1">
-                            It is estimated that TheLight contributes an increase to someone's Personal, Community, and Spiritual Wellbeing by 25%.
-                        </Typography>
-                    </Grid>
-                </Grid>
+    <Box sx={{ width: '95vw',  bgcolor: '#F8FAFC', p: 4, boxSizing: 'border-box', border: '1px solid #951010ff' }}>
+      {/* Header */}
+      <Box
+        sx={{
+          display: 'flex',
+          height: '200px',
+          flexDirection: { xs: 'column', md: 'row' },
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          mb: 4,
+          gap: 2,
+        }}
+      >
+        <Typography variant="h4" fontWeight="bold" textAlign={{ xs: 'center', md: 'left' }}>
+          IMPACT INDEX
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{ fontStyle: 'italic', textAlign: { xs: 'center', md: 'center' }, maxWidth: 500 }}
+        >
+          It is estimated that TheLight contributes an increase to someone's Personal, Community,
+          and Spiritual Wellbeing by 25%.
+        </Typography>
+      </Box>
 
-                <Grid container direction="row" alignItems="center" justifyContent="center">
-                    <Grid item xs={4} sm={4} md={4}>
-                        {renderGaugeChart(
-                        reachScoreValue,
-                        "Reach Score",
-                        "It is estimated that TheLight is reaching 8.89% of the Target Achievable Mission.",
-                        "#FBCFE8"
-                        )}
-                    </Grid>
+      {/* Charts Row */}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
+          justifyContent: 'center',
+          alignItems: 'stretch',
+          gap: 3,
+        }}
+      >
+        {/* Reach Score */}
+        <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 300 }}>
+          {renderGaugeChart(
+            reachScoreValue,
+            'Reach Score',
+            'It is estimated that TheLight is reaching 8.89% of the Target Achievable Mission.',
+            '#FBCFE8'
+          )}
+        </Paper>
 
-                    <Grid item xs={4} sm={4} md={4}>
-                        {renderSpeedometerChart()}
-                    </Grid>
+        {/* Speedometer */}
+        <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 300 }}>
+          {renderSpeedometerChart()}
+        </Paper>
 
-                    <Grid item xs={4} sm={4} md={4}>
-                        {renderGaugeChart(
-                        contributionScoreValue,
-                        "Contribution Score",
-                        "It is estimated that TheLight contributes an increase to someone's Personal, Community, and Spiritual Wellbeing by 25%.",
-                        "#D8B4FE"
-                        )}
-                    </Grid>
-                </Grid>
-         </Grid>
-    </Grid>
+        {/* Contribution Score */}
+        <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 300 }}>
+          {renderGaugeChart(
+            contributionScoreValue,
+            'Contribution Score',
+            "It is estimated that TheLight contributes an increase to someone's Personal, Community, and Spiritual Wellbeing by 25%.",
+            '#D8B4FE'
+          )}
+        </Paper>
+      </Box>
+    </Box>
   );
 };
 
