@@ -4,6 +4,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import ImpactIndex from '../Components/ImpactIndex.jsx';
+import CoreMetrics from '../Components/CoreMetrics.jsx';
+import PersonalWellbeing from '../Components/PersonalWellbeing.jsx';
 
 
 function CustomTabPanel(props) {
@@ -17,7 +19,7 @@ function CustomTabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ p: 4, display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#E5EAFB' }}>{children}</Box>}
     </div>
   );
 }
@@ -43,22 +45,22 @@ function MainLayout() {
   };
 
   return (
-    <Box sx={{ width: '50%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+    <Box sx={{ width: '100%', backgroundColor: 'transparent' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: 'transparent'  }} display={'flex'} justifyContent={'center'} alignItems={'center'}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Impact Index" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          <Tab label="Core Metrics" {...a11yProps(1)} />
+          <Tab label="Personal Wellbeing" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
         <ImpactIndex />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        <CoreMetrics />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Item Three
+        <PersonalWellbeing />
       </CustomTabPanel>
     </Box>
   );
