@@ -173,7 +173,7 @@ if(trend === "up"){
   );
 };
 
-const PersonalWellbeing = () => {
+const CommunityWellbeing = () => {
 
   const [startDate, setStartDate] = useState(moment().subtract(10, 'days')); // Default to 10 days ago
   const [endDate, setEndDate] = useState(moment()); // Default to today
@@ -187,7 +187,7 @@ const PersonalWellbeing = () => {
       const formattedStartDate = start ? start.format('YYYY-MM-DD') : '';
       const formattedEndDate = end ? end.format('YYYY-MM-DD') : '';
 
-      const url = new URL("https://score.impactindex.app/personal_wellbeing/");
+      const url = new URL("https://score.impactindex.app/community_wellbeing/");
       url.searchParams.append("location_id", locationId);
       if (formattedStartDate) url.searchParams.append("start_date", formattedStartDate);
       if (formattedEndDate) url.searchParams.append("end_date", formattedEndDate);
@@ -270,7 +270,7 @@ const PersonalWellbeing = () => {
         }}
       >
         <Typography variant="h4" fontWeight="bold" textAlign={{ xs: 'center', md: 'center' }} sx={{fontSize: '3rem'}}>
-          Personal Wellbeing
+          Community Wellbeing
         </Typography>
       </Box>
 
@@ -445,4 +445,4 @@ const PersonalWellbeing = () => {
   );
 };
 
-export default PersonalWellbeing;
+export default CommunityWellbeing;

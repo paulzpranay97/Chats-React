@@ -91,7 +91,7 @@ const renderPatientAgeChart = (count15_24, count25_34, count35_44, count45_54, c
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }} textAlign={{ xs: 'left', md: 'left' }}>Participant Ages</Typography>
 
         {/* Chart Container */}
-        <Box sx={{ height: 300, width: 600}}>
+        <Box sx={{ height: 300, width:{md: 550, lg:600, xs:200}}}>
           <Bar data={data} options={options} />
         </Box>
       </Box>
@@ -180,7 +180,7 @@ const renderPatientChart = (thisMonthCount, lastMonthCount, avgMonthCount,maxCou
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }} textAlign={{ xs: 'left', md: 'left' }}>Participants</Typography>
 
         {/* Chart Container */}
-        <Box sx={{ height: 200, width: 600}}>
+        <Box sx={{ height: 200, width: {md:500, lg: 600, xs: 200}}}>
           <Bar data={data} options={options} />
         </Box>
       </Box>
@@ -197,24 +197,24 @@ const renderTheCheckInScore = (checkInScore) => {
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-      <Box >
+      <Box  sx={{ width: "100%",  height: 'auto'}}>
         {/* Title */}
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
           The Check-In Score
         </Typography>
 
         {/* Score */}
-        <Typography variant="h3" component="p" sx={{ fontSize: '3.5rem' }}>
+        <Typography variant="h3" component="p" sx={{ fontSize: '2.3rem' }} mt={2}>
           {score}/{maxScore}
         </Typography>
 
         {/* Subtitle */}
-        <Typography variant="body2" component="p" >
+        <Typography variant="body2" component="p" mt={2}>
           Last 6 Month
         </Typography>
 
         {/* Progress Bar */}
-        <Box sx={{ width: '100%', borderRadius: '9999px', overflow: 'hidden' }}>
+        <Box sx={{ width: '100%', borderRadius: '9999px', overflow: 'hidden' }} mt={2} >
           <LinearProgress
             variant="determinate"
             value={score}
@@ -477,7 +477,7 @@ const renderProfileChart = (genderM, genderF, childrenYes, childrenNo, dependant
         </Box>
 
         {/* Chart Container */}
-        <Box sx={{ height: 100, width: '100%' }}>
+        <Box sx={{ height: 100, width: {md:280, lg: 300, xs: 350} }}>
           <Bar  data={mf_data} options={mf_options} />
         </Box>
 
@@ -488,7 +488,7 @@ const renderProfileChart = (genderM, genderF, childrenYes, childrenNo, dependant
         </Box>
 
         {/* Chart Container */}
-        <Box sx={{ height: 300, width: '100%' }}>
+        <Box sx={{ height: 300, width: {md:280, lg: 300, xs: 350}}}>
           <Bar data={data} options={options} />
         </Box>
       </Box>
@@ -529,16 +529,16 @@ const layerSegmentChart = (layerSingle, layerDeeper, layerRepeat, layerOther) =>
   ];
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left' }}>
-      <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }} textAlign={{ xs: 'left', md: 'left' }}> 
+    <Box sx={{ display: 'flex', flexDirection:{ xs: 'column', md: 'row', lg: 'column' }, alignItems: 'left' }}>
+      <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }} textAlign={{ xs: 'left', md: 'center', lg: 'left' }}> 
         Layer Segments
       </Typography>
 
-      <Box sx={{ width: '100%',  display: 'flex', justifyContent: 'center',alignItems: 'center', height: 220 }}>
+      <Box sx={{ width: { xs: '100%', md: '50%', lg: '100%' },  display: 'flex', justifyContent: 'center',alignItems: 'center', height: 220 }}>
         <Doughnut data={data} options={options} />
       </Box>
 
-      <Box sx={{ mt: 5, width: '100%' }}>
+      <Box sx={{ mt: 5, width:{ xs: '100%', md: '50%', lg: '100%' } }}>
         {legendItems.map((item, index) => (
           <Box
             key={index}
@@ -880,7 +880,7 @@ const CoreMetrics = () => {
       <Box
         sx={{
           display: 'flex',
-          flexDirection: { xs: 'column', md: 'row' },
+          flexDirection: { xs: 'column', md: 'column', lg: 'row' },
           justifyContent: 'center',
           alignItems: 'stretch',
           gap: 3,
@@ -891,7 +891,7 @@ const CoreMetrics = () => {
           <Box
             sx={{
               display: 'flex',
-              width: '75%',
+              width: { xs: '100%', md: '100%', lg: '75%' },
               flexDirection: { xs: 'row', md: 'row' },
               justifyContent: 'center',
               alignItems: 'stretch',
@@ -902,7 +902,7 @@ const CoreMetrics = () => {
                     sx={{
                         width: '100%',
                         display: 'flex',
-                        flexDirection: { xs: 'row', md: 'row' },
+                        flexDirection: { xs: 'column', md: 'row' },
                         justifyContent: 'center',
                         alignItems: 'stretch',
                         gap: 3,
@@ -912,7 +912,7 @@ const CoreMetrics = () => {
 
                      <Box
                             sx={{
-                                width: '30%',
+                                width:{lg: '30%', md: '30%', xs: '100%'},
                                 display: 'flex',
                                 flexDirection: { xs: 'column', md: 'column' },
                                 justifyContent: 'center',
@@ -923,11 +923,11 @@ const CoreMetrics = () => {
                         >
 
                                             {/* Reach Score */}
-                                            <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 550, borderRadius: 4 }}>
+                                            <Paper sx={{ p: {md:1, lg:3}, flex: 1, textAlign: 'center', minHeight: 550, borderRadius: 4 }}>
                                               {renderProfileChart(genderM, genderF, childrenYes, childrenNo, dependantsYes, dependantsNo, marriedYes, marriedNo)}
                                             </Paper>
                                             {/* Reach Score */}
-                                            <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 100, borderRadius: 4 }}>
+                                            <Paper sx={{ display: 'flex', justifyContent: 'center', p: 3, flex: 1, textAlign: 'center', minHeight: 100, borderRadius: 4 }}>
                                                 {renderTheCheckInScore(checkInScore)}
                                             </Paper>
                             
@@ -935,7 +935,7 @@ const CoreMetrics = () => {
                     </Box>
                      <Box
                             sx={{
-                                width: '70%',
+                                width:{lg: '70%', md: '70%', xs: '100%'},
                                 display: 'flex',
                                 flexDirection: { xs: 'column', md: 'column' },
                                 justifyContent: 'center',
@@ -945,7 +945,7 @@ const CoreMetrics = () => {
                             }}
                         >
 
-                             {/* Reach Score */}
+                                            {/* Reach Score */}
                                             <Paper sx={{  flex: 1, textAlign: 'center',  borderRadius: 4 ,width: '100%'}}>
                                                 {renderPatientChart(thisMonthCount, lastMonthCount, avgCount,maxCount)}
                                             </Paper>
@@ -958,7 +958,7 @@ const CoreMetrics = () => {
                                     sx={{
                                         width: '100%',
                                         display: 'flex',
-                                        flexDirection: { xs: 'row', md: 'row' },
+                                        flexDirection: { xs: 'column', md: 'row' },
                                         justifyContent: 'center',
                                         alignItems: 'stretch',
                                         gap: 3,
@@ -989,7 +989,7 @@ const CoreMetrics = () => {
           <Box
             sx={{
               display: 'flex',
-              width: '25%',
+              width: { xs: '100%', md: '100%', lg: '25%' },
               flexDirection: { xs: 'row', md: 'row' },
               justifyContent: 'center',
               alignItems: 'stretch',

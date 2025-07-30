@@ -104,12 +104,12 @@ const renderSpeedometerChart = (missionImpactValue) => {
           needleTransitionDuration={1000}
           needleTransition="easeElastic"
           ringWidth={40}
-          height={200}
+          height={200 }
           width={300}
         />
       </Box>
       <Typography variant="body2" textAlign="center">
-        It is estimated that TheLight's missional impact contributes an additional 2.22% to all of Melbourne's Wellbeing.
+        It is estimated that TheLight's missional impact contributes an additional {missionImpactValue}% to all of Melbourne's Wellbeing.
       </Typography>
     </Box>
   );
@@ -130,7 +130,6 @@ const ImpactIndex = () => {
   const fetchData = async () => {
     const data = await get_impact_index_data();
     if (data) {
-      console.log(data);
 
       setWidthScore(data?.width_score || 0);
       setContributionScore(data?.contribution_score || 0);
@@ -198,20 +197,23 @@ const ImpactIndex = () => {
 
       {/* Charts Row */}
       <Box
+        mt={{md:6, sm:20, xs: 15}}
         sx={{
           display: 'flex',
-          flexDirection: { xs: 'column', md: 'row' },
+          flexDirection: { xs: 'column',lg:'row', md: 'column', sm:'column' },
           justifyContent: 'center',
           alignItems: 'stretch',
           gap: 3,
+
+          
         }}
       >
 
           <Box
             sx={{
               display: 'flex',
-              width: '50%',
-              flexDirection: { xs: 'row', md: 'row' },
+              width: { xs: '100%',lg:'50%', md: '100%', sm:'100%' },
+              flexDirection: { xs: 'column', md: 'row' },
               justifyContent: 'center',
               alignItems: 'stretch',
               gap: 3,
@@ -222,7 +224,7 @@ const ImpactIndex = () => {
                   {renderGaugeChart(
                     reachScoreValue,
                     'Reach Score',
-                    'It is estimated that TheLight is reaching 8.89% of the Target Achievable Mission.',
+                    `It is estimated that TheLight is reaching ${reachScoreValue}% of the Target Achievable Mission.`,
                     '#FF67BB'
                   )}
                 </Paper>
@@ -237,8 +239,8 @@ const ImpactIndex = () => {
           <Box
             sx={{
               display: 'flex',
-              width: '50%',
-              flexDirection: { xs: 'row', md: 'row' },
+              width: {  xs: '100%',lg:'50%', md: '100%', sm:'100%'  },
+              flexDirection: { xs: 'row', md: 'row' ,sm: 'row'},
               justifyContent: 'center',
               alignItems: 'stretch',
               gap: 3,
@@ -250,7 +252,7 @@ const ImpactIndex = () => {
             {renderGaugeChart(
               contributionScoreValue,
               'Contribution Score',
-              "It is estimated that TheLight contributes an increase to someone's Personal, Community, and Spiritual Wellbeing by 25%.",
+              `It is estimated that TheLight contributes an increase to someone's Personal, Community, and Spiritual Wellbeing by ${contributionScoreValue}%.`,
               '#D766FF'
             )}
           </Paper>
