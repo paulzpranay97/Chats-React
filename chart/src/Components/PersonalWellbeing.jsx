@@ -76,7 +76,7 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
               py: 1.5, // py-3
               px: 6, // px-12
               borderRadius: '9999px', // rounded-full
-              fontSize: '1.5rem', // text-2xl
+              fontSize: '1.3rem', // text-2xl
               letterSpacing: '0.05em', // tracking-wider
               textTransform: 'none', // Prevent uppercase default from MUI Button
               '&:hover': {
@@ -157,7 +157,7 @@ if(trend === "up"){
             left: '50%',
             transform: 'translate(-50%, -50%)',
             fontSize: '1rem',
-            minWidth: '100px',
+             minWidth: '200px',
             color: color,
         }}
         >
@@ -393,7 +393,7 @@ const PersonalWellbeing = () => {
                                             >
                                               {renderGaugeChart(
                                                 score.value,
-                                                score.name.toUpperCase(),
+                                                score.name.replace(/_/g, ' ').toUpperCase(),
                                                 '#004AAD',
                                                 score.trend
                                               )}
@@ -420,16 +420,16 @@ const PersonalWellbeing = () => {
 
                                      
                                     <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #2E8E46'}}>
-                                    {renderStatsDetails(personalWellbeingData?.summary.max.name.toUpperCase(),'HIGHEST SCORES', personalWellbeingData?.summary.max.value, personalWellbeingData?.summary.max.trend)}
+                                    {renderStatsDetails(personalWellbeingData?.summary.max.name.replace(/_/g, ' ').toUpperCase(),'HIGHEST SCORES', personalWellbeingData?.summary.max.value, personalWellbeingData?.summary.max.trend)}
                                     </Paper>
                                     <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #2E8E46'}}>
-                                    {renderStatsDetails(personalWellbeingData?.summary.second_max.name.toUpperCase(),'HIGHEST SCORES', personalWellbeingData?.summary.second_max.value, personalWellbeingData?.summary.second_max.trend)}
+                                    {renderStatsDetails(personalWellbeingData?.summary.second_max.name.replace(/_/g, ' ').toUpperCase(),'HIGHEST SCORES', personalWellbeingData?.summary.second_max.value, personalWellbeingData?.summary.second_max.trend)}
                                     </Paper>
                                     <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #D23737'}}>
-                                    {renderStatsDetails(personalWellbeingData?.summary.min.name.toUpperCase(),'LOWEST SCORES', personalWellbeingData?.summary.min.value, personalWellbeingData?.summary.min.trend)}
+                                    {renderStatsDetails(personalWellbeingData?.summary.min.name.replace(/_/g, ' ').toUpperCase(),'LOWEST SCORES', personalWellbeingData?.summary.min.value, personalWellbeingData?.summary.min.trend)}
                                     </Paper>
                                     <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #D23737'}}>
-                                    {renderStatsDetails(personalWellbeingData?.summary.second_min.name.toUpperCase(),'LOWEST SCORES', personalWellbeingData?.summary.second_min.value, personalWellbeingData?.summary.second_min.trend)}
+                                    {renderStatsDetails(personalWellbeingData?.summary.second_min.name.replace(/_/g, ' ').toUpperCase(),'LOWEST SCORES', personalWellbeingData?.summary.second_min.value, personalWellbeingData?.summary.second_min.trend)}
                                     </Paper>
                                     
                             </Box>

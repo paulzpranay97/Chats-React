@@ -75,24 +75,24 @@ function MainLayout() {
     {...a11yProps(0)}
     sx={{
       fontSize:'1.25rem',
-      fontWeight: 'bold',// --- Default button styles for all tabs ---
-      color: 'text.primary', // Default text color
-      backgroundColor: '#FFFFFF', // Light grey background
-      borderRadius: '0px', // Rounded corners for button look
-      padding: '10px 20px', // More padding for a button feel
-      minHeight: '48px', // Ensure a consistent height
-      opacity: 1, // Ensure full opacity for unselected tabs
-      textTransform: 'none', // Prevent uppercase text
+      fontWeight: 'bold',
+      color: 'text.primary', 
+      backgroundColor: '#FFFFFF',
+      borderRadius: '0px', 
+      padding: '10px 20px', 
+      minHeight: '48px', 
+      opacity: 1,
+      textTransform: 'none', 
       '&:hover': {
         backgroundColor: '#e0e0e0', 
-        borderRadius: '50px',// Slightly darker on hover
+        borderRadius: '50px',
       },
-      // --- Styles for the selected tab (active button) ---
+    
       '&.Mui-selected': {
-        color: 'black', // black text for selected button
-        backgroundColor: '#FFFFFF', // Primary blue background for selected button
+        color: 'black',
+        backgroundColor: '#FFFFFF',
         fontWeight: 'bold',
-        borderRadius: '50px', // Bold text for selected button
+        borderRadius: '50px', 
       },
     }}
   />

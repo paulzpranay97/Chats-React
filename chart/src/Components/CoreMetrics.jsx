@@ -86,12 +86,12 @@ const renderPatientAgeChart = (count15_24, count25_34, count35_44, count45_54, c
     },
   };
   return (
-    <Box sx={{ p:4,display: 'flex', flexDirection: 'column', alignItems: 'flex-start' , width: '100%'}}>
+    <Box sx={{ p:4,display: 'flex', flexDirection: 'column', alignItems: 'flex-start' , width: '90%'}}>
       <Box >
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }} textAlign={{ xs: 'left', md: 'left' }}>Participant Ages</Typography>
 
         {/* Chart Container */}
-        <Box sx={{ height: 300, width:{md: 550, lg:600, xs:200}}}>
+        <Box sx={{ height: 300, width:{md: 550, lg:600, xs:280}}}>
           <Bar data={data} options={options} />
         </Box>
       </Box>
@@ -175,12 +175,12 @@ const renderPatientChart = (thisMonthCount, lastMonthCount, avgMonthCount,maxCou
     },
   };
   return (
-    <Box sx={{ p:4,display: 'flex', flexDirection: 'column', alignItems: 'flex-start' , width: '100%'}}>
+    <Box sx={{ p:4,display: 'flex', flexDirection: 'column', alignItems: 'flex-start' , width: '90%'}}>
       <Box >
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }} textAlign={{ xs: 'left', md: 'left' }}>Participants</Typography>
 
         {/* Chart Container */}
-        <Box sx={{ height: 200, width: {md:500, lg: 600, xs: 200}}}>
+        <Box sx={{ height: 200, width: {md:500, lg: 600, xs: 280}}}>
           <Bar data={data} options={options} />
         </Box>
       </Box>
@@ -923,7 +923,7 @@ const CoreMetrics = () => {
                         >
 
                                             {/* Reach Score */}
-                                            <Paper sx={{ p: {md:1, lg:3}, flex: 1, textAlign: 'center', minHeight: 550, borderRadius: 4 }}>
+                                            <Paper sx={{ p: {md:1, lg:3,xs:2}, flex: 1, textAlign: 'center', minHeight: 550, borderRadius: 4 }}>
                                               {renderProfileChart(genderM, genderF, childrenYes, childrenNo, dependantsYes, dependantsNo, marriedYes, marriedNo)}
                                             </Paper>
                                             {/* Reach Score */}
