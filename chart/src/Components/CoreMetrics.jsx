@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend,CategoryScale, LinearScale, BarElement, Title } from 'chart.js';
 import { Doughnut,Bar } from 'react-chartjs-2';
 import ReactSpeedometer from 'react-d3-speedometer'; 
@@ -653,6 +654,12 @@ const CoreMetrics = () => {
   const [communityWellbeing, setcommunityWellbeing] = useState(0);
   const [spiritualWellbeing, setspiritualWellbeing] = useState(0);
 
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const locationId = params.get('location_id') || 'V7jzbIYZWXwQXczlF32Z';
+
+
+
 
   
 
@@ -776,8 +783,12 @@ const CoreMetrics = () => {
     }, []);
 
     const get_profile_data = async () => {
+      let url = new URL("https://score.impactindex.app/core_metrics/profiles/");
+      if(locationId){
+        url.searchParams.append("location_id", locationId);
+      }
       try {
-        const profiles_res = await fetch("https://score.impactindex.app/core_metrics/profiles/?location_id=V7jzbIYZWXwQXczlF32Z", {
+        const profiles_res = await fetch(url.toString(), {
           method: "GET",
           headers: {
             "Accept": "application/json",
@@ -794,8 +805,12 @@ const CoreMetrics = () => {
     };
 
     const get_layer_segment_data = async () => {
+      let url = new URL("https://score.impactindex.app/core_metrics/layers/");
+      if(locationId){
+        url.searchParams.append("location_id", locationId);
+      }
       try {
-        const layer_segment_res = await fetch("https://score.impactindex.app/core_metrics/layers/?location_id=V7jzbIYZWXwQXczlF32Z", {
+        const layer_segment_res = await fetch(url.toString(), {
           method: "GET",
           headers: {
             "Accept": "application/json",
@@ -813,8 +828,12 @@ const CoreMetrics = () => {
 
 
     const get_participant_data = async () => {
+      let url = new URL("https://score.impactindex.app/core_metrics/participants");
+      if(locationId){
+        url.searchParams.append("location_id", locationId);
+      }
       try {
-        const participant_res = await fetch("https://score.impactindex.app/core_metrics/participants?location_id=V7jzbIYZWXwQXczlF32Z", {
+        const participant_res = await fetch(url.toString(), {
           method: "GET",
           headers: {
             "Accept": "application/json",
@@ -831,8 +850,12 @@ const CoreMetrics = () => {
     };
 
     const get_score_data = async () => {
+      let url = new URL("https://score.impactindex.app/core_metrics/circles/");
+      if(locationId){
+        url.searchParams.append("location_id", locationId);
+      }
       try {
-        const score_res = await fetch("https://score.impactindex.app/core_metrics/circles/?location_id=V7jzbIYZWXwQXczlF32Z", {
+        const score_res = await fetch(url.toString(), {
           method: "GET",
           headers: {
             "Accept": "application/json",

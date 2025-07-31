@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import ReactSpeedometer from 'react-d3-speedometer'; 
@@ -113,6 +114,11 @@ const ImpactIndex = () => {
     const [contributionScore, setContributionScore] = useState(0);
     const [impactIndex, setImpactIndex] = useState(0);
 
+    
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const locationId = params.get('location_id') || 'V7jzbIYZWXwQXczlF32Z';
+
     const reachScoreValue = impactIndex;
     const contributionScoreValue = contributionScore;
     const missionImpactValue = widthScore;
@@ -133,9 +139,13 @@ const ImpactIndex = () => {
     }, []);
 
     const get_impact_index_data = async () => {
-      
+
+      let url = new URL("https://score.impactindex.app/impact_index/");
+      if(locationId){
+        url.searchParams.append("location_id", locationId);
+      }
       try {
-        const response = await fetch("https://score.impactindex.app/impact_index/?location_id=V7jzbIYZWXwQXczlF32Z", {
+        const response = await fetch(url.toString(), {
           method: "GET",
           headers: {
             "Accept": "application/json",

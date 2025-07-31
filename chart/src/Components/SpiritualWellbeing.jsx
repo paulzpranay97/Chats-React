@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend,CategoryScale, LinearScale, BarElement, Title  } from 'chart.js';
 import { Doughnut,Bar } from 'react-chartjs-2';
 import ReactSpeedometer from 'react-d3-speedometer'; 
@@ -174,7 +175,11 @@ const SpiritualWellbeing = () => {
   const [startDate, setStartDate] = useState(moment().subtract(10, 'days')); 
   const [endDate, setEndDate] = useState(moment());
   const [personalWellbeingData, setPersonalWellbeingData] = useState(null); 
-  const locationId = "V7jzbIYZWXwQXczlF32Z"; 
+
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const locationId = params.get('location_id') || 'V7jzbIYZWXwQXczlF32Z';
+  
 
  
   const get_personal_wellbeing_data = useCallback(async (start, end) => {
@@ -184,7 +189,9 @@ const SpiritualWellbeing = () => {
       const formattedEndDate = end ? end.format('YYYY-MM-DD') : '';
 
       const url = new URL("https://score.impactindex.app/spiritual_wellbeing/");
-      url.searchParams.append("location_id", locationId);
+      if(locationId){
+        url.searchParams.append("location_id", locationId);
+      }
       if (formattedStartDate) url.searchParams.append("start_date", formattedStartDate);
       if (formattedEndDate) url.searchParams.append("end_date", formattedEndDate);
 

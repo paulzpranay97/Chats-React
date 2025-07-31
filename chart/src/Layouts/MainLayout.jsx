@@ -112,6 +112,10 @@ function App() {
             centered
             sx={{
               width: '100%',
+              height: '100%',
+              display: "flex",
+              justifyContent: 'center',
+              alignItems: 'center',
               
 
               '.MuiTabs-indicator': {
@@ -133,11 +137,12 @@ function App() {
                 key={label}
                 label={label}
                 {...a11yProps(index)}
+                
                 sx={{
                   fontSize: '1.25rem',
                   fontWeight: 'bold',
                   color: 'text.primary',
-                  backgroundColor: '#FFFFFF',
+                  backgroundColor: '#F6F6F6',
                   borderRadius: '50px', 
                   padding: '10px 20px',
                   minHeight: '48px',
