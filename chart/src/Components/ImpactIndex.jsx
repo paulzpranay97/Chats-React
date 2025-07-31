@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState , useCallback} from 'react';
 import { useLocation } from 'react-router-dom';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import ReactSpeedometer from 'react-d3-speedometer'; 
 
 import { Box, Paper, Typography, Grid } from '@mui/material';
+// D3.js Imports
+import * as d3 from 'd3';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -76,14 +78,101 @@ const renderGaugeChart = (value, title, description, color, max = 100) => {
 };
 
 
+
+const D3Gauge = ({ value, color }) => {
+  const svgRef = useRef();
+
+  const drawGauge = useCallback(() => {
+    const svg = d3.select(svgRef.current);
+    svg.selectAll('*').remove();
+
+    const width = svg.node().clientWidth;
+    const height = svg.node().clientHeight;
+    const radius = Math.min(width, height) / 2 * 1;
+    const centerX = width / 2;
+    const centerY = height / 2 + radius * 0.2; 
+
+    const COLORS = {
+      indigo: '#818CF8',
+      purple: '#A78BFA',
+      pink: '#F472B6',
+    };
+    const gaugeColor = COLORS[color] || '#D766FF';
+    const backgroundColor = '#EFADFF';
+
+    const arcBackground = d3.arc()
+      .innerRadius(radius * 0.7)
+      .outerRadius(radius)
+      .startAngle(-Math.PI/2) // 180°
+      .endAngle(Math.PI/2)         // 0°
+      .cornerRadius(5);
+
+    const arcForeground = d3.arc()
+      .innerRadius(radius * 0.7)
+      .outerRadius(radius)
+      .startAngle(-Math.PI /2 + (value / 100) * Math.PI)
+      .endAngle(-Math.PI /2)
+      .cornerRadius(5);
+
+    const g = svg.append('g')
+      .attr('transform', `translate(${centerX}, ${centerY})`);
+
+    // Draw background arc
+    g.append('path')
+      .attr('d', arcBackground())
+      .attr('fill', backgroundColor);
+
+    // Draw foreground arc
+    g.append('path')
+      .attr('d', arcForeground())
+      .attr('fill', gaugeColor);
+
+    // Needle
+    const needleLength = radius * 0.6;
+    const needleBaseRadius = radius * 0.08;
+
+    // Base path pointing up (to top)
+    const needlePathBase = `M ${-needleBaseRadius} 0 L 0 ${-needleLength} L ${needleBaseRadius} 0 Z`;
+
+    // Rotate from left (180°) to right (0°)
+    const rotationAngleDegrees = -90 + (value / 100) * 180;
+
+    g.append('path')
+      .attr('d', needlePathBase)
+      .attr('fill', gaugeColor)
+      .attr('transform', `rotate(${rotationAngleDegrees})`);
+
+    // Center circle
+    g.append('circle')
+      .attr('cx', 0)
+      .attr('cy', 0)
+      .attr('r', radius * 0.08)
+      .attr('fill', gaugeColor)
+      .attr('stroke', 'white')
+      .attr('stroke-width', 0);
+
+  }, [value, color]);
+
+  useEffect(() => {
+    drawGauge();
+    const handleResize = () => drawGauge();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [drawGauge]);
+
+  return <svg ref={svgRef} width={200}
+    height={200}></svg>;
+};
+
+
 const renderSpeedometerChart = (missionImpactValue) => {
   return (
     <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
       <Typography variant="h6" component="h3" sx={{ fontSize: '1.25rem' , fontWeight: 'bold', color: '#333' }}>
         Mission-wide Impact Index
       </Typography>
-      <Box sx={{ height: 200 }}>
-        <ReactSpeedometer
+      <Box sx={{ height: 200, width: "100%" }}>
+        {/* <ReactSpeedometer
           value={missionImpactValue}
           maxValue={100}
           needleColor="#D766FF"
@@ -99,8 +188,12 @@ const renderSpeedometerChart = (missionImpactValue) => {
           ringWidth={40}
           height={200 }
           width={300}
-        />
+        /> */}
+        <D3Gauge value={missionImpactValue} color={"#D766FF"} sx={{width:"100%", height: "100%"}}/>
       </Box>
+      <Typography variant="h6" component="h3" sx={{ fontSize: '1.25rem' , fontWeight: 'bold', color: '#333' , position: 'relative', top: -40 }} mt={-6} >
+        {missionImpactValue}%
+      </Typography>
       <Typography variant="body2" textAlign="center">
         It is estimated that TheLight's missional impact contributes an additional {missionImpactValue}% to all of Melbourne's Wellbeing.
       </Typography>

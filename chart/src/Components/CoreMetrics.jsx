@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState , useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend,CategoryScale, LinearScale, BarElement, Title } from 'chart.js';
 import { Doughnut,Bar } from 'react-chartjs-2';
 import ReactSpeedometer from 'react-d3-speedometer'; 
 
-
+// D3.js Imports
+import * as d3 from 'd3';
 
 // MUI Imports
 import { Box, Paper, Typography, Grid, LinearProgress } from '@mui/material';
@@ -571,6 +572,87 @@ const layerSegmentChart = (layerSingle, layerDeeper, layerRepeat, layerOther) =>
 };
 
 
+const D3Gauge = ({ value, color, bgcolor }) => {
+  const svgRef = useRef();
+
+  const drawGauge = useCallback(() => {
+    const svg = d3.select(svgRef.current);
+    svg.selectAll('*').remove();
+
+    const width = svg.node().clientWidth;
+    const height = svg.node().clientHeight;
+    const radius = Math.min(width, height) / 2 * 0.6;
+    const centerX = width / 2;
+    const centerY = height / 2 + radius * 0.2; 
+
+    
+    const gaugeColor = color ;
+    const backgroundColor = bgcolor;
+
+    const arcBackground = d3.arc()
+      .innerRadius(radius * 0.7)
+      .outerRadius(radius)
+      .startAngle(-Math.PI/2) // 180°
+      .endAngle(Math.PI/2)         // 0°
+      .cornerRadius(5);
+
+    const arcForeground = d3.arc()
+      .innerRadius(radius * 0.7)
+      .outerRadius(radius)
+      .startAngle(-Math.PI /2 + (value / 100) * Math.PI)
+      .endAngle(-Math.PI /2)
+      .cornerRadius(5);
+
+    const g = svg.append('g')
+      .attr('transform', `translate(${centerX}, ${centerY})`);
+
+    // Draw background arc
+    g.append('path')
+      .attr('d', arcBackground())
+      .attr('fill', backgroundColor);
+
+    // Draw foreground arc
+    g.append('path')
+      .attr('d', arcForeground())
+      .attr('fill', gaugeColor);
+
+    // Needle
+    const needleLength = radius * 0.6;
+    const needleBaseRadius = radius * 0.07;
+
+    // Base path pointing up (to top)
+    const needlePathBase = `M ${-needleBaseRadius} 0 L 0 ${-needleLength} L ${needleBaseRadius} 0 Z`;
+
+    // Rotate from left (180°) to right (0°)
+    const rotationAngleDegrees = -90 + (value / 100) * 180;
+
+    g.append('path')
+      .attr('d', needlePathBase)
+      .attr('fill', gaugeColor)
+      .attr('transform', `rotate(${rotationAngleDegrees})`);
+
+    // Center circle
+    g.append('circle')
+      .attr('cx', 0)
+      .attr('cy', 0)
+      .attr('r', radius * 0.07)
+      .attr('fill', gaugeColor)
+      .attr('stroke', 'white')
+      .attr('stroke-width', 0);
+
+  }, [value, color]);
+
+  useEffect(() => {
+    drawGauge();
+    const handleResize = () => drawGauge();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [drawGauge]);
+
+  return <svg ref={svgRef} width={160}
+    height={160}></svg>;
+};
+
 
 // Custom SVG-based Speedometer chart
 const renderSpeedometerChart = (title, missionImpactValue) => {
@@ -590,10 +672,10 @@ const renderSpeedometerChart = (title, missionImpactValue) => {
   
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+    <Box display="flex" flexDirection="column" justifyContent={'center'} alignItems="center">
       
-      <Box sx={{ height: 100 }}>
-        <ReactSpeedometer
+      <Box display="flex" flexDirection="column" justifyContent={'center'} alignItems="center" >
+        {/* <ReactSpeedometer
             value={missionImpactValue}
             maxValue={100}
             needleColor={needleColorchart}
@@ -608,9 +690,14 @@ const renderSpeedometerChart = (title, missionImpactValue) => {
             ringWidth={25}
             height={150}
             width={150}
-        />
+        /> */}
+
+        <D3Gauge value={missionImpactValue} color={needleColorchart} bgcolor={pieColorchart} />
       </Box>
-      <Typography variant="body2" textAlign="center">
+       <Typography variant="body2" textAlign="center" sx={{position: "relative", top:-50, fontSize: '18px', fontWeight: 600, }}>
+        {missionImpactValue}%
+      </Typography>
+      <Typography variant="body2" textAlign="center"sx={{position: "relative", top:-50}}>
         {title}
       </Typography>
     </Box>
@@ -985,13 +1072,13 @@ const CoreMetrics = () => {
                                 >
 
                                      
-                                    <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4  }}>
+                                    <Paper sx={{flex: 1, textAlign: 'center', minHeight: 100, borderRadius: 4  }}>
                                     {renderSpeedometerChart('Personal Wellbeing', personalWellbeing)}
                                     </Paper>
-                                    <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4  }}>
+                                    <Paper sx={{flex: 1, textAlign: 'center', minHeight: 100, borderRadius: 4  }}>
                                     {renderSpeedometerChart('Community Wellbeing', communityWellbeing)}
                                     </Paper>
-                                    <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4  }}>
+                                    <Paper sx={{flex: 1, textAlign: 'center', minHeight: 100, borderRadius: 4  }}>
                                     {renderSpeedometerChart('Spiritual Wellbeing',spiritualWellbeing)}
                                     </Paper>
                                     
