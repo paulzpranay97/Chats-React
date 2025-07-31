@@ -8,11 +8,9 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import moment from 'moment';
 
 
-// MUI Imports
 import { Box, Paper, Typography, Grid, LinearProgress, Button,TextField } from '@mui/material';
 
 
-// Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title);
 
 
@@ -36,8 +34,8 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
       <Box display="flex" flexDirection="row" alignItems="center" gap={2}>
             <Box
                 sx={{
-                    backgroundColor: bgColorGR, // bg-green-500
-                    borderRadius: '9999px', // rounded-full
+                    backgroundColor: bgColorGR, 
+                    borderRadius: '9999px', 
                 
                     display: 'flex',
                     alignItems: 'center',
@@ -47,7 +45,6 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
                 }}
                 >
                     <i class="ri-funds-line" style={{ fontSize: '30px', transform: flipIcon }} ></i>
-                {/* <TrendingUpIcon sx={{ fontSize: 24, color: 'white' }} /> size={24} color="white" */}
             </Box>
             <Typography variant="h4" fontWeight="600" textAlign={{ xs: 'center', md: 'left' }} sx={{fontSize: '1rem'}}>
           {score_type}
@@ -56,13 +53,13 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
 
       
       <Typography
-            variant="h1" // Large variant for the score
+            variant="h1" 
             sx={{
-              color: bgColorGR, // text-blue-900
-              fontWeight: 'bold', // font-bold
-              fontSize: '4rem', // text-6xl (approx)
-              mt: 2, // mt-4
-              mb: 2, // mb-4
+              color: bgColorGR, 
+              fontWeight: 'bold', 
+              fontSize: '4rem',
+              mt: 2, 
+              mb: 2, 
             }}
           >
             {value}
@@ -70,17 +67,17 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
       <Button
             variant="contained"
             sx={{
-              backgroundColor: bgColorGR, // bg-green-600
+              backgroundColor: bgColorGR, 
               color: 'white',
-              fontWeight: 'bold', // font-bold
-              py: 1.5, // py-3
-              px: 6, // px-12
-              borderRadius: '9999px', // rounded-full
-              fontSize: '1.3rem', // text-2xl
-              letterSpacing: '0.05em', // tracking-wider
-              textTransform: 'none', // Prevent uppercase default from MUI Button
+              fontWeight: 'bold', 
+              py: 1.5, 
+              px: 6, 
+              borderRadius: '9999px', 
+              fontSize: '1.3rem', 
+              letterSpacing: '0.05em', 
+              textTransform: 'none', 
               '&:hover': {
-                backgroundColor: '#15803d', // Slightly darker green on hover
+                backgroundColor: '#15803d', 
               },
             }}
           >
@@ -90,17 +87,14 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
   );
   };
 
-
-// Custom SVG-based Speedometer chart
 const renderGaugeChart = (value, title, color,trend) => {
   
     let icon;
-if(trend === "up"){
-  icon = <><i class="ri-arrow-up-circle-fill" style={{fontSize: '60px', color: '#2FDD92'}}></i></>;
-}else if(trend === "down"){
-  icon = <><i class="ri-arrow-down-circle-fill" style={{fontSize: '60px', color: '#D23737'}}></i></>;
-
-}
+    if(trend === "up"){
+      icon = <><i class="ri-arrow-up-circle-fill" style={{fontSize: '60px', color: '#2FDD92'}}></i></>;
+    }else if(trend === "down"){
+      icon = <><i class="ri-arrow-down-circle-fill" style={{fontSize: '60px', color: '#D23737'}}></i></>;
+    }
 
 
 
@@ -122,7 +116,7 @@ if(trend === "up"){
     cutout: '60%',
     plugins: {
       tooltip: { enabled: true },
-      legend: { display: false }, // Disable legend for a cleaner UI
+      legend: { display: false },
     },
     maintainAspectRatio: false,
     responsive: true,
@@ -166,7 +160,6 @@ if(trend === "up"){
        
     </Box>
       <Box sx={{ width: 'px', height: '20px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            {/* <i class="ri-arrow-down-circle-fill" style={{fontSize: '60px', color: '#2FDD92'}}></i> */}
         {icon}
       </Box>
     </Box>
@@ -175,10 +168,10 @@ if(trend === "up"){
 
 const SpiritualWellbeing = () => {
 
-  const [startDate, setStartDate] = useState(moment().subtract(10, 'days')); // Default to 10 days ago
-  const [endDate, setEndDate] = useState(moment()); // Default to today
-  const [personalWellbeingData, setPersonalWellbeingData] = useState(null); // State to store fetched data
-  const locationId = "V7jzbIYZWXwQXczlF32Z"; // Define your location_id
+  const [startDate, setStartDate] = useState(moment().subtract(10, 'days')); 
+  const [endDate, setEndDate] = useState(moment());
+  const [personalWellbeingData, setPersonalWellbeingData] = useState(null); 
+  const locationId = "V7jzbIYZWXwQXczlF32Z"; 
 
  
   const get_personal_wellbeing_data = useCallback(async (start, end) => {
@@ -192,7 +185,6 @@ const SpiritualWellbeing = () => {
       if (formattedStartDate) url.searchParams.append("start_date", formattedStartDate);
       if (formattedEndDate) url.searchParams.append("end_date", formattedEndDate);
 
-      console.log("Fetching data from URL:", url.toString()); // Log the URL
 
       const personal_wellbeing_res = await fetch(url.toString(), {
         method: "GET",
@@ -213,19 +205,15 @@ const SpiritualWellbeing = () => {
       console.error("Error fetching personal wellbeing data:", error);
       return null;
     }
-  }, [locationId]); // Depend on locationId if it can change
+  }, [locationId]); 
 
-  // This useEffect will run on initial component mount
-  // and whenever the `startDate`, `endDate`, or `get_personal_wellbeing_data` changes.
-  // We'll primarily control it via handleApply now.
+
   useEffect(() => {
-    // We want to fetch initial data when the component mounts.
-    // Call the fetch function with the current state dates.
+  
     const initialFetch = async () => {
         const data = await get_personal_wellbeing_data(startDate, endDate);
         if (data) {
             setPersonalWellbeingData(data);
-            console.log("Initial personal wellbeing data:", data);
         }
     };
     initialFetch();
@@ -241,8 +229,7 @@ const SpiritualWellbeing = () => {
   
     const data = await get_personal_wellbeing_data(startDate, endDate);
     if (data) {
-      setPersonalWellbeingData(data); // Update the state with new data
-      console.log("Fetched data after Apply:", data);
+      setPersonalWellbeingData(data); 
     }
   };
   

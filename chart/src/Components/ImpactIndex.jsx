@@ -2,16 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import ReactSpeedometer from 'react-d3-speedometer'; 
-import axios from 'axios';
 
-
-// MUI Imports
 import { Box, Paper, Typography, Grid } from '@mui/material';
 
-// Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-// Helper function to render a Doughnut chart as a gauge
 const renderGaugeChart = (value, title, description, color, max = 100) => {
 
     let fontsizecard = '';
@@ -47,7 +42,7 @@ const renderGaugeChart = (value, title, description, color, max = 100) => {
     cutout: '60%',
     plugins: {
       tooltip: { enabled: true },
-      legend: { display: false }, // Disable legend for a cleaner UI
+      legend: { display: false }, 
     },
     maintainAspectRatio: false,
     responsive: true,
@@ -80,10 +75,7 @@ const renderGaugeChart = (value, title, description, color, max = 100) => {
 };
 
 
-// Custom SVG-based Speedometer chart
 const renderSpeedometerChart = (missionImpactValue) => {
-  
-
   return (
     <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
       <Typography variant="h6" component="h3" sx={{ fontSize: '1.25rem' , fontWeight: 'bold', color: '#333' }}>
@@ -117,32 +109,30 @@ const renderSpeedometerChart = (missionImpactValue) => {
 
 const ImpactIndex = () => {
 
-  const [widthScore, setWidthScore] = useState(0);
-  const [contributionScore, setContributionScore] = useState(0);
-  const [impactIndex, setImpactIndex] = useState(0);
+    const [widthScore, setWidthScore] = useState(0);
+    const [contributionScore, setContributionScore] = useState(0);
+    const [impactIndex, setImpactIndex] = useState(0);
 
-  const reachScoreValue = impactIndex;
-  const contributionScoreValue = contributionScore;
-  const missionImpactValue = widthScore;
+    const reachScoreValue = impactIndex;
+    const contributionScoreValue = contributionScore;
+    const missionImpactValue = widthScore;
 
 
-  useEffect(() => {
-  const fetchData = async () => {
-    const data = await get_impact_index_data();
-    if (data) {
+    useEffect(() => {
+      const fetchData = async () => {
+        const data = await get_impact_index_data();
+        if (data) {
 
-      setWidthScore(data?.width_score || 0);
-      setContributionScore(data?.contribution_score || 0);
-      setImpactIndex(data?.impact_index || 0);
-    }
-  };
+          setWidthScore(data?.width_score || 0);
+          setContributionScore(data?.contribution_score || 0);
+          setImpactIndex(data?.impact_index || 0);
+        }
+      };
 
-  fetchData();
-}, []);
+      fetchData();
+    }, []);
 
     const get_impact_index_data = async () => {
-
-      console.log("checked impact index data");
       
       try {
         const response = await fetch("https://score.impactindex.app/impact_index/?location_id=V7jzbIYZWXwQXczlF32Z", {
@@ -151,14 +141,8 @@ const ImpactIndex = () => {
             "Accept": "application/json",
           },
         });
-
         const jsonData = await response.json();
-        console.log("Impact Index Data:", jsonData);
         return jsonData;
-       
-      
-      
-        
       } catch (error) {
         console.error("Error fetching impact index data:", error);
         return null;

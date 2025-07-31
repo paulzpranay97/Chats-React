@@ -667,11 +667,6 @@ const CoreMetrics = () => {
         const score_data = await get_score_data();
         if (profile_data && layer_segment_data && participant_data && score_data) {
 
-            console.log("profile_data", profile_data);
-            console.log("layer_segment_data", layer_segment_data);
-            console.log("participant_data", participant_data);
-            console.log("score_data", score_data);
-
             const genderM = profile_data.gender.male;
             const genderF = profile_data.gender.female;
 

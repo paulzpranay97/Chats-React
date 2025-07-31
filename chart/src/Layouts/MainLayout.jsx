@@ -15,7 +15,6 @@ import {
 import { useTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 
-// Assuming these components are in the correct relative paths
 import ImpactIndex from '../Components/ImpactIndex.jsx';
 import CoreMetrics from '../Components/CoreMetrics.jsx';
 import PersonalWellbeing from '../Components/PersonalWellbeing.jsx';
@@ -57,17 +56,15 @@ const a11yProps = (index) => {
   };
 };
 
-function App() { // Renamed from MainLayout to App for default export
+function App() { 
   const [value, setValue] = React.useState(0);
-  const [drawerOpen, setDrawerOpen] = React.useState(false); // State for drawer
+  const [drawerOpen, setDrawerOpen] = React.useState(false); 
   const theme = useTheme();
-  // Check if screen size is less than 'lg' (typically tablet/mobile)
-  // This will make the hamburger menu appear on 'xs', 'sm', and 'md' screen sizes.
   const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    setDrawerOpen(false); // Close drawer when a tab is selected
+    setDrawerOpen(false); 
   };
 
   const toggleDrawer = (open) => (event) => {
@@ -77,7 +74,6 @@ function App() { // Renamed from MainLayout to App for default export
     setDrawerOpen(open);
   };
 
-  // Array of tab labels for easier mapping
   const tabLabels = [
     "Impact Index",
     "Core Metrics",
@@ -96,24 +92,22 @@ function App() { // Renamed from MainLayout to App for default export
           borderColor: 'divider',
           backgroundColor: '#F6F6F6',
           display: 'flex',
-          justifyContent: isMobile ? 'flex-start' : 'center', // Align left for mobile, center for desktop
+          justifyContent: isMobile ? 'flex-start' : 'center', 
           alignItems: 'center',
-          px: isMobile ? 2 : 0, // Add horizontal padding for mobile
+          px: isMobile ? 2 : 0, 
         }}
       >
         {isMobile ? (
-          // Hamburger menu for mobile/tablet
           <IconButton
             edge="start"
             color="inherit"
             aria-label="menu"
             onClick={toggleDrawer(true)}
-            sx={{ mr: 2, color: 'black' }} // Adjust color if needed
+            sx={{ mr: 2, color: 'black' }} 
           >
             <MenuIcon />
           </IconButton>
         ) : (
-          // Desktop tabs
           <Tabs
             centered
             sx={{
@@ -124,7 +118,7 @@ function App() { // Renamed from MainLayout to App for default export
                 display: 'none',
               },
               '.MuiTabs-flexContainer': {
-                gap: '10px', // Added gap between tabs for better spacing
+                gap: '10px', 
                 display: 'flex',
                 justifyContent: 'center',
                 backgroundColor: '#F6F6F6',
@@ -144,7 +138,7 @@ function App() { // Renamed from MainLayout to App for default export
                   fontWeight: 'bold',
                   color: 'text.primary',
                   backgroundColor: '#FFFFFF',
-                  borderRadius: '50px', // Apply rounded corners here
+                  borderRadius: '50px', 
                   padding: '10px 20px',
                   minHeight: '48px',
                   opacity: 1,
@@ -156,7 +150,7 @@ function App() { // Renamed from MainLayout to App for default export
                     color: 'black',
                     backgroundColor: '#FFFFFF',
                     fontWeight: 'bold',
-                    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', // Add a subtle shadow to selected tab
+                    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
                   },
                 }}
               />
@@ -185,7 +179,7 @@ function App() { // Renamed from MainLayout to App for default export
                   onClick={(event) => handleChange(event, index)}
                   sx={{
                     '&.Mui-selected': {
-                      backgroundColor: '#E5EAFB', // Highlight selected item in drawer
+                      backgroundColor: '#E5EAFB', 
                       fontWeight: 'bold',
                     },
                     '&:hover': {
