@@ -214,9 +214,9 @@ const ImpactIndex = () => {
     const params = new URLSearchParams(location.search);
     const locationId = params.get('location_id') || 'V7jzbIYZWXwQXczlF32Z';
 
-    const reachScoreValue = impactIndex;
+    const reachScoreValue = widthScore;
     const contributionScoreValue = contributionScore;
-    const missionImpactValue = widthScore;
+    const missionImpactValue = impactIndex;
 
 
     useEffect(() => {
