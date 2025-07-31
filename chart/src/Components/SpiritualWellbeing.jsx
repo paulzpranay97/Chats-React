@@ -94,6 +94,9 @@ const renderGaugeChart = (value, title, color,trend) => {
       icon = <><i class="ri-arrow-up-circle-fill" style={{fontSize: '60px', color: '#2FDD92'}}></i></>;
     }else if(trend === "down"){
       icon = <><i class="ri-arrow-down-circle-fill" style={{fontSize: '60px', color: '#D23737'}}></i></>;
+      
+    }else if(trend === "same"){
+      icon = <><i class="ri-subtract-line" style={{fontSize: '37px', color: '#fcfcfcff', backgroundColor:'#FF8440', borderRadius: '5px'}}></i></>;
     }
 
 
