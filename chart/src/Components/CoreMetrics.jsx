@@ -614,10 +614,10 @@ const D3Gauge = ({ value, color, bgcolor }) => {
     // Draw foreground arc
     g.append('path')
       .attr('d', arcForeground())
-      .attr('fill', gaugeColor);
+      .attr('fill', backgroundColor);
 
     // Needle
-    const needleLength = radius * 0.6;
+    const needleLength = radius * 0.9;
     const needleBaseRadius = radius * 0.07;
 
     // Base path pointing up (to top)
@@ -694,10 +694,10 @@ const renderSpeedometerChart = (title, missionImpactValue) => {
 
         <D3Gauge value={missionImpactValue} color={needleColorchart} bgcolor={pieColorchart} />
       </Box>
-       <Typography variant="body2" textAlign="center" sx={{position: "relative", top:-50, fontSize: '18px', fontWeight: 600, }}>
-        {missionImpactValue}%
+       <Typography variant="body2" textAlign="center" sx={{position: "relative", top:-65, fontSize: '18px', fontWeight: 600, }}>
+        {missionImpactValue}
       </Typography>
-      <Typography variant="body2" textAlign="center"sx={{position: "relative", top:-50}}>
+      <Typography variant="body2" textAlign="center"sx={{position: "relative", top:-65, }}>
         {title}
       </Typography>
     </Box>

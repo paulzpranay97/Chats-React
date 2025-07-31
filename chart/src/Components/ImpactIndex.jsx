@@ -97,6 +97,7 @@ const D3Gauge = ({ value, color }) => {
       purple: '#A78BFA',
       pink: '#F472B6',
     };
+    // const gaugeColor = COLORS[color] || '#D766FF';
     const gaugeColor = COLORS[color] || '#D766FF';
     const backgroundColor = '#EFADFF';
 
@@ -125,10 +126,10 @@ const D3Gauge = ({ value, color }) => {
     // Draw foreground arc
     g.append('path')
       .attr('d', arcForeground())
-      .attr('fill', gaugeColor);
+      .attr('fill', '#EFADFF')// gaugeColor);
 
     // Needle
-    const needleLength = radius * 0.6;
+    const needleLength = radius * 0.9;
     const needleBaseRadius = radius * 0.08;
 
     // Base path pointing up (to top)
