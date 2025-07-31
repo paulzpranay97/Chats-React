@@ -206,7 +206,7 @@ const renderTheCheckInScore = (checkInScore) => {
         </Typography>
 
         {/* Score */}
-        <Typography variant="h3" component="p" sx={{ fontSize: '2.3rem' }} mt={2}>
+        <Typography variant="h3" component="p" sx={{ fontSize: '2.3rem' , fontWeight: 'bold'}} mt={2}>
           {score}/{maxScore}
         </Typography>
 
@@ -581,7 +581,7 @@ const D3Gauge = ({ value, color, bgcolor }) => {
 
     const width = svg.node().clientWidth;
     const height = svg.node().clientHeight;
-    const radius = Math.min(width, height) / 2 * 0.6;
+    const radius = Math.min(width, height) / 2 * 0.8;
     const centerX = width / 2;
     const centerY = height / 2 + radius * 0.2; 
 
@@ -649,8 +649,8 @@ const D3Gauge = ({ value, color, bgcolor }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, [drawGauge]);
 
-  return <svg ref={svgRef} width={160}
-    height={160}></svg>;
+  return <svg ref={svgRef} width={200}
+    height={200}></svg>;
 };
 
 
