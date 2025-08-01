@@ -1,12 +1,11 @@
-import React, { useRef, useEffect, useState , useCallback} from 'react';
+import React, {  useEffect, useState} from 'react';
 import { useLocation } from 'react-router-dom';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import ReactSpeedometer from 'react-d3-speedometer'; 
 
 import { Box, Paper, Typography, Grid } from '@mui/material';
-// D3.js Imports
-import * as d3 from 'd3';
+
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -19,11 +18,11 @@ const renderGaugeChart2 = (value, title, description, color, max = 100) => {
 
     if( title === 'Reach Score' ){
       fontsizecard = '1.25rem';
-      piebgcolor = '#FFE2F2';
+      piebgcolor = '#0000001a';
 
-    }else if( title === 'Contribution Score' ){
+    }else if( title === 'Mission-wide Impact Index' ){
       fontsizecard = '1.25rem';
-      piebgcolor = '#F9DFFF';
+      piebgcolor = '#0000001a';
 
     }
 
@@ -79,27 +78,7 @@ const renderGaugeChart2 = (value, title, description, color, max = 100) => {
         >
           {value}
         </Typography>
-        <Typography
-          variant="h5"
-          sx={{
-            position: 'absolute',
-            top: '63%',
-            left: '50%',
-            fontSize:"12px",
-            transform: 'translate(-50%, -50%)',
-            backgroundColor: "#FFFFFF",
-            borderRadius: "45px", 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            minWidth: '40px', 
-            minHeight: '10px',
-            boxSizing: 'border-box' ,
-            zIndex: '111'
-          }}
-        >
-          +{value}
-        </Typography>
+  
       </Box>
       <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
         {description}
@@ -108,21 +87,21 @@ const renderGaugeChart2 = (value, title, description, color, max = 100) => {
   );
 };
 
-const renderGaugeChart = (value, title, description, color, max = 100) => {
 
-  let fontsizecard = '';
-  let piebgcolor = "" ;
+const renderGaugeChartContribution = (value, title, description, color, max) => {
+
+  console.log("Color", color);
+  
+
+    let fontsizecard = '';
+    let piebgcolor = "" ;
 
 
-  if( title === 'Reach Score' ){
-    fontsizecard = '1.25rem';
-    piebgcolor = '#FFE2F2';
+    if( title === 'Contribution Score' ){
+      fontsizecard = '1.25rem';
+      piebgcolor = '#0000001a';
 
-  }else if( title === 'Contribution Score' ){
-    fontsizecard = '2.25rem';
-    piebgcolor = '#F9DFFF';
-
-  }
+    }
 
 
   const data = {
@@ -140,7 +119,7 @@ const renderGaugeChart = (value, title, description, color, max = 100) => {
   const options = {
     rotation: 0,
     circumference: 360,
-    cutout: '60%',
+    cutout: '85%',
     plugins: {
       tooltip: { enabled: true },
       legend: { display: false }, 
@@ -163,139 +142,22 @@ const renderGaugeChart = (value, title, description, color, max = 100) => {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            backgroundColor: color,
+            borderRadius: "50%", 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            minWidth: '150px', 
+            minHeight: '150px',
+            boxSizing: 'border-box' 
           }}
         >
-          {value}%
+          {value}
         </Typography>
       </Box>
       <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
         {description}
-      </Typography>
-    </Box>
-  );
-};
-
-
-
-const D3Gauge = ({ value, color }) => {
-  const svgRef = useRef();
-
-  const drawGauge = useCallback(() => {
-    const svg = d3.select(svgRef.current);
-    svg.selectAll('*').remove();
-
-    const width = svg.node().clientWidth;
-    const height = svg.node().clientHeight;
-    const radius = Math.min(width, height) / 2 * 1;
-    const centerX = width / 2;
-    const centerY = height / 2 + radius * 0.2; 
-
-    const COLORS = {
-      indigo: '#818CF8',
-      purple: '#A78BFA',
-      pink: '#F472B6',
-    };
-    // const gaugeColor = COLORS[color] || '#D766FF';
-    const gaugeColor = COLORS[color] || '#D766FF';
-    const backgroundColor = '#EFADFF';
-
-    const arcBackground = d3.arc()
-      .innerRadius(radius * 0.7)
-      .outerRadius(radius)
-      .startAngle(-Math.PI/2) // 180°
-      .endAngle(Math.PI/2)         // 0°
-      .cornerRadius(5);
-
-    const arcForeground = d3.arc()
-      .innerRadius(radius * 0.7)
-      .outerRadius(radius)
-      .startAngle(-Math.PI /2 + (value / 100) * Math.PI)
-      .endAngle(-Math.PI /2)
-      .cornerRadius(5);
-
-    const g = svg.append('g')
-      .attr('transform', `translate(${centerX}, ${centerY})`);
-
-    // Draw background arc
-    g.append('path')
-      .attr('d', arcBackground())
-      .attr('fill', backgroundColor);
-
-    // Draw foreground arc
-    g.append('path')
-      .attr('d', arcForeground())
-      .attr('fill', '#EFADFF')// gaugeColor);
-
-    // Needle
-    const needleLength = radius * 0.9;
-    const needleBaseRadius = radius * 0.08;
-
-    // Base path pointing up (to top)
-    const needlePathBase = `M ${-needleBaseRadius} 0 L 0 ${-needleLength} L ${needleBaseRadius} 0 Z`;
-
-    // Rotate from left (180°) to right (0°)
-    const rotationAngleDegrees = -90 + (value / 100) * 180;
-
-    g.append('path')
-      .attr('d', needlePathBase)
-      .attr('fill', gaugeColor)
-      .attr('transform', `rotate(${rotationAngleDegrees})`);
-
-    // Center circle
-    g.append('circle')
-      .attr('cx', 0)
-      .attr('cy', 0)
-      .attr('r', radius * 0.08)
-      .attr('fill', gaugeColor)
-      .attr('stroke', 'white')
-      .attr('stroke-width', 0);
-
-  }, [value, color]);
-
-  useEffect(() => {
-    drawGauge();
-    const handleResize = () => drawGauge();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [drawGauge]);
-
-  return <svg ref={svgRef} width={200}
-    height={200}></svg>;
-};
-
-
-const renderSpeedometerChart = (missionImpactValue) => {
-  return (
-    <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
-      <Typography variant="h6" component="h3" sx={{ fontSize: '1.25rem' , fontWeight: 'bold', color: '#333' }}>
-        Mission-wide Impact Index
-      </Typography>
-      <Box sx={{ height: 200, width: "100%" }}>
-        {/* <ReactSpeedometer
-          value={missionImpactValue}
-          maxValue={100}
-          needleColor="#D766FF"
-          startColor="#EFADFF"
-          endColor="#D8B4FE"
-          segments={1}
-          forceRender={true}
-          currentValueText={`${missionImpactValue}/100`}
-          valueTextFontSize="22px"
-          labelFontSize="0px"
-          needleTransitionDuration={1000}
-          needleTransition="easeElastic"
-          ringWidth={40}
-          height={200 }
-          width={300}
-        /> */}
-        <D3Gauge value={missionImpactValue} color={"#D766FF"} sx={{width:"100%", height: "100%"}}/>
-      </Box>
-      <Typography variant="h6" component="h3" sx={{ fontSize: '1.25rem' , fontWeight: 'bold', color: '#333' , position: 'relative', top: -40 }} mt={-6} >
-        {missionImpactValue}%
-      </Typography>
-      <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
-        It is estimated that TheLight's missional impact contributes an additional {missionImpactValue}% to all of Melbourne's Wellbeing.
       </Typography>
     </Box>
   );
@@ -307,29 +169,56 @@ const ImpactIndex = () => {
     const [contributionScore, setContributionScore] = useState(0);
     const [impactIndex, setImpactIndex] = useState(0);
 
+    const [contributionScoreMid, setContributionScoreMid] = useState(0);
+    const [contributionScoreLow, setContributionScoreLow] = useState(0);
+    const [contributionScoreHigh, setContributionScoreHigh] = useState(0);
+
+    const [conColor, setConColor] = useState('');
+
     
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const locationId = params.get('location_id') || 'V7jzbIYZWXwQXczlF32Z';
 
-    const reachScoreValue = widthScore;
+    const reachScoreValue = impactIndex;
     const contributionScoreValue = contributionScore;
-    const missionImpactValue = impactIndex;
+    const missionImpactValue = widthScore;
 
 
-    useEffect(() => {
-      const fetchData = async () => {
-        const data = await get_impact_index_data();
-        if (data) {
+    
 
-          setWidthScore(data?.width_score || 0);
-          setContributionScore(data?.contribution_score || 0);
-          setImpactIndex(data?.impact_index || 0);
+useEffect(() => {
+    const fetchData = async () => {
+      const data = await get_impact_index_data();
+      if (data) {
+
+        const contributionScore = data.contribution_score || 0;
+        const c_low = data.contribution_lower || 0;
+        const c_mid = data.contribution_mid || 0;
+        const c_high = data.contribution_upper_bound || 0;
+
+        setContributionScoreMid(c_mid);
+        setContributionScoreLow(c_low);
+        setContributionScoreHigh(c_high);
+        setContributionScore(contributionScore);
+        setWidthScore(data.width_score || 0);
+        setImpactIndex(data.impact_index || 0);
+
+        if (contributionScore < c_low) {
+          setConColor('red');
+        } else if (contributionScore >= c_low && contributionScore < c_mid) {
+          setConColor('orange');
+        } else if (contributionScore >= c_mid && contributionScore <= c_high) {
+          setConColor('green');
+        } else {
+          // Handle case where score is greater than high bound
+          setConColor('blue'); // or some other color
         }
-      };
+      }
+    };
 
-      fetchData();
-    }, []);
+    fetchData();
+  }, []);
 
     const get_impact_index_data = async () => {
 
@@ -351,6 +240,9 @@ const ImpactIndex = () => {
         return null;
       }
     };
+
+
+    
 
   
 
@@ -382,73 +274,7 @@ const ImpactIndex = () => {
         </Typography>
       </Box>
 
-      {/* Charts Row */}
-      <Box
-        mt={{md:6, sm:20, xs: 15}}
-        sx={{
-          display: 'flex',
-          flexDirection: { xs: 'column',lg:'row', md: 'column', sm:'column' },
-          justifyContent: 'center',
-          alignItems: 'stretch',
-          gap: 3,
-
-          
-        }}
-      >
-
-          <Box
-            sx={{
-              display: 'flex',
-              width: { xs: '100%',lg:'50%', md: '100%', sm:'100%' },
-              flexDirection: { xs: 'column', md: 'row' },
-              justifyContent: 'center',
-              alignItems: 'stretch',
-              gap: 3,
-            }}
-          >
-                {/* Reach Score */}
-                <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 300, borderRadius: 4 }}>
-                  {renderGaugeChart(
-                    reachScoreValue,
-                    'Reach Score',
-                    `It is estimated that TheLight is reaching ${reachScoreValue}% of the Target Achievable Mission.`,
-                    '#FF67BB'
-                  )}
-                </Paper>
-
-                {/* Speedometer */}
-                <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 350,borderRadius: 4  }}>
-                  {renderSpeedometerChart(missionImpactValue)}
-                </Paper>
-            
-          </Box>
-
-          <Box
-            sx={{
-              display: 'flex',
-              width: {  xs: '100%',lg:'50%', md: '100%', sm:'100%'  },
-              flexDirection: { xs: 'row', md: 'row' ,sm: 'row'},
-              justifyContent: 'center',
-              alignItems: 'stretch',
-              gap: 3,
-            }}
-          >
-
-          {/* Contribution Score */}
-          <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 350 , borderRadius: 4 }}>
-            {renderGaugeChart(
-              contributionScoreValue,
-              'Contribution Score',
-              `It is estimated that TheLight contributes an increase to someone's Personal, Community, and Spiritual Wellbeing by ${contributionScoreValue}%.`,
-              '#D766FF'
-            )}
-          </Paper>
-            
-          </Box>
-         
-      </Box>
-
-
+   
       {/* Charts Row 3 */}
       <Box
         mt={{md:6, sm:20, xs: 15}}
@@ -477,21 +303,22 @@ const ImpactIndex = () => {
                 {/* Speedometer */}
                 <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 350,borderRadius: 4  }}>
                   {renderGaugeChart2(
-                    reachScoreValue,
-                    'Reach Score',
-                    `It is estimated that TheLight is reaching ${reachScoreValue}% of the Target Achievable Mission.`,
-                    '#FF67BB'
+                    missionImpactValue,
+                    'Mission-wide Impact Index',
+                    `It is estimated that TheLight’s missional impact contributes an additional ${missionImpactValue}% to all of Melbourne’s Wellbeing`,
+                    '#D766FF'
                   )}
                 </Paper>
   
 
                 {/* Contribution Score */}
                 <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 350 , borderRadius: 4 }}>
-                  {renderGaugeChart2(
-                    reachScoreValue,
-                    'Reach Score',
-                    `It is estimated that TheLight is reaching ${reachScoreValue}% of the Target Achievable Mission.`,
-                    '#FF67BB'
+                  {renderGaugeChartContribution(
+                    contributionScoreValue,
+                    'Contribution Score',
+                    `It is estimated that TheLight contributes an increase to someone's Personal, Community, and Spiritual Wellbeing by ${contributionScoreValue}%.`,
+                    conColor,
+                    contributionScoreHigh
                   )}
                 </Paper>
         
