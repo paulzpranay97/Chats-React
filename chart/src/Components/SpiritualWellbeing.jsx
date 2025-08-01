@@ -137,10 +137,10 @@ const renderGaugeChart = (value, title, color,trend) => {
         variant="h5"
         sx={{
             position: 'absolute',
-            bottom: 20,
-            left: '52%',
+            bottom: 25,
+            left: '50%',
             transform: 'translate(-50%, -50%)',
-            fontSize: '2rem',
+            fontSize: '1.6rem',
             fontWeight: 'bold',
            
         }}

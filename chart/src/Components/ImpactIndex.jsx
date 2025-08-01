@@ -10,6 +10,104 @@ import * as d3 from 'd3';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+
+const renderGaugeChart2 = (value, title, description, color, max = 100) => {
+
+    let fontsizecard = '';
+    let piebgcolor = "" ;
+
+
+    if( title === 'Reach Score' ){
+      fontsizecard = '1.25rem';
+      piebgcolor = '#FFE2F2';
+
+    }else if( title === 'Contribution Score' ){
+      fontsizecard = '1.25rem';
+      piebgcolor = '#F9DFFF';
+
+    }
+
+
+  const data = {
+    datasets: [
+      {
+        data: [value, max - value],
+        backgroundColor: [color, piebgcolor],
+        borderColor: [color, piebgcolor],
+        borderWidth: 0,
+        borderRadius: 0,
+      },
+    ],
+  };
+
+  const options = {
+    rotation: 0,
+    circumference: 360,
+    cutout: '85%',
+    plugins: {
+      tooltip: { enabled: true },
+      legend: { display: false }, 
+    },
+    maintainAspectRatio: false,
+    responsive: true,
+  };
+
+  return (
+    <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+      <Typography variant="h6" component="h3" sx={{ fontSize: fontsizecard , fontWeight: 'bold', color: '#333' }}>
+        {title}
+      </Typography>
+      <Box sx={{ position: 'relative', width: '100%', maxWidth: 200, height: 200 }}>
+        <Doughnut data={data} options={options} />
+        <Typography
+          variant="h5"
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            fontWeight: 'bold',
+            backgroundColor: color,
+            borderRadius: "50%", 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            minWidth: '150px', 
+            minHeight: '150px',
+            boxSizing: 'border-box' 
+          }}
+        >
+          {value}
+        </Typography>
+        <Typography
+          variant="h5"
+          sx={{
+            position: 'absolute',
+            top: '63%',
+            left: '50%',
+            fontSize:"12px",
+            transform: 'translate(-50%, -50%)',
+            backgroundColor: "#FFFFFF",
+            borderRadius: "45px", 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            minWidth: '40px', 
+            minHeight: '10px',
+            boxSizing: 'border-box' ,
+            zIndex: '111'
+          }}
+        >
+          +{value}
+        </Typography>
+      </Box>
+      <Typography variant="body2" textAlign="center">
+        {description}
+      </Typography>
+    </Box>
+  );
+};
+
 const renderGaugeChart = (value, title, description, color, max = 100) => {
 
     let fontsizecard = '';
@@ -347,6 +445,56 @@ const ImpactIndex = () => {
           </Paper>
             
           </Box>
+         
+      </Box>
+
+
+      {/* Charts Row 3 */}
+      <Box
+        mt={{md:6, sm:20, xs: 15}}
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column',lg:'row', md: 'column', sm:'column' },
+          justifyContent: 'center',
+          alignItems: 'stretch',
+          gap: 3,
+
+          
+        }}
+      >
+
+         
+                {/* Reach Score */}
+                <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 300, borderRadius: 4 }}>
+                  {renderGaugeChart2(
+                    reachScoreValue,
+                    'Reach Score',
+                    `It is estimated that TheLight is reaching ${reachScoreValue}% of the Target Achievable Mission.`,
+                    '#FF67BB'
+                  )}
+                </Paper>
+
+                {/* Speedometer */}
+                <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 350,borderRadius: 4  }}>
+                  {renderGaugeChart2(
+                    reachScoreValue,
+                    'Reach Score',
+                    `It is estimated that TheLight is reaching ${reachScoreValue}% of the Target Achievable Mission.`,
+                    '#FF67BB'
+                  )}
+                </Paper>
+  
+
+                {/* Contribution Score */}
+                <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 350 , borderRadius: 4 }}>
+                  {renderGaugeChart2(
+                    reachScoreValue,
+                    'Reach Score',
+                    `It is estimated that TheLight is reaching ${reachScoreValue}% of the Target Achievable Mission.`,
+                    '#FF67BB'
+                  )}
+                </Paper>
+        
          
       </Box>
     </Box>
