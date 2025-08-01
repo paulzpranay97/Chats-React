@@ -88,12 +88,12 @@ const renderPatientAgeChart = (count15_24, count25_34, count35_44, count45_54, c
     },
   };
   return (
-    <Box sx={{ p:4,display: 'flex', flexDirection: 'column', alignItems: 'flex-start' , width: '90%'}}>
-      <Box >
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' , boxSizing: 'border-box', width: '100%'}}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' , width: '100%'}}>
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }} textAlign={{ xs: 'left', md: 'left' }}>Participant Ages</Typography>
 
         {/* Chart Container */}
-        <Box sx={{ height: 300, width:{md: 550, lg:600, xs:280}}}>
+        <Box sx={{ height: 300, width:"100%"}}>
           <Bar data={data} options={options} />
         </Box>
       </Box>
@@ -177,12 +177,12 @@ const renderPatientChart = (thisMonthCount, lastMonthCount, avgMonthCount,maxCou
     },
   };
   return (
-    <Box sx={{ p:4,display: 'flex', flexDirection: 'column', alignItems: 'flex-start' , width: '90%'}}>
-      <Box >
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' , boxSizing: 'border-box', width: '100%'}}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' , width: '100%'}}>
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }} textAlign={{ xs: 'left', md: 'left' }}>Participants</Typography>
 
         {/* Chart Container */}
-        <Box sx={{ height: 200, width: {md:500, lg: 600, xs: 280}}}>
+        <Box sx={{ height: 200, width: '100%'}}>
           <Bar data={data} options={options} />
         </Box>
       </Box>
@@ -346,7 +346,7 @@ const renderProfileChart = (genderM, genderF, childrenYes, childrenNo, dependant
     layout: {
       padding: {
         left: 0,
-        right: 40,
+        right: 0,
         top: 0,
         bottom: 0,
       },
@@ -460,7 +460,7 @@ const renderProfileChart = (genderM, genderF, childrenYes, childrenNo, dependant
     layout: {
       padding: {
         left: 0,
-        right: 40,
+        right: 0,
         top: 0,
         bottom: 0,
       },
@@ -468,8 +468,8 @@ const renderProfileChart = (genderM, genderF, childrenYes, childrenNo, dependant
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-      <Box >
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' , boxSizing: 'border-box', width: '100%'}}>
+      <Box  sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' , boxSizing: 'border-box', width: '100%'}} >
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }} textAlign={{ xs: 'left', md: 'left' }}>Profiles</Typography>
 
         {/* Legend for Male/Female */}
@@ -479,7 +479,7 @@ const renderProfileChart = (genderM, genderF, childrenYes, childrenNo, dependant
         </Box>
 
         {/* Chart Container */}
-        <Box sx={{ height: 100, width: {md:280, lg: 300, xs: 350} }}>
+        <Box sx={{ height: 100, width: '100%' }}>
           <Bar  data={mf_data} options={mf_options} />
         </Box>
 
@@ -490,7 +490,7 @@ const renderProfileChart = (genderM, genderF, childrenYes, childrenNo, dependant
         </Box>
 
         {/* Chart Container */}
-        <Box sx={{ height: 300, width: {md:280, lg: 300, xs: 350}}}>
+        <Box sx={{ height: 300,width: '100%'}}>
           <Bar data={data} options={options} />
         </Box>
       </Box>
@@ -962,7 +962,7 @@ const CoreMetrics = () => {
 
 
   return (
-    <Box sx={{ width: '95vw',  bgcolor: '#F8FAFC', p: 4, boxSizing: 'border-box', backgroundColor: '#E5EAFB',}}>
+    <Box sx={{ width: '95vw', p: {lg:4, md:4, xs:1}, bgcolor: '#F8FAFC', boxSizing: 'border-box', backgroundColor: '#E5EAFB'}} >
       {/* Header */}
       <Box
         sx={{
@@ -1051,12 +1051,12 @@ const CoreMetrics = () => {
                         >
 
                                             {/* Reach Score */}
-                                            <Paper sx={{  flex: 1, textAlign: 'center',  borderRadius: 4 ,width: '100%'}}>
+                                            <Paper sx={{ p: {md:1, lg:3,xs:2}, flex: 1, textAlign: 'center', borderRadius: 4 }}>
                                                 {renderPatientChart(thisMonthCount, lastMonthCount, avgCount,maxCount)}
                                             </Paper>
 
                                              {/* Reach Score */}
-                                            <Paper sx={{  flex: 1, textAlign: 'center',  borderRadius: 4, width: '100%' }}>
+                                            <Paper sx={{ p: {md:1, lg:3,xs:2}, flex: 1, textAlign: 'center',  borderRadius: 4 }}>
                                                 {renderPatientAgeChart(count15_24, count25_34, count35_44, count45_54, count55Plus, maxCountAgeGroup)}
                                             </Paper>
                             <Box

@@ -254,7 +254,7 @@ const PersonalWellbeing = () => {
 
 
   return (
-    <Box sx={{ width: '95vw',  bgcolor: '#F8FAFC', p: 4, boxSizing: 'border-box', backgroundColor: '#E5EAFB',}}>
+    <Box sx={{ width: '95vw',  bgcolor: '#F8FAFC',p: {lg:4, md:4, xs:1}, boxSizing: 'border-box', backgroundColor: '#E5EAFB',}}>
       {/* Header */}
       <Box
         sx={{

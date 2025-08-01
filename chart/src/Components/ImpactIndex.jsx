@@ -101,7 +101,7 @@ const renderGaugeChart2 = (value, title, description, color, max = 100) => {
           +{value}
         </Typography>
       </Box>
-      <Typography variant="body2" textAlign="center">
+      <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
         {description}
       </Typography>
     </Box>
@@ -110,19 +110,19 @@ const renderGaugeChart2 = (value, title, description, color, max = 100) => {
 
 const renderGaugeChart = (value, title, description, color, max = 100) => {
 
-    let fontsizecard = '';
-    let piebgcolor = "" ;
+  let fontsizecard = '';
+  let piebgcolor = "" ;
 
 
-    if( title === 'Reach Score' ){
-      fontsizecard = '1.25rem';
-      piebgcolor = '#FFE2F2';
+  if( title === 'Reach Score' ){
+    fontsizecard = '1.25rem';
+    piebgcolor = '#FFE2F2';
 
-    }else if( title === 'Contribution Score' ){
-      fontsizecard = '2.25rem';
-      piebgcolor = '#F9DFFF';
+  }else if( title === 'Contribution Score' ){
+    fontsizecard = '2.25rem';
+    piebgcolor = '#F9DFFF';
 
-    }
+  }
 
 
   const data = {
@@ -169,7 +169,7 @@ const renderGaugeChart = (value, title, description, color, max = 100) => {
           {value}%
         </Typography>
       </Box>
-      <Typography variant="body2" textAlign="center">
+      <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
         {description}
       </Typography>
     </Box>
@@ -294,7 +294,7 @@ const renderSpeedometerChart = (missionImpactValue) => {
       <Typography variant="h6" component="h3" sx={{ fontSize: '1.25rem' , fontWeight: 'bold', color: '#333' , position: 'relative', top: -40 }} mt={-6} >
         {missionImpactValue}%
       </Typography>
-      <Typography variant="body2" textAlign="center">
+      <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
         It is estimated that TheLight's missional impact contributes an additional {missionImpactValue}% to all of Melbourne's Wellbeing.
       </Typography>
     </Box>
@@ -356,7 +356,7 @@ const ImpactIndex = () => {
 
 
   return (
-    <Box sx={{ width: '95vw',  bgcolor: '#F8FAFC', p: 4, boxSizing: 'border-box', backgroundColor: '#E5EAFB',}}>
+    <Box sx={{ width: '95vw',  bgcolor: '#F8FAFC', p: {lg:4, md:4, xs:1}, boxSizing: 'border-box', backgroundColor: '#E5EAFB',}}>
       {/* Header */}
       <Box
         sx={{
@@ -375,7 +375,7 @@ const ImpactIndex = () => {
         </Typography>
         <Typography
           variant="body1"
-          sx={{ fontStyle: 'italic', textAlign: { xs: 'center', md: 'center' }, maxWidth: 400 , fontSize: '1.4rem' }}
+          sx={{ fontStyle: 'italic', textAlign: { xs: 'center', md: 'center' }, maxWidth: 400 , fontSize: '1.4rem' , fontWeight: "bold"}}
         >
           It is estimated that TheLight contributes an increase to someone's Personal, Community,
           and Spiritual Wellbeing by 25%.
