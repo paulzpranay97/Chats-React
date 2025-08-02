@@ -80,7 +80,7 @@ const renderGaugeChart2 = (value, title, description, color, max = 100) => {
         </Typography>
   
       </Box>
-      <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
+      <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}} mt={5}>
         {description}
       </Typography>
     </Box>
@@ -88,7 +88,7 @@ const renderGaugeChart2 = (value, title, description, color, max = 100) => {
 };
 
 
-const renderGaugeChartContribution = (value, title, description, color, max) => {
+const renderGaugeChartContribution = (value, title, description, color, max, min, mid) => {
 
   console.log("Color", color);
   
@@ -155,6 +155,17 @@ const renderGaugeChartContribution = (value, title, description, color, max) => 
         >
           {value}
         </Typography>
+      </Box>
+      <Box display={'flex'} flexDirection={'row'} gap={3}>
+          <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
+           <i class="ri-square-fill" style={{marginLeft: '3px', color:'red'}}></i> 0-{min}
+          </Typography>
+          <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
+           <i class="ri-square-fill" style={{marginLeft: '3px', color:'orange'}}></i> {min}-{mid}
+          </Typography>
+          <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
+           <i class="ri-square-fill" style={{marginLeft: '3px', color:'green'}}></i> {mid}-{max}
+          </Typography>
       </Box>
       <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
         {description}
@@ -291,7 +302,7 @@ useEffect(() => {
 
          
                 {/* Reach Score */}
-                <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 300, borderRadius: 4 }}>
+                <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 400, borderRadius: 4 }}>
                   {renderGaugeChart2(
                     reachScoreValue,
                     'Reach Score',
@@ -301,7 +312,7 @@ useEffect(() => {
                 </Paper>
 
                 {/* Speedometer */}
-                <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 350,borderRadius: 4  }}>
+                <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 400,borderRadius: 4  }}>
                   {renderGaugeChart2(
                     missionImpactValue,
                     'Mission-wide Impact Index',
@@ -312,13 +323,15 @@ useEffect(() => {
   
 
                 {/* Contribution Score */}
-                <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 350 , borderRadius: 4 }}>
+                <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 400 , borderRadius: 4 }}>
                   {renderGaugeChartContribution(
                     contributionScoreValue,
                     'Contribution Score',
                     `It is estimated that TheLight contributes an increase to someone's Personal, Community, and Spiritual Wellbeing by ${contributionScoreValue}%.`,
                     conColor,
-                    contributionScoreHigh
+                    contributionScoreHigh,
+                    contributionScoreLow,
+                    contributionScoreMid
                   )}
                 </Paper>
         
