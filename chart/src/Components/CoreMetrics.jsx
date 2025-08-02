@@ -193,12 +193,12 @@ const renderPatientChart = (thisMonthCount, lastMonthCount, avgMonthCount,maxCou
 
 
 
-const renderTheCheckInScore = (checkInScore) => {
+const renderTheCheckInScore = (checkInScore, checkInScoreSingle, checkInScoreDeeper, checkInScoreRepeat, checkInScoreOther) => {
   const score = checkInScore; // The score value
   const maxScore = 100; // The maximum score
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <Box sx={{width:"100%", display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
       <Box  sx={{ width: "100%",  height: 'auto'}}>
         {/* Title */}
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
@@ -209,17 +209,145 @@ const renderTheCheckInScore = (checkInScore) => {
         <Typography variant="h3" component="p" sx={{ fontSize: '2.3rem' , fontWeight: 'bold'}} mt={2}>
           {score}/{maxScore}
         </Typography>
-
-        {/* Subtitle */}
-        <Typography variant="body2" component="p" mt={2}>
-          Last 6 Month
-        </Typography>
-
+        
         {/* Progress Bar */}
         <Box sx={{ width: '100%', borderRadius: '9999px', overflow: 'hidden' }} mt={2} >
           <LinearProgress
             variant="determinate"
             value={score}
+            sx={{
+              height: 10,
+              borderRadius: '9999px',
+              backgroundColor: '#E0E7FF', // Light blue background for the progress bar
+              '& .MuiLinearProgress-bar': {
+                backgroundColor: '#3B82F6', // Darker blue for the filled part
+                borderRadius: '9999px',
+              },
+            }}
+          />
+        </Box>
+        {/* Subtitle */}
+        <Typography variant="body2" component="p" mt={2}>
+          Last 6 Month
+        </Typography>
+
+      </Box>
+
+      <Box  sx={{ width: "100%",  height: 'auto', display: 'flex', flexWrap:'wrap'}}>
+        {/* Title */}
+
+        <Box sx={{ width: '100%',overflow: 'hidden', display: 'flex', flexDirection: 'row', justifyContent: "space-between" , alignItems:"center" }} mt={2} >
+              <Typography variant="h6" sx={{  fontWeight: 'bold',fontSize: '14px' }}>
+                Single
+              </Typography>
+
+              {/* Score */}
+              <Typography variant="h3" component="p" sx={{ fontWeight: 'bold',fontSize: '16px'}}>
+                {checkInScoreSingle}/{maxScore}
+              </Typography>
+        </Box>
+        
+        {/* Progress Bar */}
+        <Box sx={{ width: '100%', borderRadius: '9999px', overflow: 'hidden' }} mt={2} >
+          <LinearProgress
+            variant="determinate"
+            value={checkInScoreSingle}
+            sx={{
+              height: 10,
+              borderRadius: '9999px',
+              backgroundColor: '#E0E7FF', // Light blue background for the progress bar
+              '& .MuiLinearProgress-bar': {
+                backgroundColor: '#3B82F6', // Darker blue for the filled part
+                borderRadius: '9999px',
+              },
+            }}
+          />
+        </Box>
+      </Box>
+
+      <Box  sx={{ width: "100%",  height: 'auto', display: 'flex', flexWrap:'wrap'}}>
+        {/* Title */}
+
+        <Box sx={{ width: '100%',overflow: 'hidden', display: 'flex', flexDirection: 'row', justifyContent: "space-between" , alignItems:"center" }} mt={2} >
+              <Typography variant="h6" sx={{  fontWeight: 'bold',fontSize: '14px' }}>
+                Deeper
+              </Typography>
+
+              {/* Score */}
+              <Typography variant="h3" component="p" sx={{ fontWeight: 'bold',fontSize: '16px'}}>
+                {checkInScoreDeeper}/{maxScore}
+              </Typography>
+        </Box>
+        
+        {/* Progress Bar */}
+        <Box sx={{ width: '100%', borderRadius: '9999px', overflow: 'hidden' }} mt={2} >
+          <LinearProgress
+            variant="determinate"
+            value={checkInScoreDeeper}
+            sx={{
+              height: 10,
+              borderRadius: '9999px',
+              backgroundColor: '#E0E7FF', // Light blue background for the progress bar
+              '& .MuiLinearProgress-bar': {
+                backgroundColor: '#3B82F6', // Darker blue for the filled part
+                borderRadius: '9999px',
+              },
+            }}
+          />
+        </Box>
+      </Box>
+
+      <Box  sx={{ width: "100%",  height: 'auto', display: 'flex', flexWrap:'wrap'}}>
+        {/* Title */}
+
+        <Box sx={{ width: '100%',overflow: 'hidden', display: 'flex', flexDirection: 'row', justifyContent: "space-between" , alignItems:"center" }} mt={2} >
+              <Typography variant="h6" sx={{  fontWeight: 'bold',fontSize: '14px' }}>
+                Repeat
+              </Typography>
+
+              {/* Score */}
+              <Typography variant="h3" component="p" sx={{ fontWeight: 'bold',fontSize: '16px'}}>
+                {checkInScoreRepeat}/{maxScore}
+              </Typography>
+        </Box>
+        
+        {/* Progress Bar */}
+        <Box sx={{ width: '100%', borderRadius: '9999px', overflow: 'hidden' }} mt={2} >
+          <LinearProgress
+            variant="determinate"
+            value={checkInScoreRepeat}
+            sx={{
+              height: 10,
+              borderRadius: '9999px',
+              backgroundColor: '#E0E7FF', // Light blue background for the progress bar
+              '& .MuiLinearProgress-bar': {
+                backgroundColor: '#3B82F6', // Darker blue for the filled part
+                borderRadius: '9999px',
+              },
+            }}
+          />
+        </Box>
+      </Box>
+
+      <Box  sx={{ width: "100%",  height: 'auto', display: 'flex', flexWrap:'wrap'}}>
+        {/* Title */}
+
+        <Box sx={{ width: '100%',overflow: 'hidden', display: 'flex', flexDirection: 'row', justifyContent: "space-between" , alignItems:"center" }} mt={2} >
+              <Typography variant="h6" sx={{  fontWeight: 'bold',fontSize: '14px' }}>
+                Other
+              </Typography>
+
+              {/* Score */}
+              <Typography variant="h3" component="p" sx={{ fontWeight: 'bold',fontSize: '16px'}}>
+                {checkInScoreOther}/{maxScore}
+              </Typography>
+        </Box>
+        
+        {/* Progress Bar */}
+        <Box sx={{ width: '100%', borderRadius: '9999px', overflow: 'hidden' }} mt={2} >
+          <LinearProgress
+            variant="determinate"
+            value={checkInScoreOther}
             sx={{
               height: 10,
               borderRadius: '9999px',
@@ -737,6 +865,10 @@ const CoreMetrics = () => {
 
 
   const [checkInScore, setcheckInScore] = useState(0);
+  const [checkInScoreSingle, setcheckInScoreSingle] = useState(0);
+  const [checkInScoreDeeper, setcheckInScoreDeeper] = useState(0);
+  const [checkInScoreRepeat, setcheckInScoreRepeat] = useState(0);
+  const [checkInScoreOther, setcheckInScoreOther] = useState(0);
   const [personalWellbeing, setpersonalWellbeing] = useState(0);
   const [communityWellbeing, setcommunityWellbeing] = useState(0);
   const [spiritualWellbeing, setspiritualWellbeing] = useState(0);
@@ -857,8 +989,13 @@ const CoreMetrics = () => {
             setCount45_54(count45_54);
             setCount55Plus(count55Plus);
 
-
+            console.log(score_data.layer_checkin_scores);
+            
             setcheckInScore(score_data.checkin_score);
+            setcheckInScoreSingle(score_data.layer_checkin_scores.Single);
+            setcheckInScoreDeeper(score_data.layer_checkin_scores.Deeper);
+            setcheckInScoreRepeat(score_data.layer_checkin_scores.Repeat);
+            setcheckInScoreOther(score_data.layer_checkin_scores.Other);
             setpersonalWellbeing(score_data.personal_wellbeing);
             setcommunityWellbeing(score_data.community_wellbeing);
             setspiritualWellbeing(score_data.spiritual_wellbeing);
@@ -1032,8 +1169,8 @@ const CoreMetrics = () => {
                                               {renderProfileChart(genderM, genderF, childrenYes, childrenNo, dependantsYes, dependantsNo, marriedYes, marriedNo)}
                                             </Paper>
                                             {/* Reach Score */}
-                                            <Paper sx={{ display: 'flex', justifyContent: 'center', p: 3, flex: 1, textAlign: 'center', minHeight: 100, borderRadius: 4 }}>
-                                                {renderTheCheckInScore(checkInScore)}
+                                            <Paper sx={{ display: 'flex', justifyContent: 'center',  p: {md:3, lg:3,xs:2}, flex: 1, textAlign: 'center', minHeight: 100, borderRadius: 4 }}>
+                                                {renderTheCheckInScore(checkInScore,checkInScoreSingle, checkInScoreDeeper, checkInScoreRepeat, checkInScoreOther)}
                                             </Paper>
                             
 
