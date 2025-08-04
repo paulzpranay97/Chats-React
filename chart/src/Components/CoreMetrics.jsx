@@ -1188,7 +1188,7 @@ const CoreMetrics = () => {
                         >
 
                                             {/* Reach Score */}
-                                            <Paper sx={{ p: {md:1, lg:3,xs:2}, flex: 1, textAlign: 'center', borderRadius: 4 }}>
+                                            <Paper sx={{ p: {md:1, lg:3, xs:2}, flex: 1, textAlign: 'center', borderRadius: 4 }}>
                                                 {renderPatientChart(thisMonthCount, lastMonthCount, avgCount,maxCount)}
                                             </Paper>
 

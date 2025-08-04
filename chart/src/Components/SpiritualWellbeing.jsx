@@ -404,7 +404,7 @@ const SpiritualWellbeing = () => {
                                     
                             </Box>
 
-                            {/* <Box
+                            <Box
                                     sx={{
                                         width: '100%',
                                         display: 'flex',
@@ -429,7 +429,7 @@ const SpiritualWellbeing = () => {
                                     {renderStatsDetails(personalWellbeingData?.summary.second_min.name.replace(/_/g, ' ').toUpperCase(),'LOWEST SCORES', personalWellbeingData?.summary.second_min.value, personalWellbeingData?.summary.second_min.trend)}
                                     </Paper>
                                     
-                            </Box> */}
+                            </Box>
 
                     </Box>
 
