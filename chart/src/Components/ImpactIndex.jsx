@@ -80,9 +80,11 @@ const renderGaugeChart2 = (value, title, description, color, max = 100) => {
         </Typography>
   
       </Box>
-      <Typography variant="body2" textAlign="center" sx={{fontSize:"1.2rem"}} mt={5}>
+      {/* <Typography variant="body2" textAlign="center" sx={{fontSize:"1.2rem"}} mt={5} >
         {description}
-      </Typography>
+      </Typography> */}
+
+      <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem" }} dangerouslySetInnerHTML={{ __html: description }} />
     </Box>
   );
 };
@@ -157,20 +159,22 @@ const renderGaugeChartContribution = (value, title, description, color, max, min
       <Box display={'flex'} flexDirection={'row'} gap={3}>
           <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
            {/* <i class="ri-square-fill" style={{marginLeft: '3px', color:'red'}}></i> 0-{min} */}
-           <i class="ri-square-fill" style={{marginLeft: '3px', color:'red'}}></i> Low
+           <i class="ri-square-fill" style={{marginLeft: '3px', color:'red'}}></i> Low 0-{min}
           </Typography>
           <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
            {/* <i class="ri-square-fill" style={{marginLeft: '3px', color:'orange'}}></i> {min}-{mid} */}
-           <i class="ri-square-fill" style={{marginLeft: '3px', color:'orange'}}></i> Mid
+           <i class="ri-square-fill" style={{marginLeft: '3px', color:'orange'}}></i> Mid {min}-{mid}
           </Typography>
           <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
            {/* <i class="ri-square-fill" style={{marginLeft: '3px', color:'green'}}></i> {mid}-{max} */}
-           <i class="ri-square-fill" style={{marginLeft: '3px', color:'green'}}></i> High
+           <i class="ri-square-fill" style={{marginLeft: '3px', color:'green'}}></i> High {mid}-{max}
           </Typography>
       </Box>
-      <Typography variant="body2" textAlign="center" sx={{fontSize:"1.2rem"}}>
+      {/* <Typography variant="body2" textAlign="center" sx={{fontSize:"1.2rem"}} dangerouslySetInnerHTML={{ __html: description }}>
         {description}
-      </Typography>
+      </Typography> */}
+
+      <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem" }} dangerouslySetInnerHTML={{ __html: description }} />
     </Box>
   );
 };
@@ -310,7 +314,8 @@ useEffect(() => {
                   {renderGaugeChart2(
                     reachScoreValue,
                     'Reach Score',
-                    `It is estimated that ${locationName} is reaching ${reachScoreValue}% of the Target Achievable Mission.`,
+                    `It is estimated that ${locationName} is reaching <span style="font-weight:bold">${reachScoreValue}%
+</span> of the Target Achievable Mission.`,
                     '#FF67BB'
                   )}
                 </Paper>
@@ -320,7 +325,9 @@ useEffect(() => {
                   {renderGaugeChart2(
                     missionImpactValue,
                     'Mission-wide Impact Index',
-                    `The Impact Index estimates that ${locationName} contributes a ${missionImpactValue}% uplift to the overall wellbeing of Melbourne, resulting in a score of ${contributionScore}. `,
+                    `The Impact Index estimates that ${locationName} contributes a <span style="font-weight:bold">${missionImpactValue}%
+</span> uplift to the overall wellbeing of Melbourne, resulting in a score of <span style="font-weight:bold">${contributionScore}
+</span>. `,
                     '#D766FF'
                   )}
                 </Paper>
@@ -331,7 +338,7 @@ useEffect(() => {
                   {renderGaugeChartContribution(
                     contributionScoreValue,
                     'Contribution Score',
-                    `People engaged with ${locationName} report that their Check-In Wellbeing scores — across Personal, Community, and Spiritual wellbeing — are ${contributionScoreValue}% of what they would be without the ministry’s support.`,
+                    `People engaged with ${locationName} report that their Check-In Wellbeing scores — across Personal, Community, and Spiritual wellbeing — are <span style="font-weight:bold">${contributionScoreValue}%</span> of what they would be without the ministry’s support.`,
                     conColor,
                     contributionScoreHigh,
                     contributionScoreLow,
