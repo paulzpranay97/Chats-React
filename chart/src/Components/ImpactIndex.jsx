@@ -156,13 +156,16 @@ const renderGaugeChartContribution = (value, title, description, color, max, min
       </Box>
       <Box display={'flex'} flexDirection={'row'} gap={3}>
           <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
-           <i class="ri-square-fill" style={{marginLeft: '3px', color:'red'}}></i> 0-{min}
+           {/* <i class="ri-square-fill" style={{marginLeft: '3px', color:'red'}}></i> 0-{min} */}
+           <i class="ri-square-fill" style={{marginLeft: '3px', color:'red'}}></i> Low
           </Typography>
           <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
-           <i class="ri-square-fill" style={{marginLeft: '3px', color:'orange'}}></i> {min}-{mid}
+           {/* <i class="ri-square-fill" style={{marginLeft: '3px', color:'orange'}}></i> {min}-{mid} */}
+           <i class="ri-square-fill" style={{marginLeft: '3px', color:'orange'}}></i> Mid
           </Typography>
           <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
-           <i class="ri-square-fill" style={{marginLeft: '3px', color:'green'}}></i> {mid}-{max}
+           {/* <i class="ri-square-fill" style={{marginLeft: '3px', color:'green'}}></i> {mid}-{max} */}
+           <i class="ri-square-fill" style={{marginLeft: '3px', color:'green'}}></i> High
           </Typography>
       </Box>
       <Typography variant="body2" textAlign="center" sx={{fontSize:"1.2rem"}}>
