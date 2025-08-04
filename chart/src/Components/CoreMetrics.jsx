@@ -661,7 +661,7 @@ const layerSegmentChart = (layerSingle, layerDeeper, layerRepeat, layerOther) =>
   return (
     <Box sx={{ display: 'flex', flexDirection:{ xs: 'column', md: 'row', lg: 'column' }, alignItems: 'left' }}>
       <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }} textAlign={{ xs: 'left', md: 'center', lg: 'left' }}> 
-        Layer Segments
+        Participant Segments
       </Typography>
 
       <Box sx={{ width: { xs: '100%', md: '50%', lg: '100%' },  display: 'flex', justifyContent: 'center',alignItems: 'center', height: 220 }}>
@@ -699,6 +699,79 @@ const layerSegmentChart = (layerSingle, layerDeeper, layerRepeat, layerOther) =>
   );
 };
 
+
+
+const layerSegmentChartStatic = (layerSingle, layerDeeper, layerRepeat) => {
+  const data = {
+    labels: ['Deeper', 'Repeat', 'Single'],
+    datasets: [
+      {
+        data: [layerDeeper, layerRepeat, layerSingle],
+        backgroundColor: ['#C7D2FE', '#E9D5FF', '#FBCFE8'],
+        borderWidth: 0,
+        cutout: '65%',
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (ctx) => `${ctx.label}: ${ctx.formattedValue}%`,
+        },
+      },
+    },
+  };
+
+  const legendItems = [
+    { color: '#C7D2FE', label: 'Active in the Deeper Programs' },
+    { color: '#E9D5FF', label: 'Repeat participant' },
+    { color: '#FBCFE8', label: 'First Response' }
+  ];
+
+  return (
+    <Box sx={{ display: 'flex', flexDirection:{ xs: 'column', md: 'row', lg: 'column' }, alignItems: 'left' }} mt={3}>
+      <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }} textAlign={{ xs: 'left', md: 'center', lg: 'left' }}> 
+        Participant Segments Static
+      </Typography>
+
+      <Box sx={{ width: { xs: '100%', md: '50%', lg: '100%' },  display: 'flex', justifyContent: 'center',alignItems: 'center', height: 220 }}>
+        <Doughnut data={data} options={options} />
+      </Box>
+
+      <Box sx={{ mt: 5, width:{ xs: '100%', md: '50%', lg: '100%' } }}>
+        {legendItems.map((item, index) => (
+          <Box
+            key={index}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1,
+              mb: 2,
+              padding: '5px 0px',
+
+              borderBottom: '1px solid #5454543d',
+            }}
+          >
+            <Box
+              sx={{
+                width: 12,
+                height: 12,
+                backgroundColor: item.color,
+                borderRadius: '4px',
+               
+              }}
+            />
+            <Typography variant="body2" >{item.label}</Typography>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+  );
+};
 
 const D3Gauge = ({ value, color, bgcolor }) => {
   const svgRef = useRef();
@@ -848,6 +921,10 @@ const CoreMetrics = () => {
   const [layerRepeat, setlayerRepeat] = useState(0);
   const [layerOther, setlayerOther] = useState(0);
 
+  const [layerSingleStatic, setlayerSingleStatic] = useState(0);
+  const [layerDeeperStatic, setlayerDeeperStatic] = useState(0);
+  const [layerRepeatStatic, setlayerRepeatStatic] = useState(0);
+
 
   const [thisMonthCount, setthisMonthCount] = useState(0);
   const [lastMonthCount, setlastMonthCount] = useState(0);
@@ -958,6 +1035,26 @@ const CoreMetrics = () => {
             setlayerRepeat(parseFloat(percentagelayersRepeat.toFixed(2)));
             setlayerOther(parseFloat(percentagelayersOther.toFixed(2)));
 
+
+            const layer_single_static = layer_segment_data.static_layer_counts.Single;
+            const layer_deeper_static = layer_segment_data.static_layer_counts.Deeper;
+            const layer_repeat_static = layer_segment_data.static_layer_counts.Repeat;
+
+           
+
+            const layers_total_static = layer_single_static + layer_deeper_static + layer_repeat_static;
+
+
+            
+
+            const percentagelayersSinglestatic = (layer_single_static / layers_total_static) * 100;
+            const percentagelayersDeeperstatic = (layer_deeper_static / layers_total_static) * 100;
+            const percentagelayersRepeatstatic = (layer_repeat_static / layers_total_static) * 100;
+
+            setlayerSingleStatic(parseFloat(percentagelayersSinglestatic.toFixed(2)));
+            setlayerDeeperStatic(parseFloat(percentagelayersDeeperstatic.toFixed(2)));
+            setlayerRepeatStatic(parseFloat(percentagelayersRepeatstatic.toFixed(2)));
+
             const thisMonth = participant_data.this_month_count;
             const lastMonth = participant_data.last_month_count;
             const avgMonth = participant_data.average_per_month;
@@ -988,8 +1085,6 @@ const CoreMetrics = () => {
             setCount35_44(count35_44);
             setCount45_54(count45_54);
             setCount55Plus(count55Plus);
-
-            console.log(score_data.layer_checkin_scores);
             
             setcheckInScore(score_data.checkin_score);
             setcheckInScoreSingle(score_data.layer_checkin_scores.Single);
@@ -1257,7 +1352,9 @@ const CoreMetrics = () => {
                                             {/* Reach Score */}
                                             <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 100, borderRadius: 4 }}>
                                                 {layerSegmentChart(layerSingle, layerDeeper, layerRepeat, layerOther)}
+                                                {layerSegmentChartStatic(layerSingleStatic, layerDeeperStatic, layerRepeatStatic)}
                                             </Paper>
+                                            
 
                 </Box>
 
