@@ -53,7 +53,7 @@ const renderGaugeChart2 = (value, title, description, color, max = 100) => {
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
-      <Typography variant="h6" component="h3" sx={{ fontSize: '2rem', fontWeight: 'bold', color: '#333' }}>
+      <Typography variant="h6" component="h3" sx={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#333' }}>
         {title}
       </Typography>
       <Box sx={{ position: 'relative', width: '100%', maxWidth: 300, height: 300 }}>
@@ -80,7 +80,7 @@ const renderGaugeChart2 = (value, title, description, color, max = 100) => {
         </Typography>
   
       </Box>
-      <Typography variant="body2" textAlign="center" sx={{fontSize:"1.3rem"}} mt={5}>
+      <Typography variant="body2" textAlign="center" sx={{fontSize:"1.2rem"}} mt={5}>
         {description}
       </Typography>
     </Box>
@@ -128,7 +128,7 @@ const renderGaugeChartContribution = (value, title, description, color, max, min
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
-      <Typography variant="h6" component="h3" sx={{ fontSize: '2rem' , fontWeight: 'bold', color: '#333' }}>
+      <Typography variant="h6" component="h3" sx={{ fontSize: '1.8rem' , fontWeight: 'bold', color: '#333' }}>
         {title}
       </Typography>
       <Box sx={{ position: 'relative', width: '100%', maxWidth: 300, height: 300 }}>
@@ -165,7 +165,7 @@ const renderGaugeChartContribution = (value, title, description, color, max, min
            <i class="ri-square-fill" style={{marginLeft: '3px', color:'green'}}></i> {mid}-{max}
           </Typography>
       </Box>
-      <Typography variant="body2" textAlign="center" sx={{fontSize:"1.3rem"}}>
+      <Typography variant="body2" textAlign="center" sx={{fontSize:"1.2rem"}}>
         {description}
       </Typography>
     </Box>
@@ -279,7 +279,7 @@ useEffect(() => {
         </Typography> */}
         <Typography
           variant="body1"
-          sx={{ fontStyle: 'italic', textAlign: { xs: 'center', md: 'center' }, width: "100%" , fontSize: '1.8rem' , fontWeight: "bold"}}
+          sx={{ fontStyle: 'italic', textAlign: { xs: 'center', md: 'center' }, width: "100%" , fontSize: '1.4rem' , fontWeight: "bold"}}
         >
           It is estimated that {locationName} contributes an increase to someone's Personal, Community,
           and Spiritual Wellbeing by {reachScoreValue}%.
