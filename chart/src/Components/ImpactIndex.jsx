@@ -53,10 +53,10 @@ const renderGaugeChart2 = (value, title, description, color, max = 100) => {
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
-      <Typography variant="h6" component="h3" sx={{ fontSize: fontsizecard , fontWeight: 'bold', color: '#333' }}>
+      <Typography variant="h6" component="h3" sx={{ fontSize: '2rem', fontWeight: 'bold', color: '#333' }}>
         {title}
       </Typography>
-      <Box sx={{ position: 'relative', width: '100%', maxWidth: 200, height: 200 }}>
+      <Box sx={{ position: 'relative', width: '100%', maxWidth: 300, height: 300 }}>
         <Doughnut data={data} options={options} />
         <Typography
           variant="h5"
@@ -71,8 +71,8 @@ const renderGaugeChart2 = (value, title, description, color, max = 100) => {
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'center', 
-            minWidth: '150px', 
-            minHeight: '150px',
+            minWidth: '200px', 
+            minHeight: '200px',
             boxSizing: 'border-box' 
           }}
         >
@@ -80,7 +80,7 @@ const renderGaugeChart2 = (value, title, description, color, max = 100) => {
         </Typography>
   
       </Box>
-      <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}} mt={5}>
+      <Typography variant="body2" textAlign="center" sx={{fontSize:"1.3rem"}} mt={5}>
         {description}
       </Typography>
     </Box>
@@ -89,8 +89,6 @@ const renderGaugeChart2 = (value, title, description, color, max = 100) => {
 
 
 const renderGaugeChartContribution = (value, title, description, color, max, min, mid) => {
-
-  console.log("Color", color);
   
 
     let fontsizecard = '';
@@ -130,10 +128,10 @@ const renderGaugeChartContribution = (value, title, description, color, max, min
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
-      <Typography variant="h6" component="h3" sx={{ fontSize: fontsizecard , fontWeight: 'bold', color: '#333' }}>
+      <Typography variant="h6" component="h3" sx={{ fontSize: '2rem' , fontWeight: 'bold', color: '#333' }}>
         {title}
       </Typography>
-      <Box sx={{ position: 'relative', width: '100%', maxWidth: 200, height: 200 }}>
+      <Box sx={{ position: 'relative', width: '100%', maxWidth: 300, height: 300 }}>
         <Doughnut data={data} options={options} />
         <Typography
           variant="h5"
@@ -148,8 +146,8 @@ const renderGaugeChartContribution = (value, title, description, color, max, min
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'center', 
-            minWidth: '150px', 
-            minHeight: '150px',
+            minWidth: '200px', 
+            minHeight: '200px',
             boxSizing: 'border-box' 
           }}
         >
@@ -167,7 +165,7 @@ const renderGaugeChartContribution = (value, title, description, color, max, min
            <i class="ri-square-fill" style={{marginLeft: '3px', color:'green'}}></i> {mid}-{max}
           </Typography>
       </Box>
-      <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
+      <Typography variant="body2" textAlign="center" sx={{fontSize:"1.3rem"}}>
         {description}
       </Typography>
     </Box>
@@ -185,6 +183,7 @@ const ImpactIndex = () => {
     const [contributionScoreHigh, setContributionScoreHigh] = useState(0);
 
     const [conColor, setConColor] = useState('');
+    const [locationName, setlocationName] = useState('');
 
     
     const location = useLocation();
@@ -207,6 +206,8 @@ useEffect(() => {
         const c_low = data.contribution_lower || 0;
         const c_mid = data.contribution_mid || 0;
         const c_high = data.contribution_upper_bound || 0;
+
+        setlocationName(data.ghl_location_name || 0)
 
         setContributionScoreMid(c_mid);
         setContributionScoreLow(c_low);
@@ -264,7 +265,7 @@ useEffect(() => {
       <Box
         sx={{
           display: 'flex',
-          height: '120px',
+          height: '40px',
           flexDirection: { xs: 'column', md: 'row' },
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -273,15 +274,15 @@ useEffect(() => {
           
         }}
       >
-        <Typography variant="h4" fontWeight="bold" textAlign={{ xs: 'center', md: 'left' }} sx={{fontSize: '3rem'}}>
+        {/* <Typography variant="h4" fontWeight="bold" textAlign={{ xs: 'center', md: 'left' }} sx={{fontSize: '3rem'}}>
           IMPACT INDEX
-        </Typography>
+        </Typography> */}
         <Typography
           variant="body1"
-          sx={{ fontStyle: 'italic', textAlign: { xs: 'center', md: 'center' }, maxWidth: 400 , fontSize: '1.4rem' , fontWeight: "bold"}}
+          sx={{ fontStyle: 'italic', textAlign: { xs: 'center', md: 'center' }, width: "100%" , fontSize: '1.8rem' , fontWeight: "bold"}}
         >
-          It is estimated that TheLight contributes an increase to someone's Personal, Community,
-          and Spiritual Wellbeing by 25%.
+          It is estimated that {locationName} contributes an increase to someone's Personal, Community,
+          and Spiritual Wellbeing by {reachScoreValue}%.
         </Typography>
       </Box>
 
@@ -306,7 +307,7 @@ useEffect(() => {
                   {renderGaugeChart2(
                     reachScoreValue,
                     'Reach Score',
-                    `It is estimated that TheLight is reaching ${reachScoreValue}% of the Target Achievable Mission.`,
+                    `It is estimated that ${locationName} is reaching ${reachScoreValue}% of the Target Achievable Mission.`,
                     '#FF67BB'
                   )}
                 </Paper>
@@ -316,7 +317,7 @@ useEffect(() => {
                   {renderGaugeChart2(
                     missionImpactValue,
                     'Mission-wide Impact Index',
-                    `It is estimated that TheLight’s missional impact contributes an additional ${missionImpactValue}% to all of Melbourne’s Wellbeing`,
+                    `The Impact Index estimates that ${locationName} contributes a ${missionImpactValue}% uplift to the overall wellbeing of Melbourne, resulting in a score of ${contributionScore}. `,
                     '#D766FF'
                   )}
                 </Paper>
@@ -327,11 +328,12 @@ useEffect(() => {
                   {renderGaugeChartContribution(
                     contributionScoreValue,
                     'Contribution Score',
-                    `It is estimated that TheLight contributes an increase to someone's Personal, Community, and Spiritual Wellbeing by ${contributionScoreValue}%.`,
+                    `People engaged with ${locationName} report that their Check-In Wellbeing scores — across Personal, Community, and Spiritual wellbeing — are ${contributionScoreValue}% of what they would be without the ministry’s support.`,
                     conColor,
                     contributionScoreHigh,
                     contributionScoreLow,
                     contributionScoreMid
+                    
                   )}
                 </Paper>
         
