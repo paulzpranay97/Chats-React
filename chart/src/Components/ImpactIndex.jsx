@@ -84,7 +84,7 @@ const renderGaugeChart2 = (value, title, description, color, max = 100) => {
         {description}
       </Typography> */}
 
-      <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem" }} dangerouslySetInnerHTML={{ __html: description }} />
+      <Typography mt={5} variant="body2" textAlign="center" sx={{ fontSize: "1.2rem" }} dangerouslySetInnerHTML={{ __html: description }} />
     </Box>
   );
 };
