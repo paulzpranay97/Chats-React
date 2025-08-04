@@ -289,7 +289,7 @@ useEffect(() => {
    
       {/* Charts Row 3 */}
       <Box
-        mt={{md:6, sm:20, xs: 15}}
+        mt={{md:6, sm:20, xs: 30}}
         sx={{
           display: 'flex',
           flexDirection: { xs: 'column',lg:'row', md: 'column', sm:'column' },
