@@ -146,15 +146,15 @@ useEffect(() => {
         const c_mid = data.contribution_mid || 0;
         const c_high = data.contribution_upper_bound || 0;
 
-        const wideScore = data.width_score || 0;
-        const w_low = data.reach_lower || 0;
-        const w_mid = data.reach_mid || 0;
-        const w_high = data.reach_upper || 0;
+        const reachScore = data.width_score || 0;
+        const r_low = data.reach_lower || 0;
+        const r_mid = data.reach_mid || 0;
+        const r_high = data.reach_upper || 0;
 
-        const reachScore = data.impact_index_b || 0;
-        const r_low = data.impact_lower || 0;
-        const r_mid = data.impact_mid || 0;
-        const r_high = data.impact_upper || 0;
+        const wideScore = data.impact_index_b || 0;
+        const w_low = data.impact_lower || 0;
+        const w_mid = data.impact_mid || 0;
+        const w_high = data.impact_upper || 0;
 
         setlocationName(data.ghl_location_name || 0)
 
