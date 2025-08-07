@@ -207,7 +207,8 @@ const renderTheCheckInScore = (checkInScore, checkInScoreSingle, checkInScoreDee
 
         {/* Score */}
         <Typography variant="h3" component="p" sx={{ fontSize: '2.3rem' , fontWeight: 'bold'}} mt={2}>
-          {score}/{maxScore}
+          {/* {score}/{maxScore} */}
+          {score}
         </Typography>
         
         {/* Progress Bar */}
@@ -238,12 +239,13 @@ const renderTheCheckInScore = (checkInScore, checkInScoreSingle, checkInScoreDee
 
         <Box sx={{ width: '100%',overflow: 'hidden', display: 'flex', flexDirection: 'row', justifyContent: "space-between" , alignItems:"center" }} mt={2} >
               <Typography variant="h6" sx={{  fontWeight: 'bold',fontSize: '14px' }}>
-                Single
+                Layer 1
               </Typography>
 
               {/* Score */}
               <Typography variant="h3" component="p" sx={{ fontWeight: 'bold',fontSize: '16px'}}>
-                {checkInScoreSingle}/{maxScore}
+                {/* {checkInScoreSingle}/{maxScore} */}
+                {checkInScoreSingle}
               </Typography>
         </Box>
         
@@ -270,12 +272,13 @@ const renderTheCheckInScore = (checkInScore, checkInScoreSingle, checkInScoreDee
 
         <Box sx={{ width: '100%',overflow: 'hidden', display: 'flex', flexDirection: 'row', justifyContent: "space-between" , alignItems:"center" }} mt={2} >
               <Typography variant="h6" sx={{  fontWeight: 'bold',fontSize: '14px' }}>
-                Deeper
+                Layer 2
               </Typography>
 
               {/* Score */}
               <Typography variant="h3" component="p" sx={{ fontWeight: 'bold',fontSize: '16px'}}>
-                {checkInScoreDeeper}/{maxScore}
+                {/* {checkInScoreDeeper}/{maxScore} */}
+                {checkInScoreDeeper}
               </Typography>
         </Box>
         
@@ -302,12 +305,13 @@ const renderTheCheckInScore = (checkInScore, checkInScoreSingle, checkInScoreDee
 
         <Box sx={{ width: '100%',overflow: 'hidden', display: 'flex', flexDirection: 'row', justifyContent: "space-between" , alignItems:"center" }} mt={2} >
               <Typography variant="h6" sx={{  fontWeight: 'bold',fontSize: '14px' }}>
-                Repeat
+                Layer 3
               </Typography>
 
               {/* Score */}
               <Typography variant="h3" component="p" sx={{ fontWeight: 'bold',fontSize: '16px'}}>
-                {checkInScoreRepeat}/{maxScore}
+                {/* {checkInScoreRepeat}/{maxScore} */}
+                {checkInScoreRepeat}
               </Typography>
         </Box>
         
@@ -339,7 +343,8 @@ const renderTheCheckInScore = (checkInScore, checkInScoreSingle, checkInScoreDee
 
               {/* Score */}
               <Typography variant="h3" component="p" sx={{ fontWeight: 'bold',fontSize: '16px'}}>
-                {checkInScoreOther}/{maxScore}
+                {/* {checkInScoreOther}/{maxScore} */}
+                {checkInScoreOther}
               </Typography>
         </Box>
         
@@ -628,7 +633,7 @@ const renderProfileChart = (genderM, genderF, childrenYes, childrenNo, dependant
 
 const layerSegmentChart = (layerSingle, layerDeeper, layerRepeat, layerOther) => {
   const data = {
-    labels: ['Deeper', 'Repeat', 'Single', 'Other'],
+    labels: ['Layer 2', 'Layer 3', 'Layer 1', 'Other'],
     datasets: [
       {
         data: [layerDeeper, layerRepeat, layerSingle, layerOther],
@@ -702,8 +707,10 @@ const layerSegmentChart = (layerSingle, layerDeeper, layerRepeat, layerOther) =>
 
 
 const layerSegmentChartStatic = (layerSingle, layerDeeper, layerRepeat) => {
+
+  
   const data = {
-    labels: ['Deeper', 'Repeat', 'Single'],
+    labels: ['Layer 2', 'Layer 3', 'Layer 1'],
     datasets: [
       {
         data: [layerDeeper, layerRepeat, layerSingle],
@@ -970,6 +977,9 @@ const CoreMetrics = () => {
         const score_data = await get_score_data();
         if (profile_data && layer_segment_data && participant_data && score_data) {
 
+          console.log(layer_segment_data);
+          
+
             const genderM = profile_data.gender.male;
             const genderF = profile_data.gender.female;
 
@@ -1036,9 +1046,12 @@ const CoreMetrics = () => {
             setlayerOther(parseFloat(percentagelayersOther.toFixed(2)));
 
 
-            const layer_single_static = layer_segment_data.static_layer_counts.Single;
-            const layer_deeper_static = layer_segment_data.static_layer_counts.Deeper;
-            const layer_repeat_static = layer_segment_data.static_layer_counts.Repeat;
+
+            
+            
+            const layer_single_static = layer_segment_data.static_layer_counts['layer 1'];
+            const layer_deeper_static = layer_segment_data.static_layer_counts['layer 2'];
+            const layer_repeat_static = layer_segment_data.static_layer_counts['layer 3'];
 
            
 
@@ -1087,9 +1100,9 @@ const CoreMetrics = () => {
             setCount55Plus(count55Plus);
             
             setcheckInScore(score_data.checkin_score);
-            setcheckInScoreSingle(score_data.layer_checkin_scores.Single);
-            setcheckInScoreDeeper(score_data.layer_checkin_scores.Deeper);
-            setcheckInScoreRepeat(score_data.layer_checkin_scores.Repeat);
+            setcheckInScoreSingle(score_data.layer_checkin_scores['layer 1']);
+            setcheckInScoreDeeper(score_data.layer_checkin_scores['layer 2']);
+            setcheckInScoreRepeat(score_data.layer_checkin_scores['layer 3']);
             setcheckInScoreOther(score_data.layer_checkin_scores.Other);
             setpersonalWellbeing(score_data.personal_wellbeing);
             setcommunityWellbeing(score_data.community_wellbeing);

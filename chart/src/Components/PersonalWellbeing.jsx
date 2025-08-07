@@ -320,20 +320,20 @@ const PersonalWellbeing = () => {
             />
 
             <Button
-          variant="contained" // Gives it a filled background
-          color="primary"     // Uses your theme's primary color
-          onClick={handleApply}
-          sx={{
-            // Optional: add some top margin if it's in column layout on small screens
-            mt: { xs: 2, md: 0 },
-            // Optional: Adjust width if needed
-            width: { xs: '100%', md: 'auto', lg: '20%' },
-            height: 55
-            
-          }}
-        >
-          Apply
-        </Button>
+              variant="contained" // Gives it a filled background
+              color="primary"     // Uses your theme's primary color
+              onClick={handleApply}
+              sx={{
+                // Optional: add some top margin if it's in column layout on small screens
+                mt: { xs: 2, md: 0 },
+                // Optional: Adjust width if needed
+                width: { xs: '100%', md: 'auto', lg: '20%' },
+                height: 55
+                
+              }}
+            >
+              Apply
+            </Button>
           </Box>
 
           {/* The Apply Button */}

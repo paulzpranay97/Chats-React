@@ -10,16 +10,21 @@ import { Box, Paper, Typography, Grid } from '@mui/material';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 
+const renderGaugeChart2 = (value, title, description, color, max = 100) => {
+
+    let fontsizecard = '';
+    let piebgcolor = "" ;
 
 
-const renderGaugeChartContribution = (value, title,  color, max, min, mid) => {
-  
+    if( title === 'Reach Score' ){
+      fontsizecard = '1.25rem';
+      piebgcolor = '#0000001a';
 
-    let fontsizecard = '1.25rem';
-    let piebgcolor = "#0000001a" ;
+    }else if( title === 'Mission-wide Impact Index' ){
+      fontsizecard = '1.25rem';
+      piebgcolor = '#0000001a';
 
-
-    
+    }
 
 
   const data = {
@@ -48,10 +53,87 @@ const renderGaugeChartContribution = (value, title,  color, max, min, mid) => {
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
-      <Typography variant="h6" component="h3" sx={{ fontSize: '1.6rem' , fontWeight: 'bold', color: '#333' }}>
+      <Typography variant="h6" component="h3" sx={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#333' }}>
         {title}
       </Typography>
-      <Box sx={{ position: 'relative', width: '100%',maxWidth: 300, height: 300 }}>
+      <Box sx={{ position: 'relative', width: '100%', maxWidth: 300, height: 300 }}>
+        <Doughnut data={data} options={options} />
+        <Typography
+          variant="h5"
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            fontWeight: 'bold',
+            backgroundColor: color,
+            borderRadius: "50%", 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            minWidth: '200px', 
+            minHeight: '200px',
+            boxSizing: 'border-box' 
+          }}
+        >
+          {value}
+        </Typography>
+  
+      </Box>
+      {/* <Typography variant="body2" textAlign="center" sx={{fontSize:"1.2rem"}} mt={5} >
+        {description}
+      </Typography> */}
+
+      <Typography mt={5} variant="body2" textAlign="center" sx={{ fontSize: "1.2rem" }} dangerouslySetInnerHTML={{ __html: description }} />
+    </Box>
+  );
+};
+
+
+const renderGaugeChartContribution = (value, title, description, color, max, min, mid) => {
+  
+
+    let fontsizecard = '';
+    let piebgcolor = "" ;
+
+
+    if( title === 'Contribution Score' ){
+      fontsizecard = '1.25rem';
+      piebgcolor = '#0000001a';
+
+    }
+
+
+  const data = {
+    datasets: [
+      {
+        data: [value, max - value],
+        backgroundColor: [color, piebgcolor],
+        borderColor: [color, piebgcolor],
+        borderWidth: 0,
+        borderRadius: 0,
+      },
+    ],
+  };
+
+  const options = {
+    rotation: 0,
+    circumference: 360,
+    cutout: '85%',
+    plugins: {
+      tooltip: { enabled: true },
+      legend: { display: false }, 
+    },
+    maintainAspectRatio: false,
+    responsive: true,
+  };
+
+  return (
+    <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+      <Typography variant="h6" component="h3" sx={{ fontSize: '1.8rem' , fontWeight: 'bold', color: '#333' }}>
+        {title}
+      </Typography>
+      <Box sx={{ position: 'relative', width: '100%', maxWidth: 300, height: 300 }}>
         <Doughnut data={data} options={options} />
         <Typography
           variant="h5"
@@ -77,48 +159,37 @@ const renderGaugeChartContribution = (value, title,  color, max, min, mid) => {
       <Box display={'flex'} flexDirection={'row'} gap={3}>
           <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
            {/* <i class="ri-square-fill" style={{marginLeft: '3px', color:'red'}}></i> 0-{min} */}
-           <i className="ri-square-fill" style={{marginLeft: '3px', color:'red'}}></i> Low 0-{min}
+           <i className="ri-square-fill" sx={{marginLeft: '3px', color:'red'}}></i> Low 0-{min}
           </Typography>
           <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
            {/* <i className="ri-square-fill" sx={{marginLeft: '3px', color:'orange'}}></i> {min}-{mid} */}
-           <i className="ri-square-fill" style={{marginLeft: '3px', color:'orange'}}></i> Mid {min}-{mid}
+           <i className="ri-square-fill" sx={{marginLeft: '3px', color:'orange'}}></i> Mid {min}-{mid}
           </Typography>
           <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
            {/* <i className="ri-square-fill" sx={{marginLeft: '3px', color:'green'}}></i> {mid}-{max} */}
-           <i className="ri-square-fill" style={{marginLeft: '3px', color:'green'}}></i> High {mid}-{max}
+           <i className="ri-square-fill" sx={{marginLeft: '3px', color:'green'}}></i> High {mid}-{max}
           </Typography>
       </Box>
+      {/* <Typography variant="body2" textAlign="center" sx={{fontSize:"1.2rem"}} dangerouslySetInnerHTML={{ __html: description }}>
+        {description}
+      </Typography> */}
+
+      <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem" }} dangerouslySetInnerHTML={{ __html: description }} />
     </Box>
   );
 };
 
 const ImpactIndex = () => {
 
-   
-    const [reachScore, setReachScore] = useState(0);
-    const [wideScore, setWideScore] = useState(0);
+    const [widthScore, setWidthScore] = useState(0);
     const [contributionScore, setContributionScore] = useState(0);
-    
-
-    const [reachScoreMid, setReachScoreMid] = useState(0);
-    const [reachScoreLow, setReachScoreLow] = useState(0);
-    const [reachScoreHigh, setReachScoreHigh] = useState(0);
-
-    const [wideScoreMid, setWideScoreMid] = useState(0);
-    const [wideScoreLow, setWideScoreLow] = useState(0);
-    const [wideScoreHigh, setWideScoreHigh] = useState(0);
+    const [impactIndex, setImpactIndex] = useState(0);
 
     const [contributionScoreMid, setContributionScoreMid] = useState(0);
     const [contributionScoreLow, setContributionScoreLow] = useState(0);
     const [contributionScoreHigh, setContributionScoreHigh] = useState(0);
 
-  
-
     const [conColor, setConColor] = useState('');
-    const [reachColor, setReachColor] = useState('');
-    const [wideColor, setWideColor] = useState('');
-
-    
     const [locationName, setlocationName] = useState('');
 
     
@@ -126,11 +197,9 @@ const ImpactIndex = () => {
     const params = new URLSearchParams(location.search);
     const locationId = params.get('location_id') || 'V7jzbIYZWXwQXczlF32Z';
 
-    
-    const reachScoreValue = reachScore;
-    const wideScoreValue = wideScore;
+    const reachScoreValue = impactIndex;
     const contributionScoreValue = contributionScore;
-   
+    const missionImpactValue = widthScore;
 
 
     
@@ -139,22 +208,14 @@ useEffect(() => {
     const fetchData = async () => {
       const data = await get_impact_index_data();
       if (data) {
+
+        console.log(data);
         
 
-        const contributionScore = data.contribution_score_a || 0;
+        const contributionScore = data.contribution_score || 0;
         const c_low = data.contribution_lower || 0;
         const c_mid = data.contribution_mid || 0;
         const c_high = data.contribution_upper_bound || 0;
-
-        const wideScore = data.width_score || 0;
-        const w_low = data.reach_lower || 0;
-        const w_mid = data.reach_mid || 0;
-        const w_high = data.reach_upper || 0;
-
-        const reachScore = data.impact_index_b || 0;
-        const r_low = data.impact_lower || 0;
-        const r_mid = data.impact_mid || 0;
-        const r_high = data.impact_upper || 0;
 
         setlocationName(data.ghl_location_name || 0)
 
@@ -162,17 +223,8 @@ useEffect(() => {
         setContributionScoreLow(c_low);
         setContributionScoreHigh(c_high);
         setContributionScore(contributionScore);
-
-        setReachScoreMid(r_mid);
-        setReachScoreLow(r_low);
-        setReachScoreHigh(r_high);
-        setReachScore(reachScore);
-
-
-        setWideScoreMid(w_mid);
-        setWideScoreLow(w_low);
-        setWideScoreHigh(w_high);
-        setWideScore(wideScore);
+        setWidthScore(data.width_score || 0);
+        setImpactIndex(data.impact_index || 0);
 
         if (contributionScore < c_low) {
           setConColor('red');
@@ -183,29 +235,6 @@ useEffect(() => {
         } else {
           // Handle case where score is greater than high bound
           setConColor('blue'); // or some other color
-        }
-
-
-        if (reachScore < r_low) {
-          setReachColor('red');
-        } else if (reachScore >= r_low && reachScore < r_mid) {
-          setReachColor('orange');
-        } else if (reachScore >= r_mid && reachScore <= r_high) {
-          setReachColor('green');
-        } else {
-          // Handle case where score is greater than high bound
-          setReachColor('blue'); // or some other color
-        }
-
-        if (wideScore < w_low) {
-          setWideColor('red');
-        } else if (wideScore >= w_low && wideScore < w_mid) {
-          setWideColor('orange');
-        } else if (wideScore >= w_mid && wideScore <= w_high) {
-          setWideColor('green');
-        } else {
-          // Handle case where score is greater than high bound
-          setWideColor('blue'); // or some other color
         }
       }
     };
@@ -249,71 +278,76 @@ useEffect(() => {
         sx={{
           display: 'flex',
           flexDirection: { xs: 'column',lg:'row', md: 'column', sm:'column' },
-          justifyContent: 'space-between',
+          justifyContent: 'center',
           alignItems: 'stretch',
           gap: 3,
+
+          
         }}
       >
 
+         
                 {/* Reach Score */}
-                <Box sx={{ flex: 1 }} display={'flex'} flexDirection={'column'} gap={2}>
+
+                <Box>
                   <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 400, borderRadius: 4 }}>
+                    {renderGaugeChart2(
+                      reachScoreValue,
+                      'Reach Score',
+                      `It is estimated that ${locationName} is reaching <span style="font-weight:bold">${reachScoreValue}%
+  </span> of the Target Achievable Mission.`,
+                      '#FF67BB'
+                    )}
+                </Paper>
 
-                    {renderGaugeChartContribution(
-                        reachScoreValue,
-                        'Reach Score',
-                        reachColor,
-                        reachScoreHigh,
-                        reachScoreLow,
-                        reachScoreMid
-                      )}
-                   
-                  </Paper>
+                <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 100, borderRadius: 4 }}>
+                    <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem" }}>
+                    It is estimated that {locationName} is reaching{" "}
+                    <span style={{ fontWeight: "bold" }}>
+                      {reachScoreValue}%
+                    </span>{" "}
+                    of the Target Achievable Mission.
+                  </Typography>
+                </Paper>
 
-                  <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4 }} mt={2}>
-                      <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem" }}>
-                      It is estimated that {locationName} is reaching{" "}
-                      <span style={{ fontWeight: "bold" }}>
-                        {reachScoreValue}%
-                      </span>{" "}
-                      of the Target Achievable Mission.
-                    </Typography>
-                  </Paper>
+                </Box>
+                
 
-                </Box >
-                {/* Wide Score */}
-                <Box sx={{ flex: 1 }} display={'flex'} flexDirection={'column'} gap={2}>
+                <Box>
                       {/* Speedometer */}
                       <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 400,borderRadius: 4  }}>
-
-                      {renderGaugeChartContribution(
-                        wideScoreValue,
-                        'Mission-wide Impact Index',
-                        wideColor,
-                        wideScoreHigh,
-                        wideScoreLow,
-                        wideScoreMid
-                        
-                      )}
-                        
+                        {renderGaugeChart2(
+                          missionImpactValue,
+                          'Mission-wide Impact Index',
+                          `The Impact Index estimates that ${locationName} contributes a <span style="font-weight:bold">${missionImpactValue}%
+      </span> uplift to the overall wellbeing of Melbourne, resulting in a score of <span style="font-weight:bold">${contributionScore}
+      </span>. `,
+                          '#D766FF'
+                        )}
                       </Paper>
 
-                      <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4 }} mt={2}>
+                      <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 100, borderRadius: 4 }}>
                           <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem" }}>
                             The Impact Index estimates that {locationName} contributes a{" "}
-                            <span style={{ fontWeight: "bold" }}>{wideScoreValue}%</span>{" "}
+                            <span style={{ fontWeight: "bold" }}>{missionImpactValue}%</span>{" "}
                             uplift to the overall wellbeing of Melbourne, resulting in a score of{" "}
                             <span style={{ fontWeight: "bold" }}>{contributionScore}</span>.
                           </Typography>
                       </Paper>
 
                 </Box>
+                
+  
+
                 {/* Contribution Score */}
-                <Box sx={{ flex: 1 }} sx={{ flex: 1 }} display={'flex'} flexDirection={'column'} gap={2}>
+
+                <Box>
+
                      <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 400 , borderRadius: 4 }}>
                       {renderGaugeChartContribution(
                         contributionScoreValue,
                         'Contribution Score',
+                        `People engaged with ${locationName} report that their Check-In Wellbeing scores — across Personal, Community, and Spiritual wellbeing — are <span style="font-weight:bold">${contributionScoreValue}%</span> of what they would be without the ministry’s support.`,
                         conColor,
                         contributionScoreHigh,
                         contributionScoreLow,
@@ -321,7 +355,8 @@ useEffect(() => {
                         
                       )}
                     </Paper>
-                    <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4 }}>
+
+                    <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 100, borderRadius: 4 }}>
                            <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem" }}>
                             People engaged with {locationName} report that their Check-In Wellbeing scores — across Personal, Community, and Spiritual wellbeing — are{' '}
                             <span style={{ fontWeight: 'bold' }}>{contributionScoreValue}%</span> of what they would be without the ministry’s support.
@@ -329,6 +364,7 @@ useEffect(() => {
                     </Paper>
                 </Box>
                
+        
          
       </Box>
     </Box>
