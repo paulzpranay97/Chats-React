@@ -245,7 +245,7 @@ useEffect(() => {
    
       {/* Charts Row 3 */}
       <Box
-        mt={{md:3, sm:20, xs: 30}}
+        mt={{md:3, sm:3, xs: 3}}
         sx={{
           display: 'flex',
           flexDirection: { xs: 'column',lg:'row', md: 'column', sm:'column' },
@@ -256,7 +256,7 @@ useEffect(() => {
       >
 
                 {/* Reach Score */}
-                <Box sx={{ flex: 1 }} display={'flex'} flexDirection={'column'} gap={2}>
+                <Box sx={{ flex: 1 }} display={'flex'} flexDirection={'column'} gap={1}>
                   <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 400, borderRadius: 4 }}>
 
                     {renderGaugeChartContribution(
@@ -270,8 +270,8 @@ useEffect(() => {
                    
                   </Paper>
 
-                  <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4 }} mt={2}>
-                      <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem" }}>
+                  <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center" }} mt={2}>
+                      <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem", fontWeight:"bold" }}>
                       It is estimated that {locationName} is reaching{" "}
                       <span style={{ fontWeight: "bold" }}>
                         {reachScoreValue}%
@@ -282,7 +282,7 @@ useEffect(() => {
 
                 </Box >
                 {/* Wide Score */}
-                <Box sx={{ flex: 1 }} display={'flex'} flexDirection={'column'} gap={2}>
+                <Box sx={{ flex: 1 }} display={'flex'} flexDirection={'column'} gap={1}>
                       {/* Speedometer */}
                       <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 400,borderRadius: 4  }}>
 
@@ -298,8 +298,8 @@ useEffect(() => {
                         
                       </Paper>
 
-                      <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4 }} mt={2}>
-                          <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem" }}>
+                      <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center" }} mt={2}>
+                          <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem", fontWeight:"bold" }}>
                             The Impact Index estimates that {locationName} contributes a{" "}
                             <span style={{ fontWeight: "bold" }}>{wideScoreValue}%</span>{" "}
                             uplift to the overall wellbeing of Melbourne, resulting in a score of{" "}
@@ -309,7 +309,7 @@ useEffect(() => {
 
                 </Box>
                 {/* Contribution Score */}
-                <Box sx={{ flex: 1 }} sx={{ flex: 1 }} display={'flex'} flexDirection={'column'} gap={2}>
+                <Box sx={{ flex: 1 }}  display={'flex'} flexDirection={'column'} gap={1}>
                      <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 400 , borderRadius: 4 }}>
                       {renderGaugeChartContribution(
                         contributionScoreValue,
@@ -321,9 +321,9 @@ useEffect(() => {
                         
                       )}
                     </Paper>
-                    <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4 }}>
-                           <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem" }}>
-                            People engaged with {locationName} report that their Check-In Wellbeing scores — across Personal, Community, and Spiritual wellbeing — are{' '}
+                    <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center"}}>
+                           <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem", fontWeight:"bold" }}>
+                            People engaged with {locationName} report that their Check-In Wellbeing scores - across Personal, Community, and Spiritual wellbeing - are{' '}
                             <span style={{ fontWeight: 'bold' }}>{contributionScoreValue}%</span> of what they would be without the ministry’s support.
                           </Typography>
                     </Paper>

@@ -102,6 +102,25 @@ const renderGaugeChart = (value, title, color,trend) => {
       icon = <><i class="ri-subtract-line" style={{fontSize: '37px', color: '#fcfcfcff', backgroundColor:'#FF8440', borderRadius: '5px'}}></i></>;
     }
 
+     let main_title = '';
+
+       if (title === "INTELLECTUAL") {
+          main_title = "LEARNING";
+        } else if (title === "SAFETY") {
+          main_title = "ATMOSPHERE";
+        } else if (title === "CLOSE RELATIONSHIPS") {
+          main_title = "RELATIONSHIPS";
+        } else if (title === "RECREATIONAL") {
+          main_title = "FUN";
+        } else if (title === "DISCIPLINES") {
+          main_title = "CHRISTIAN PRACTICES";
+        } else if (title === "COMMUNITY") {
+          main_title = "CHRISTIAN COMMUNITY";
+        } else {
+          main_title = title;
+        }
+
+
 
 
   const data = {
@@ -161,7 +180,7 @@ const renderGaugeChart = (value, title, color,trend) => {
             color: color,
         }}
         >
-        {title}
+        {main_title}
         </Typography>
        
     </Box>
@@ -174,8 +193,8 @@ const renderGaugeChart = (value, title, color,trend) => {
 
 const CommunityWellbeing = () => {
 
-  const [startDate, setStartDate] = useState(moment().subtract(10, 'days')); 
-  const [endDate, setEndDate] = useState(moment()); 
+  const [startDate, setStartDate] = useState(moment().subtract(1, 'month').startOf('month'));
+  const [endDate, setEndDate] = useState(moment().subtract(1, 'month').endOf('month'));
   const [personalWellbeingData, setPersonalWellbeingData] = useState(null); 
   
     const location = useLocation();
@@ -285,57 +304,47 @@ const CommunityWellbeing = () => {
       >
 
         <LocalizationProvider dateAdapter={AdapterMoment}>
-            <Box
-              sx={{
-                width: {lg:'50%', md:'80%', xs:'100%'},
-                display: 'flex',
-                height: 'auto',
-                flexDirection: { xs: 'column', md: 'row' }, // Changed to 'column' for xs for better layout on small screens
-                justifyContent: 'center',
-                alignItems: 'center',
-                mb: 2,
-                gap: 2, // Controls the space between the date pickers
-              }}
-            >
+          <Box
+            sx={{
+              width: { lg: '50%', md: '80%', xs: '100%' },
+              display: 'flex',
+              flexDirection: { xs: 'column', md: 'row' },
+              justifyContent: 'center',
+              alignItems: 'center',
+              mb: 2,
+              gap: 2,
+            }}
+          >
             <DatePicker
-              sx={{width: {lg:'50%', md:'100%', xs:'100%'},}}
-              label="Start Date"
+              views={['year', 'month']}
+              label="Select Month"
+              minDate={moment().subtract(5, 'years')}
+              maxDate={moment()}
               value={startDate}
               onChange={(newValue) => {
-                setStartDate(newValue);
+                if (newValue) {
+                  const start = moment(newValue).startOf('month');
+                  const end = moment(newValue).endOf('month');
+                  setStartDate(start);
+                  setEndDate(end);
+                }
               }}
-              renderInput={(params) => <TextField {...params} />}
+              renderInput={(params) => <TextField {...params} sx={{ width: '100%' }} />}
             />
-
-            <DatePicker
-              sx={{width: {lg:'50%', md:'100%', xs:'100%'},}}
-              label="End Date"
-              value={endDate}
-              onChange={(newValue) => {
-                setEndDate(newValue);
-              }}
-              renderInput={(params) => <TextField {...params} />}
-            />
-
+  
             <Button
-          variant="contained" // Gives it a filled background
-          color="primary"     // Uses your theme's primary color
-          onClick={handleApply}
-          sx={{
-            // Optional: add some top margin if it's in column layout on small screens
-            mt: { xs: 2, md: 0 },
-            // Optional: Adjust width if needed
-            width: { xs: '100%', md: 'auto', lg: '20%' },
-            height: 55
-            
-          }}
-        >
-          Apply
-        </Button>
+              variant="contained"
+              color="primary"
+              onClick={handleApply}
+              sx={{
+                mt: { xs: 2, md: 0 },
+                width: { xs: '100%', md: 'auto', lg: '20%' },
+                height: 55,
+              }}
+            >
+              Apply
+            </Button>
           </Box>
-
-          {/* The Apply Button */}
-        
         </LocalizationProvider>
       
       </Box>

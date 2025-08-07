@@ -657,10 +657,10 @@ const layerSegmentChart = (layerSingle, layerDeeper, layerRepeat, layerOther) =>
   };
 
   const legendItems = [
-    { color: '#C7D2FE', label: 'Active in the Deeper Programs' },
-    { color: '#E9D5FF', label: 'Repeat participant' },
-    { color: '#FBCFE8', label: 'First Response' },
-    { color: '#F0ABFC', label: 'Other' },
+    { color: '#E9D5FF', label: 'Active in the Deeper Programs', val: layerDeeper },
+    { color: '#C7D2FE', label: 'Repeat participant', val: layerRepeat },
+    { color: '#FBCFE8', label: 'First Response', val: layerSingle },
+    { color: '#F0ABFC', label: 'Other', val: layerOther },
   ];
 
   return (
@@ -696,7 +696,10 @@ const layerSegmentChart = (layerSingle, layerDeeper, layerRepeat, layerOther) =>
                
               }}
             />
-            <Typography variant="body2" >{item.label}</Typography>
+             <Box sx={{flex: 6}} display={'flex'} justifyContent={'space-between'} >
+                <Typography variant="body2" >{item.label}</Typography>
+                <Typography variant="body2" >{item.val}%</Typography>
+              </Box>
           </Box>
         ))}
       </Box>
@@ -734,15 +737,15 @@ const layerSegmentChartStatic = (layerSingle, layerDeeper, layerRepeat) => {
   };
 
   const legendItems = [
-    { color: '#C7D2FE', label: 'Active in the Deeper Programs' },
-    { color: '#E9D5FF', label: 'Repeat participant' },
-    { color: '#FBCFE8', label: 'First Response' }
+    { color: '#FBCFE8', label: 'Layer 1', val: layerSingle },
+    { color: '#E9D5FF', label: 'Layer 2', val: layerDeeper },
+    { color: '#C7D2FE', label: 'Layer 3', val: layerRepeat }
   ];
 
   return (
     <Box sx={{ display: 'flex', flexDirection:{ xs: 'column', md: 'row', lg: 'column' }, alignItems: 'left' }} mt={3}>
       <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }} textAlign={{ xs: 'left', md: 'center', lg: 'left' }}> 
-        Participant Segments Static
+        Layer Segments
       </Typography>
 
       <Box sx={{ width: { xs: '100%', md: '50%', lg: '100%' },  display: 'flex', justifyContent: 'center',alignItems: 'center', height: 220 }}>
@@ -765,6 +768,7 @@ const layerSegmentChartStatic = (layerSingle, layerDeeper, layerRepeat) => {
           >
             <Box
               sx={{
+                flex: 0.3,
                 width: 12,
                 height: 12,
                 backgroundColor: item.color,
@@ -772,7 +776,11 @@ const layerSegmentChartStatic = (layerSingle, layerDeeper, layerRepeat) => {
                
               }}
             />
-            <Typography variant="body2" >{item.label}</Typography>
+
+            <Box sx={{flex: 6}} display={'flex'} justifyContent={'space-between'} >
+              <Typography variant="body2" >{item.label}</Typography>
+              <Typography variant="body2" >{item.val}%</Typography>
+            </Box>
           </Box>
         ))}
       </Box>
@@ -976,8 +984,6 @@ const CoreMetrics = () => {
         const participant_data = await get_participant_data();
         const score_data = await get_score_data();
         if (profile_data && layer_segment_data && participant_data && score_data) {
-
-          console.log(layer_segment_data);
           
 
             const genderM = profile_data.gender.male;

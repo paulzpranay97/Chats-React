@@ -90,93 +90,117 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
   };
 
 
-// Custom SVG-based Speedometer chart
-const renderGaugeChart = (value, title, color,trend) => {
-  
-    let icon;
-    if(trend === "up"){
-      icon = <><i class="ri-arrow-up-circle-fill" style={{fontSize: '60px', color: '#2FDD92'}}></i></>;
-    }else if(trend === "down"){
-      icon = <><i class="ri-arrow-down-circle-fill" style={{fontSize: '60px', color: '#D23737'}}></i></>;
-      
-    }else if(trend === "same"){
-      icon = <><i class="ri-subtract-line" style={{fontSize: '37px', color: '#fcfcfcff', backgroundColor:'#FF8440', borderRadius: '5px'}}></i></>;
-    }
+  // Custom SVG-based Speedometer chart
+  const renderGaugeChart = (value, title, color,trend) => {
+
+    
+    
+      let icon;
+      if(trend === "up"){
+        icon = <><i class="ri-arrow-up-circle-fill" style={{fontSize: '60px', color: '#2FDD92'}}></i></>;
+      }else if(trend === "down"){
+        icon = <><i class="ri-arrow-down-circle-fill" style={{fontSize: '60px', color: '#D23737'}}></i></>;
+        
+      }else if(trend === "same"){
+        icon = <><i class="ri-subtract-line" style={{fontSize: '37px', color: '#fcfcfcff', backgroundColor:'#FF8440', borderRadius: '5px'}}></i></>;
+      }
+
+      let main_title = '';
+
+       if (title === "INTELLECTUAL") {
+          main_title = "LEARNING";
+        } else if (title === "SAFETY") {
+          main_title = "ATMOSPHERE";
+        } else if (title === "CLOSE RELATIONSHIPS") {
+          main_title = "RELATIONSHIPS";
+        } else if (title === "RECREATIONAL") {
+          main_title = "FUN";
+        } else if (title === "DISCIPLINES") {
+          main_title = "CHRISTIAN PRACTICES";
+        } else if (title === "COMMUNITY") {
+          main_title = "CHRISTIAN COMMUNITY";
+        } else {
+          main_title = title;
+        }
 
 
-
-  const data = {
-    datasets: [
-      {
-        data: [value, 100 - value],
-        backgroundColor: [color, '#E5EBFF'],
-        borderColor: [color, '#E5EBFF'],
-        borderWidth: 0,
-        borderRadius: 0,
-      },
-    ],
-  };
-
-  const options = {
-    rotation: 270,
-    circumference: 180,
-    cutout: '60%',
-    plugins: {
-      tooltip: { enabled: true },
-      legend: { display: false },
-    },
-    maintainAspectRatio: false,
-    responsive: true,
-  };
-
-  return (
-    <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
-      
-      
-
-      <Box sx={{ position: 'relative', width: '100%', maxWidth: 200, height: 200 }}>
-        <Doughnut data={data} options={options} />
-        <Typography
-        variant="h5"
-        sx={{
-            position: 'absolute',
-            bottom: 25,
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            fontSize: '1.6rem',
-            fontWeight: 'bold',
-           
-        }}
-        >
-        {value}%
-        </Typography>
-        <Typography
-        variant="h5"
-        sx={{
-            position: 'absolute',
-            bottom: 0,
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            fontSize: '1rem',
-             minWidth: '200px',
-            color: color,
-        }}
-        >
-        {title}
-        </Typography>
        
-    </Box>
-      <Box sx={{ width: 'px', height: '20px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        {icon}
+            
+
+
+
+    const data = {
+      datasets: [
+        {
+          data: [value, 100 - value],
+          backgroundColor: [color, '#E5EBFF'],
+          borderColor: [color, '#E5EBFF'],
+          borderWidth: 0,
+          borderRadius: 0,
+        },
+      ],
+    };
+
+    const options = {
+      rotation: 270,
+      circumference: 180,
+      cutout: '60%',
+      plugins: {
+        tooltip: { enabled: true },
+        legend: { display: false },
+      },
+      maintainAspectRatio: false,
+      responsive: true,
+    };
+
+    return (
+      <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+        
+        
+
+        <Box sx={{ position: 'relative', width: '100%', maxWidth: 200, height: 200 }}>
+          <Doughnut data={data} options={options} />
+          <Typography
+          variant="h5"
+          sx={{
+              position: 'absolute',
+              bottom: 25,
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              fontSize: '1.6rem',
+              fontWeight: 'bold',
+            
+          }}
+          >
+          {value}%
+          </Typography>
+          <Typography
+          variant="h5"
+          sx={{
+              position: 'absolute',
+              bottom: 0,
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              fontSize: '1rem',
+              minWidth: '200px',
+              color: color,
+          }}
+          >
+          {main_title}
+          </Typography>
+        
       </Box>
-    </Box>
-  );
-};
+        <Box sx={{ width: 'px', height: '20px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          {icon}
+        </Box>
+      </Box>
+    );
+  };
 
 const PersonalWellbeing = () => {
 
-  const [startDate, setStartDate] = useState(moment().subtract(10, 'days')); 
-  const [endDate, setEndDate] = useState(moment()); // Default to today
+  const [startDate, setStartDate] = useState(moment().subtract(1, 'month').startOf('month'));
+  const [endDate, setEndDate] = useState(moment().subtract(1, 'month').endOf('month'));
   const [personalWellbeingData, setPersonalWellbeingData] = useState(null); 
   
     const location = useLocation();
@@ -185,6 +209,9 @@ const PersonalWellbeing = () => {
 
  
   const get_personal_wellbeing_data = useCallback(async (start, end) => {
+
+ 
+    
     try {
      
       const formattedStartDate = start ? start.format('YYYY-MM-DD') : '';
@@ -241,17 +268,15 @@ const PersonalWellbeing = () => {
   
     const data = await get_personal_wellbeing_data(startDate, endDate);
     if (data) {
+
+  
+      
       setPersonalWellbeingData(data); 
     }
   };
   
 
    
-  
-
-
-  
-
 
   return (
     <Box sx={{ width: '95vw',  bgcolor: '#F8FAFC',p: {lg:4, md:4, xs:1}, boxSizing: 'border-box', backgroundColor: '#E5EAFB',}}>
@@ -286,59 +311,49 @@ const PersonalWellbeing = () => {
         }}
       >
 
-        <LocalizationProvider dateAdapter={AdapterMoment}>
-            <Box
-              sx={{
-                width: {lg:'50%', md:'80%', xs:'100%'},
-                display: 'flex',
-                height: 'auto',
-                flexDirection: { xs: 'column', md: 'row' }, // Changed to 'column' for xs for better layout on small screens
-                justifyContent: 'center',
-                alignItems: 'center',
-                mb: 2,
-                gap: 2, // Controls the space between the date pickers
-              }}
-            >
-            <DatePicker
-              sx={{width: {lg:'50%', md:'100%', xs:'100%'},}}
-              label="Start Date"
-              value={startDate}
-              onChange={(newValue) => {
-                setStartDate(newValue);
-              }}
-              renderInput={(params) => <TextField {...params} />}
-            />
+      <LocalizationProvider dateAdapter={AdapterMoment}>
+        <Box
+          sx={{
+            width: { lg: '50%', md: '80%', xs: '100%' },
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
+            justifyContent: 'center',
+            alignItems: 'center',
+            mb: 2,
+            gap: 2,
+          }}
+        >
+          <DatePicker
+            views={['year', 'month']}
+            label="Select Month"
+            minDate={moment().subtract(5, 'years')}
+            maxDate={moment()}
+            value={startDate}
+            onChange={(newValue) => {
+              if (newValue) {
+                const start = moment(newValue).startOf('month');
+                const end = moment(newValue).endOf('month');
+                setStartDate(start);
+                setEndDate(end);
+              }
+            }}
+            renderInput={(params) => <TextField {...params} sx={{ width: '100%' }} />}
+          />
 
-            <DatePicker
-              sx={{width: {lg:'50%', md:'100%', xs:'100%'},}}
-              label="End Date"
-              value={endDate}
-              onChange={(newValue) => {
-                setEndDate(newValue);
-              }}
-              renderInput={(params) => <TextField {...params} />}
-            />
-
-            <Button
-              variant="contained" // Gives it a filled background
-              color="primary"     // Uses your theme's primary color
-              onClick={handleApply}
-              sx={{
-                // Optional: add some top margin if it's in column layout on small screens
-                mt: { xs: 2, md: 0 },
-                // Optional: Adjust width if needed
-                width: { xs: '100%', md: 'auto', lg: '20%' },
-                height: 55
-                
-              }}
-            >
-              Apply
-            </Button>
-          </Box>
-
-          {/* The Apply Button */}
-        
-        </LocalizationProvider>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleApply}
+            sx={{
+              mt: { xs: 2, md: 0 },
+              width: { xs: '100%', md: 'auto', lg: '20%' },
+              height: 55,
+            }}
+          >
+            Apply
+          </Button>
+        </Box>
+      </LocalizationProvider>
       
       </Box>
 
@@ -352,9 +367,6 @@ const PersonalWellbeing = () => {
           gap: 3
         }}
       >
-
-        
-                
 
                    
                      <Box
