@@ -17,6 +17,24 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
 
   const renderStatsDetails = (buttonText, score_type, value, treand) => {
 
+    let main_buttonText = '';
+
+       if (buttonText === "INTELLECTUAL") {
+          main_buttonText = "LEARNING";
+        } else if (buttonText === "SAFETY") {
+          main_buttonText = "ATMOSPHERE";
+        } else if (buttonText === "CLOSE RELATIONSHIPS") {
+          main_buttonText = "RELATIONSHIPS";
+        } else if (buttonText === "RECREATIONAL") {
+          main_buttonText = "FUN";
+        } else if (buttonText === "DISCIPLINES") {
+          main_buttonText = "CHRISTIAN PRACTICES";
+        } else if (buttonText === "COMMUNITY") {
+          main_buttonText = "CHRISTIAN COMMUNITY";
+        } else {
+          main_buttonText = buttonText;
+        }
+
 
     let bgColorGR = '';
     let flipIcon = '';
@@ -82,7 +100,7 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
               },
             }}
           >
-            {buttonText}
+            {main_buttonText}
           </Button>
     </Box>
   );
