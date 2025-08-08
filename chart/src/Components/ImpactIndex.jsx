@@ -18,6 +18,20 @@ const renderGaugeChartContribution = (value, title,  color, max, min, mid) => {
     let fontsizecard = '1.25rem';
     let piebgcolor = "#0000001a" ;
 
+    let neg = '';
+    let neu = '';
+    let pos = '';
+
+    if(title.startsWith("Impact") || title === "Contribution Score"){
+        neg = 'Negative';
+        neu = 'Neutral';
+        pos = 'Positive';
+    }else {
+        neg = 'Low';
+        neu = 'Mid';
+        pos = 'Heigh';
+    }
+
 
     
 
@@ -75,17 +89,17 @@ const renderGaugeChartContribution = (value, title,  color, max, min, mid) => {
         </Typography>
       </Box>
       <Box display={'flex'} flexDirection={'row'} gap={3}>
-          <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
+          <Typography variant="body2" textAlign="center" sx={{fontSize:"0.8em" , fontWeight: "bold"}}>
            {/* <i class="ri-square-fill" style={{marginLeft: '3px', color:'red'}}></i> 0-{min} */}
-           <i className="ri-square-fill" style={{marginLeft: '3px', color:'red'}}></i> Low 0-{min}
+           <i className="ri-square-fill" style={{marginLeft: '3px', color:'red'}}></i> {neg} 0-{min}
           </Typography>
-          <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
+          <Typography variant="body2" textAlign="center" sx={{fontSize:"0.8em" , fontWeight: "bold"}}>
            {/* <i className="ri-square-fill" sx={{marginLeft: '3px', color:'orange'}}></i> {min}-{mid} */}
-           <i className="ri-square-fill" style={{marginLeft: '3px', color:'orange'}}></i> Mid {min}-{mid}
+           <i className="ri-square-fill" style={{marginLeft: '3px', color:'orange'}}></i> {neu} {min}-{mid}
           </Typography>
-          <Typography variant="body2" textAlign="center" sx={{fontSize:"1em"}}>
+          <Typography variant="body2" textAlign="center" sx={{fontSize:"0.8em" , fontWeight: "bold"}}>
            {/* <i className="ri-square-fill" sx={{marginLeft: '3px', color:'green'}}></i> {mid}-{max} */}
-           <i className="ri-square-fill" style={{marginLeft: '3px', color:'green'}}></i> High {mid}-{max}
+           <i className="ri-square-fill" style={{marginLeft: '3px', color:'green'}}></i> {pos} {mid}-{max}
           </Typography>
       </Box>
     </Box>
@@ -97,7 +111,9 @@ const ImpactIndex = () => {
    
     const [reachScore, setReachScore] = useState(0);
     const [wideScore, setWideScore] = useState(0);
+    const [wideScoreAA, setWideScoreAA] = useState(0);
     const [contributionScore, setContributionScore] = useState(0);
+    const [contributionScoreb, setContributionScoreb] = useState(0);
     
 
     const [reachScoreMid, setReachScoreMid] = useState(0);
@@ -120,6 +136,7 @@ const ImpactIndex = () => {
 
     
     const [locationName, setlocationName] = useState('');
+    const [targetPopulation, setTargetPopulation] = useState('');
 
     
     const location = useLocation();
@@ -130,6 +147,7 @@ const ImpactIndex = () => {
     const reachScoreValue = reachScore;
     const wideScoreValue = wideScore;
     const contributionScoreValue = contributionScore;
+    
    
 
 
@@ -142,6 +160,7 @@ useEffect(() => {
         
 
         const contributionScore = data.contribution_score_a || 0;
+        const contributionScoreb = data.contribution_score_b || 0;
         const c_low = data.contribution_lower || 0;
         const c_mid = data.contribution_mid || 0;
         const c_high = data.contribution_upper_bound || 0;
@@ -152,16 +171,19 @@ useEffect(() => {
         const r_high = data.reach_upper || 0;
 
         const wideScore = data.impact_index_b || 0;
+        const wideScoreAA = data.impact_index_a || 0;
         const w_low = data.impact_lower || 0;
         const w_mid = data.impact_mid || 0;
         const w_high = data.impact_upper || 0;
 
-        setlocationName(data.ghl_location_name || 0)
+        setlocationName(data.ghl_location_name || "")
+        setTargetPopulation(data.target_population || "")
 
         setContributionScoreMid(c_mid);
         setContributionScoreLow(c_low);
         setContributionScoreHigh(c_high);
         setContributionScore(contributionScore);
+        setContributionScoreb(contributionScoreb);
 
         setReachScoreMid(r_mid);
         setReachScoreLow(r_low);
@@ -173,6 +195,7 @@ useEffect(() => {
         setWideScoreLow(w_low);
         setWideScoreHigh(w_high);
         setWideScore(wideScore);
+        setWideScoreAA(wideScoreAA);
 
         if (contributionScore < c_low) {
           setConColor('red');
@@ -288,7 +311,7 @@ useEffect(() => {
 
                       {renderGaugeChartContribution(
                         wideScoreValue,
-                        'Mission-wide Impact Index',
+                        `Impact on ${targetPopulation}`,
                         wideColor,
                         wideScoreHigh,
                         wideScoreLow,
@@ -300,10 +323,7 @@ useEffect(() => {
 
                       <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center" }} mt={2}>
                           <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem", fontWeight:"bold" }}>
-                            The Impact Index estimates that {locationName} contributes a{" "}
-                            <span style={{ fontWeight: "bold" }}>{wideScoreValue}%</span>{" "}
-                            uplift to the overall wellbeing of Melbourne, resulting in a score of{" "}
-                            <span style={{ fontWeight: "bold" }}>{contributionScore}</span>.
+                            The Impact Index estimates that {locationName} contributes an improvement of {wideScoreAA} to {targetPopulation}'s overall wellbeing, resulting in a score of {wideScore}.
                           </Typography>
                       </Paper>
 
@@ -323,8 +343,7 @@ useEffect(() => {
                     </Paper>
                     <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center"}}>
                            <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem", fontWeight:"bold" }}>
-                            People engaged with {locationName} report that their Check-In Wellbeing scores - across Personal, Community, and Spiritual wellbeing - are{' '}
-                            <span style={{ fontWeight: 'bold' }}>{contributionScoreValue}%</span> of what they would be without the ministry’s support.
+                            The Impact Index estimates that {locationName} contributes an improvement of {contributionScoreb} to {targetPopulation}'s overall wellbeing, resulting in a Contribution Score of {contributionScore}
                           </Typography>
                     </Paper>
                 </Box>

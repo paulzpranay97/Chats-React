@@ -392,7 +392,10 @@ const CommunityWellbeing = () => {
                                         borderRadius: 4,
                                     }}
                                 >
-                                  { personalWellbeingData?.scores.map((score) => (
+                                  { personalWellbeingData?.scores
+                                   .filter(score => score.name.replace(/_/g, ' ').toUpperCase() !== 'COMMUNITY')
+                                   .filter(score => score.name.replace(/_/g, ' ').toUpperCase() !== 'BELONGING')
+                                  .map((score) => (
                                             <Paper
                                               key={`gauge-${score.name}`}
                                               sx={{width: {lg:'10%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: 'transparent', boxShadow: 'none'}}

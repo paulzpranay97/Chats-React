@@ -114,6 +114,8 @@ const renderGaugeChart = (value, title, color,trend) => {
           main_title = "CHRISTIAN PRACTICES";
         } else if (title === "COMMUNITY") {
           main_title = "CHRISTIAN COMMUNITY";
+        } else if (title === "FAITH STATUS") {
+          main_title = "FAITH JOURNEY";
         } else {
           main_title = title;
         }
@@ -392,19 +394,31 @@ const SpiritualWellbeing = () => {
                                         borderRadius: 4,
                                     }}
                                 >
-                                  { personalWellbeingData?.scores.map((score) => (
-                                            <Paper
-                                              key={`gauge-${score.name}`}
-                                              sx={{width: {lg:'10%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: 'transparent', boxShadow: 'none'}}
-                                            >
-                                              {renderGaugeChart(
-                                                score.value,
-                                                score.name.replace(/_/g, ' ').toUpperCase(),
-                                                '#004AAD',
-                                                score.trend
-                                              )}
-                                            </Paper>
-                                          ))}
+                                  {personalWellbeingData?.scores
+                                      .filter(score => score.name.replace(/_/g, ' ').toUpperCase() !== 'CLOSE TO GOD')
+                                      .filter(score => score.name.replace(/_/g, ' ').toUpperCase() !== 'SPIRITUAL')
+                                      .map(score => (
+                                        <Paper
+                                          key={`gauge-${score.name}`}
+                                          sx={{
+                                            width: { lg: '10%', md: '50%', xs: '100%' },
+                                            p: 3,
+                                            flex: 1,
+                                            textAlign: 'center',
+                                            minHeight: 100,
+                                            borderRadius: 4,
+                                            backgroundColor: 'transparent',
+                                            boxShadow: 'none'
+                                          }}
+                                        >
+                                          {renderGaugeChart(
+                                            score.value,
+                                            score.name.replace(/_/g, ' ').toUpperCase(),
+                                            '#004AAD',
+                                            score.trend
+                                          )}
+                                        </Paper>
+                                      ))}
                                      
                                     {/* <Paper sx={{width: {lg:'10%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: 'transparent', boxShadow: 'none'}}>
                                     {renderGaugeChart(60,'MENTAL', '#004AAD')}
