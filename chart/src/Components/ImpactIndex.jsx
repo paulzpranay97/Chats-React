@@ -29,7 +29,7 @@ const renderGaugeChartContribution = (value, title,  color, max, min, mid) => {
     }else {
         neg = 'Low';
         neu = 'Mid';
-        pos = 'Heigh';
+        pos = 'High';
     }
 
 
@@ -137,6 +137,7 @@ const ImpactIndex = () => {
     
     const [locationName, setlocationName] = useState('');
     const [targetPopulation, setTargetPopulation] = useState('');
+    const [locationDashboardName, setLocationDashboardName] = useState('');
 
     
     const location = useLocation();
@@ -178,6 +179,7 @@ useEffect(() => {
 
         setlocationName(data.ghl_location_name || "")
         setTargetPopulation(data.target_population || "")
+        setLocationDashboardName(data.location_dashboard_name || "")
 
         setContributionScoreMid(c_mid);
         setContributionScoreLow(c_low);
@@ -343,7 +345,7 @@ useEffect(() => {
                     </Paper>
                     <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center"}}>
                            <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem", fontWeight:"bold" }}>
-                            The Impact Index estimates that {locationName} contributes an improvement of {contributionScoreb} to {targetPopulation}'s overall wellbeing, resulting in a Contribution Score of {contributionScore}
+                            The Impact Index estimates that {locationDashboardName} contributes an improvement of {contributionScoreb} to {targetPopulation}'s overall wellbeing, resulting in a Contribution Score of {contributionScore}
                           </Typography>
                     </Paper>
                 </Box>
