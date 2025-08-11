@@ -345,7 +345,7 @@ useEffect(() => {
                     </Paper>
                     <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center"}}>
                            <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem", fontWeight:"bold" }}>
-                            The Impact Index estimates that {locationDashboardName} contributes an improvement of {contributionScoreb} to {targetPopulation}'s overall wellbeing, resulting in a Contribution Score of {contributionScore}
+                            The Impact Index estimates that {locationDashboardName} contributes an improvement of {contributionScoreb} to {locationDashboardName} community's overall wellbeing, resulting in a Contribution Score of  {contributionScore}.
                           </Typography>
                     </Paper>
                 </Box>
