@@ -91,15 +91,15 @@ const renderGaugeChartContribution = (value, title,  color, max, min, mid) => {
       <Box display={'flex'} flexDirection={'row'} gap={3}>
           <Typography variant="body2" textAlign="center" sx={{fontSize:"0.8em" , fontWeight: "bold"}}>
            {/* <i class="ri-square-fill" style={{marginLeft: '3px', color:'red'}}></i> 0-{min} */}
-           <i className="ri-square-fill" style={{marginLeft: '3px', color:'red'}}></i> {neg} 0-{min}
+           <i className="ri-square-fill" style={{marginLeft: '3px', color:'#DC0050'}}></i> {neg} 0-{min}
           </Typography>
           <Typography variant="body2" textAlign="center" sx={{fontSize:"0.8em" , fontWeight: "bold"}}>
            {/* <i className="ri-square-fill" sx={{marginLeft: '3px', color:'orange'}}></i> {min}-{mid} */}
-           <i className="ri-square-fill" style={{marginLeft: '3px', color:'orange'}}></i> {neu} {min}-{mid}
+           <i className="ri-square-fill" style={{marginLeft: '3px', color:'#F3BB44'}}></i> {neu} {min}-{mid}
           </Typography>
           <Typography variant="body2" textAlign="center" sx={{fontSize:"0.8em" , fontWeight: "bold"}}>
            {/* <i className="ri-square-fill" sx={{marginLeft: '3px', color:'green'}}></i> {mid}-{max} */}
-           <i className="ri-square-fill" style={{marginLeft: '3px', color:'green'}}></i> {pos} {mid}-{max}
+           <i className="ri-square-fill" style={{marginLeft: '3px', color:'#00C699'}}></i> {pos} {mid}-{max}
           </Typography>
       </Box>
     </Box>
@@ -200,11 +200,11 @@ useEffect(() => {
         setWideScoreAA(wideScoreAA);
 
         if (contributionScore < c_low) {
-          setConColor('red');
+          setConColor('#DC0050');
         } else if (contributionScore >= c_low && contributionScore < c_mid) {
-          setConColor('orange');
+          setConColor('#F3BB44');
         } else if (contributionScore >= c_mid && contributionScore <= c_high) {
-          setConColor('green');
+          setConColor('#00C699');
         } else {
           // Handle case where score is greater than high bound
           setConColor('blue'); // or some other color
@@ -212,22 +212,22 @@ useEffect(() => {
 
 
         if (reachScore < r_low) {
-          setReachColor('red');
+          setReachColor('#DC0050');
         } else if (reachScore >= r_low && reachScore < r_mid) {
-          setReachColor('orange');
+          setReachColor('#F3BB44');
         } else if (reachScore >= r_mid && reachScore <= r_high) {
-          setReachColor('green');
+          setReachColor('#00C699');
         } else {
           // Handle case where score is greater than high bound
           setReachColor('blue'); // or some other color
         }
 
         if (wideScore < w_low) {
-          setWideColor('red');
+          setWideColor('#DC0050');
         } else if (wideScore >= w_low && wideScore < w_mid) {
-          setWideColor('orange');
+          setWideColor('#F3BB44');
         } else if (wideScore >= w_mid && wideScore <= w_high) {
-          setWideColor('green');
+          setWideColor('#00C699');
         } else {
           // Handle case where score is greater than high bound
           setWideColor('blue'); // or some other color
