@@ -22,14 +22,26 @@ const renderGaugeChartContribution = (value, title,  color, max, min, mid) => {
     let neu = '';
     let pos = '';
 
+    let low_c = '';
+    let mid_c = '';
+    let high_c = '';
+
     if(title.startsWith("Impact") || title === "Contribution Score"){
-        neg = 'Negative';
+        neg = 'Negative Under';
         neu = 'Neutral';
         pos = 'Positive';
+
+        low_c = '#DC0050';
+        mid_c = '#F3BB44';
+        high_c = '#00C699';
     }else {
         neg = 'Low';
         neu = 'Mid';
         pos = 'High';
+
+        low_c = '#00C699';
+        mid_c = '#008A6B';
+        high_c = '#004F3D';
     }
 
 
@@ -91,15 +103,15 @@ const renderGaugeChartContribution = (value, title,  color, max, min, mid) => {
       <Box display={'flex'} flexDirection={'row'} gap={3}>
           <Typography variant="body2" textAlign="center" sx={{fontSize:"0.8em" , fontWeight: "bold"}}>
            {/* <i class="ri-square-fill" style={{marginLeft: '3px', color:'red'}}></i> 0-{min} */}
-           <i className="ri-square-fill" style={{marginLeft: '3px', color:'#DC0050'}}></i> {neg} 0-{min}
+           <i className="ri-square-fill" style={{marginLeft: '3px', color: low_c}}></i> {neg} {min}
           </Typography>
           <Typography variant="body2" textAlign="center" sx={{fontSize:"0.8em" , fontWeight: "bold"}}>
            {/* <i className="ri-square-fill" sx={{marginLeft: '3px', color:'orange'}}></i> {min}-{mid} */}
-           <i className="ri-square-fill" style={{marginLeft: '3px', color:'#F3BB44'}}></i> {neu} {min}-{mid}
+           <i className="ri-square-fill" style={{marginLeft: '3px', color: mid_c}}></i> {neu} {min}-{mid}
           </Typography>
           <Typography variant="body2" textAlign="center" sx={{fontSize:"0.8em" , fontWeight: "bold"}}>
            {/* <i className="ri-square-fill" sx={{marginLeft: '3px', color:'green'}}></i> {mid}-{max} */}
-           <i className="ri-square-fill" style={{marginLeft: '3px', color:'#00C699'}}></i> {pos} {mid}-{max}
+           <i className="ri-square-fill" style={{marginLeft: '3px', color: high_c}}></i> {pos} {mid}+
           </Typography>
       </Box>
     </Box>
@@ -212,11 +224,11 @@ useEffect(() => {
 
 
         if (reachScore < r_low) {
-          setReachColor('#DC0050');
-        } else if (reachScore >= r_low && reachScore < r_mid) {
-          setReachColor('#F3BB44');
-        } else if (reachScore >= r_mid && reachScore <= r_high) {
           setReachColor('#00C699');
+        } else if (reachScore >= r_low && reachScore < r_mid) {
+          setReachColor('#008A6B');
+        } else if (reachScore >= r_mid && reachScore <= r_high) {
+          setReachColor('#004F3D');
         } else {
           // Handle case where score is greater than high bound
           setReachColor('blue'); // or some other color
@@ -325,7 +337,7 @@ useEffect(() => {
 
                       <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center" }} mt={2}>
                           <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem", fontWeight:"bold" }}>
-                            The Impact Index estimates that {locationName} contributes an improvement of {wideScoreAA} to {targetPopulation}'s overall wellbeing, resulting in a score of {wideScore}.
+                            The Impact Index estimates that {locationName} contributes an improvement of {wideScoreAA}% to {targetPopulation}'s overall wellbeing, resulting in a score of {wideScore}%.
                           </Typography>
                       </Paper>
 
@@ -345,7 +357,7 @@ useEffect(() => {
                     </Paper>
                     <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center"}}>
                            <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem", fontWeight:"bold" }}>
-                            The Impact Index estimates that {locationDashboardName} contributes an improvement of {contributionScoreb} to {locationDashboardName} community's overall wellbeing, resulting in a Contribution Score of  {contributionScore}.
+                            The Impact Index estimates that {locationDashboardName} contributes an improvement of {contributionScoreb}% to {locationDashboardName} community's overall wellbeing, resulting in a Contribution Score of  {contributionScore}%.
                           </Typography>
                     </Paper>
                 </Box>

@@ -96,7 +96,7 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
               letterSpacing: '0.05em', 
               textTransform: 'none', 
               '&:hover': {
-                backgroundColor: '#15803d', 
+                backgroundColor: bgColorGR, 
               },
             }}
           >
@@ -184,7 +184,7 @@ const renderGaugeChart = (value, title, color,trend) => {
            
         }}
         >
-        {value}%
+        {value}
         </Typography>
         <Typography
         variant="h5"
@@ -369,6 +369,23 @@ const SpiritualWellbeing = () => {
       
       </Box>
 
+       <Box
+          sx={{
+            display: 'flex',
+            height: 'auto',
+            flexDirection: { xs: 'row', md: 'row' },
+            justifyContent: 'center',
+            alignItems: 'center',
+            mb: 2,
+            gap: 2,
+            
+          }}
+        >
+          <Typography variant="h5" fontWeight="bold" textAlign={{ xs: 'center', md: 'center' }} sx={{fontSize: '1rem'}}>
+            Your community's assessment of their current spiritual wellbeing on a scale out of 100.
+          </Typography>
+        </Box>
+
       {/* Charts Row */}
       <Box
         sx={{
@@ -456,19 +473,34 @@ const SpiritualWellbeing = () => {
                                     }}
                                 >
 
+                                    <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #67aab2'}}>
+                                    {renderGaugeChart(
+                                                personalWellbeingData?.circle_score,
+                                                'Circle Score',
+                                                '#67aab2'
+                                              )}
+                                    </Paper>
+                                    <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #67aab2'}}>
+                                    {renderGaugeChart(
+                                                personalWellbeingData?.core_score,
+                                                'Core Score',
+                                                '#67aab2'
+                                              )}
+                                    </Paper>
+
                                      
                                     <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #2E8E46'}}>
                                     {renderStatsDetails(personalWellbeingData?.summary.max.name.replace(/_/g, ' ').toUpperCase(),'HIGHEST SCORES', personalWellbeingData?.summary.max.value, personalWellbeingData?.summary.max.trend)}
                                     </Paper>
-                                    <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #2E8E46'}}>
+                                    {/* <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #2E8E46'}}>
                                     {renderStatsDetails(personalWellbeingData?.summary.second_max.name.replace(/_/g, ' ').toUpperCase(),'HIGHEST SCORES', personalWellbeingData?.summary.second_max.value, personalWellbeingData?.summary.second_max.trend)}
-                                    </Paper>
+                                    </Paper> */}
                                     <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #D23737'}}>
                                     {renderStatsDetails(personalWellbeingData?.summary.min.name.replace(/_/g, ' ').toUpperCase(),'LOWEST SCORES', personalWellbeingData?.summary.min.value, personalWellbeingData?.summary.min.trend)}
                                     </Paper>
-                                    <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #D23737'}}>
+                                    {/* <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #D23737'}}>
                                     {renderStatsDetails(personalWellbeingData?.summary.second_min.name.replace(/_/g, ' ').toUpperCase(),'LOWEST SCORES', personalWellbeingData?.summary.second_min.value, personalWellbeingData?.summary.second_min.trend)}
-                                    </Paper>
+                                    </Paper> */}
                                     
                             </Box>
 
