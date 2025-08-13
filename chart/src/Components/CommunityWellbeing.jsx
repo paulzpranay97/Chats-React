@@ -463,7 +463,7 @@ const CommunityWellbeing = () => {
                                     <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #67aab2'}}>
                                     {renderGaugeChart(
                                                 personalWellbeingData?.circle_score,
-                                                'Circle Score',
+                                                'Community Score',
                                                 '#67aab2'
                                               )}
                                     </Paper>
