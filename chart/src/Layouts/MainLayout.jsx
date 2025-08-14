@@ -76,7 +76,7 @@ function App() {
 
   const tabLabels = [
     "Impact Index",
-    "Core Metrics",
+    // "Core Metrics",
     "Personal Wellbeing",
     "Community Wellbeing",
     "Spiritual Wellbeing"
@@ -204,16 +204,16 @@ function App() {
       <CustomTabPanel value={value} index={0}>
         <ImpactIndex />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
+      {/* <CustomTabPanel value={value} index={1}>
         <CoreMetrics />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
+      </CustomTabPanel> */}
+      <CustomTabPanel value={value} index={1}>
         <PersonalWellbeing />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={3}>
+      <CustomTabPanel value={value} index={2}>
         <CommunityWellbeing />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={4}>
+      <CustomTabPanel value={value} index={3}>
         <SpiritualWellbeing />
       </CustomTabPanel>
     </Box>

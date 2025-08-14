@@ -41,7 +41,7 @@ const renderGaugeChartContribution = (value, title,  color, max, min, mid) => {
 
         low_c = '#00C699';
         mid_c = '#008A6B';
-        high_c = '#004F3D';
+        high_c = '#004f3dcb';
     }
 
 
@@ -228,7 +228,7 @@ useEffect(() => {
         } else if (reachScore >= r_low && reachScore < r_mid) {
           setReachColor('#008A6B');
         } else if (reachScore >= r_mid && reachScore <= r_high) {
-          setReachColor('#004F3D');
+          setReachColor('#004f3dcb');
         } else {
           // Handle case where score is greater than high bound
           setReachColor('blue'); // or some other color
