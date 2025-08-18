@@ -379,6 +379,9 @@ const PersonalWellbeing = () => {
     const initialFetch = async () => {
         const data = await get_personal_wellbeing_data(startDate, endDate);
         if (data) {
+          
+            console.log(data);
+            
 
             setPersonalWellbeingData(data);
         }
@@ -598,14 +601,14 @@ const PersonalWellbeing = () => {
                                   <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #67aab2'}}>
                                     {renderGaugeChart2(
                                                 personalWellbeingData?.circle_score,
-                                                'Base Personal Score',
+                                                'Core Personal Score',
                                                 '#67aab2'
                                               )}
                                     </Paper>
                                     <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #67aab2'}}>
                                     {renderGaugeChart2(
                                                 personalWellbeingData?.core_score,
-                                                'Base Overall Score',
+                                                'Core Overall Score',
                                                 '#67aab2'
                                               )}
                                     </Paper>
@@ -625,12 +628,32 @@ const PersonalWellbeing = () => {
                                     
                             </Box>
 
+                            <Box
+                                    sx={{
+                                        width: '100%',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'stretch',
+                                        boxSizing: 'border-box',
+                                        padding: 2,
+                                        gap: 3,
+                                        border: '5px solid #778AD5',
+                                        backgroundColor: '#f4f4f4',
+                                        borderRadius: 4,
+                                    }}
+                                >
+
+                                  <Box sx={{ width: '100%', borderRadius: '50%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
+                                    <Typography style={{fontSize: '1rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px'}}>Scores based on {personalWellbeingData?.total_records} responses from {personalWellbeingData?.location_dashboard_name} community.</Typography>
+                                    {/* <Box sx={{ width: '100%', borderRadius: '50%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
+                                      <Typography style={{fontSize: '1rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px'}}></Typography>
+                                      <Typography style={{fontSize: '1rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px'}}></Typography>
+                                    </Box> */}
+                                  </Box>
+                                  
+                                    
+                            </Box>
                     </Box>
-
-
-                
-
- 
       </Box>
     </Box>
   );
