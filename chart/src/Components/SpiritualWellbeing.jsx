@@ -205,6 +205,116 @@ const renderGaugeChart = (value, title, color,trend) => {
       <Box sx={{ width: 'px', height: '20px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         {icon}
       </Box>
+       <Box sx={{ width: 'px', height: '20px', borderRadius: '50%', display: 'flex', flexDirection: 'column' }} mt={3}>
+        <Typography style={{fontSize: '10px', fontWeight: 'bold'}}> <i class="ri-arrow-up-circle-fill" style={{fontSize: '20px', color: '#2FDD92'}}></i> Higher Compare to Previous Month</Typography>
+        <Typography style={{fontSize: '10px', fontWeight: 'bold'}}> <i class="ri-arrow-down-circle-fill" style={{fontSize: '20px', color: '#D23737'}}></i> Lower Compare to Previous Month</Typography>
+        <Typography style={{fontSize: '10px', fontWeight: 'bold'}}> <i class="ri-subtract-line" style={{fontSize: '16px', color: '#fcfcfcff', backgroundColor:'#FF8440', borderRadius: '5px', marginRight: '3px'}}></i> Equal Compare to Previous Month</Typography>
+      </Box>
+    </Box>
+  );
+};
+
+
+
+const renderGaugeChart2 = (value, title, color,trend) => {
+  
+    let icon;
+    if(trend === "up"){
+      icon = <><i class="ri-arrow-up-circle-fill" style={{fontSize: '60px', color: '#2FDD92'}}></i></>;
+    }else if(trend === "down"){
+      icon = <><i class="ri-arrow-down-circle-fill" style={{fontSize: '60px', color: '#D23737'}}></i></>;
+      
+    }else if(trend === "same"){
+      icon = <><i class="ri-subtract-line" style={{fontSize: '37px', color: '#fcfcfcff', backgroundColor:'#FF8440', borderRadius: '5px'}}></i></>;
+    }
+
+     let main_title = '';
+
+       if (title === "INTELLECTUAL") {
+          main_title = "LEARNING";
+        } else if (title === "SAFETY") {
+          main_title = "ATMOSPHERE";
+        } else if (title === "CLOSE RELATIONSHIPS") {
+          main_title = "RELATIONSHIPS";
+        } else if (title === "RECREATIONAL") {
+          main_title = "FUN";
+        } else if (title === "DISCIPLINES") {
+          main_title = "CHRISTIAN PRACTICES";
+        } else if (title === "COMMUNITY") {
+          main_title = "CHRISTIAN COMMUNITY";
+        } else if (title === "FAITH STATUS") {
+          main_title = "FAITH JOURNEY";
+        } else {
+          main_title = title;
+        }
+
+
+
+
+  const data = {
+    datasets: [
+      {
+        data: [value, 100 - value],
+        backgroundColor: [color, '#E5EBFF'],
+        borderColor: [color, '#E5EBFF'],
+        borderWidth: 0,
+        borderRadius: 0,
+      },
+    ],
+  };
+
+  const options = {
+    rotation: 270,
+    circumference: 180,
+    cutout: '60%',
+    plugins: {
+      tooltip: { enabled: true },
+      legend: { display: false },
+    },
+    maintainAspectRatio: false,
+    responsive: true,
+  };
+
+  return (
+    <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+      
+      
+
+      <Box sx={{ position: 'relative', width: '100%', maxWidth: 200, height: 200 }}>
+        <Doughnut data={data} options={options} />
+        <Typography
+        variant="h5"
+        sx={{
+            position: 'absolute',
+            bottom: 25,
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            fontSize: '1.6rem',
+            fontWeight: 'bold',
+           
+        }}
+        >
+        {value}
+        </Typography>
+        <Typography
+        variant="h5"
+        sx={{
+            position: 'absolute',
+            bottom: 0,
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            fontSize: '1rem',
+            minWidth: '200px',
+            color: color,
+        }}
+        >
+        {main_title}
+        </Typography>
+       
+    </Box>
+      <Box sx={{ width: 'px', height: '20px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        {icon}
+      </Box>
     </Box>
   );
 };
@@ -440,10 +550,12 @@ const SpiritualWellbeing = () => {
                                             p: 3,
                                             flex: 1,
                                             textAlign: 'center',
-                                            minHeight: 100,
+                                            minHeight: 400,
                                             borderRadius: 4,
                                             backgroundColor: 'transparent',
-                                            boxShadow: 'none'
+                                            boxShadow: 'none',
+                                            boxSizing: 'border-box', 
+                                            padding: 0
                                           }}
                                         >
                                           {renderGaugeChart(
@@ -474,14 +586,14 @@ const SpiritualWellbeing = () => {
                                 >
 
                                     <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #67aab2'}}>
-                                    {renderGaugeChart(
+                                    {renderGaugeChart2(
                                                 personalWellbeingData?.circle_score,
                                                 'Core Spiritual Score',
                                                 '#67aab2'
                                               )}
                                     </Paper>
                                     <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #67aab2'}}>
-                                    {renderGaugeChart(
+                                    {renderGaugeChart2(
                                                 personalWellbeingData?.core_score,
                                                 'Core Overall Score',
                                                 '#67aab2'

@@ -9,7 +9,115 @@ import { Box, Paper, Typography, Grid } from '@mui/material';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+const renderGaugeChartContributionReachScore = (value, title,  color, max, min, mid, maxC, minC, midC) => {
 
+
+
+  
+  
+
+    let fontsizecard = '1.25rem';
+    let piebgcolor = "#0000001a" ;
+
+    let neg = '';
+    let neu = '';
+    let pos = '';
+
+    let low_c = '';
+    let mid_c = '';
+    let high_c = '';
+
+    if(title.startsWith("Impact") || title === "Contribution Score"){
+        neg = 'Negative Under';
+        neu = 'Neutral';
+        pos = 'Positive';
+
+        low_c = '#DC0050';
+        mid_c = '#F3BB44';
+        high_c = '#00C699';
+    }else {
+        neg = 'Low';
+        neu = 'Mid';
+        pos = 'High';
+
+        low_c = minC;
+        mid_c = midC;
+        high_c = maxC;
+    }
+
+
+    
+
+
+  const data = {
+    datasets: [
+      {
+        data: [value, max - value],
+        backgroundColor: [color, piebgcolor],
+        borderColor: [color, piebgcolor],
+        borderWidth: 0,
+        borderRadius: 0,
+      },
+    ],
+  };
+
+  const options = {
+    rotation: 0,
+    circumference: 360,
+    cutout: '85%',
+    plugins: {
+      tooltip: { enabled: true },
+      legend: { display: false }, 
+    },
+    maintainAspectRatio: false,
+    responsive: true,
+  };
+
+  return (
+    <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+      <Typography variant="h6" component="h3" sx={{ fontSize: '1.6rem' , fontWeight: 'bold', color: '#333' }}>
+        {title}
+      </Typography>
+      <Box sx={{ position: 'relative', width: '100%',maxWidth: 300, height: 300 }}>
+        <Doughnut data={data} options={options} />
+        <Typography
+          variant="h5"
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            fontWeight: 'bold',
+            backgroundColor: color,
+            borderRadius: "50%", 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            minWidth: '200px', 
+            minHeight: '200px',
+            boxSizing: 'border-box' 
+          }}
+        >
+          {value}
+        </Typography>
+      </Box>
+      <Box display={'flex'} flexDirection={'row'} gap={3}>
+          <Typography variant="body2" textAlign="center" sx={{fontSize:"0.8em" , fontWeight: "bold"}}>
+           {/* <i class="ri-square-fill" style={{marginLeft: '3px', color:'red'}}></i> 0-{min} */}
+           <i className="ri-square-fill" style={{marginLeft: '3px', color: low_c}}></i> {neg} {min}
+          </Typography>
+          <Typography variant="body2" textAlign="center" sx={{fontSize:"0.8em" , fontWeight: "bold"}}>
+           {/* <i className="ri-square-fill" sx={{marginLeft: '3px', color:'orange'}}></i> {min}-{mid} */}
+           <i className="ri-square-fill" style={{marginLeft: '3px', color: mid_c}}></i> {neu} {min}-{mid}
+          </Typography>
+          <Typography variant="body2" textAlign="center" sx={{fontSize:"0.8em" , fontWeight: "bold"}}>
+           {/* <i className="ri-square-fill" sx={{marginLeft: '3px', color:'green'}}></i> {mid}-{max} */}
+           <i className="ri-square-fill" style={{marginLeft: '3px', color: high_c}}></i> {pos} {mid}+
+          </Typography>
+      </Box>
+    </Box>
+  );
+};
 
 
 const renderGaugeChartContribution = (value, title,  color, max, min, mid) => {
@@ -132,6 +240,10 @@ const ImpactIndex = () => {
     const [reachScoreLow, setReachScoreLow] = useState(0);
     const [reachScoreHigh, setReachScoreHigh] = useState(0);
 
+    const [reachScoreMidColor, setReachScoreMidColor] = useState('');
+    const [reachScoreLowColor, setReachScoreLowColor] = useState('');
+    const [reachScoreHighColor, setReachScoreHighColor] = useState('');
+
     const [wideScoreMid, setWideScoreMid] = useState(0);
     const [wideScoreLow, setWideScoreLow] = useState(0);
     const [wideScoreHigh, setWideScoreHigh] = useState(0);
@@ -172,6 +284,9 @@ useEffect(() => {
       if (data) {
         
 
+        
+        
+
         const contributionScore = data.contribution_score_a || 0;
         const contributionScoreb = data.contribution_score_b || 0;
         const c_low = data.contribution_lower || 0;
@@ -182,6 +297,11 @@ useEffect(() => {
         const r_low = data.reach_lower || 0;
         const r_mid = data.reach_mid || 0;
         const r_high = data.reach_upper || 0;
+
+        const r_low_color = data.color_reach_lower || '#00C699';
+        const r_mid_color = data.color_reach_mid || '#008A6B';
+        const r_high_color = data.color_reach_upper || '#004f3dcb';
+      
 
         const wideScore = data.impact_index_b || 0;
         const wideScoreAA = data.impact_index_a || 0;
@@ -198,6 +318,10 @@ useEffect(() => {
         setContributionScoreHigh(c_high);
         setContributionScore(contributionScore);
         setContributionScoreb(contributionScoreb);
+
+        setReachScoreMidColor(r_mid_color);
+        setReachScoreLowColor(r_low_color);
+        setReachScoreHighColor(r_high_color);
 
         setReachScoreMid(r_mid);
         setReachScoreLow(r_low);
@@ -224,11 +348,11 @@ useEffect(() => {
 
 
         if (reachScore < r_low) {
-          setReachColor('#00C699');
+          setReachColor(r_low_color);
         } else if (reachScore >= r_low && reachScore < r_mid) {
-          setReachColor('#008A6B');
+          setReachColor(r_mid_color);
         } else if (reachScore >= r_mid && reachScore <= r_high) {
-          setReachColor('#004f3dcb');
+          setReachColor(r_high_color);
         } else {
           // Handle case where score is greater than high bound
           setReachColor('blue'); // or some other color
@@ -272,8 +396,6 @@ useEffect(() => {
     };
 
 
-    
-
   
 
 
@@ -296,24 +418,27 @@ useEffect(() => {
                 <Box sx={{ flex: 1 }} display={'flex'} flexDirection={'column'} gap={1}>
                   <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 400, borderRadius: 4 }}>
 
-                    {renderGaugeChartContribution(
+                    {renderGaugeChartContributionReachScore(
                         reachScoreValue,
                         'Reach Score',
                         reachColor,
                         reachScoreHigh,
                         reachScoreLow,
-                        reachScoreMid
+                        reachScoreMid,
+                        reachScoreHighColor,
+                        reachScoreLowColor,
+                        reachScoreMidColor
                       )}
                    
                   </Paper>
 
                   <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center" }} mt={2}>
                       <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem", fontWeight:"bold" }}>
-                      It is estimated that {locationName} is reaching{" "}
+                      It is estimated that {locationDashboardName} is reaching{" "}
                       <span style={{ fontWeight: "bold" }}>
                         {reachScoreValue}%
                       </span>{" "}
-                      of the Target Achievable Mission.
+                      of {targetPopulation}.
                     </Typography>
                   </Paper>
 
@@ -337,7 +462,7 @@ useEffect(() => {
 
                       <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center" }} mt={2}>
                           <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem", fontWeight:"bold" }}>
-                            The Impact Index estimates that {locationName} contributes an improvement of {wideScoreAA}% to {targetPopulation}'s overall wellbeing, resulting in a score of {wideScore}%.
+                            The Impact Index estimates that {locationDashboardName} contributes an improvement of {wideScoreAA}% to {targetPopulation}'s overall wellbeing, resulting in a score of {wideScore}%.
                           </Typography>
                       </Paper>
 
