@@ -298,9 +298,12 @@ useEffect(() => {
         const r_mid = data.reach_mid || 0;
         const r_high = data.reach_upper || 0;
 
-        const r_low_color = data.color_reach_lower || '#00C699';
-        const r_mid_color = data.color_reach_mid || '#008A6B';
-        const r_high_color = data.color_reach_upper || '#004f3dcb';
+        // const r_low_color = data.color_reach_lower || '#00C699';
+        // const r_mid_color = data.color_reach_mid || '#008A6B';
+        // const r_high_color = data.color_reach_upper || '#004f3dcb';
+        const r_low_color =  '#00C699';
+        const r_mid_color = '#008A6B';
+        const r_high_color = '#004f3dcb';
       
 
         const wideScore = data.impact_index_b || 0;

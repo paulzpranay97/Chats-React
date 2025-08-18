@@ -205,11 +205,7 @@ const renderGaugeChart = (value, title, color,trend) => {
       <Box sx={{ width: 'px', height: '20px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         {icon}
       </Box>
-       <Box sx={{ width: 'px', height: '20px', borderRadius: '50%', display: 'flex', flexDirection: 'column' }} mt={3}>
-        <Typography style={{fontSize: '10px', fontWeight: 'bold'}}> <i class="ri-arrow-up-circle-fill" style={{fontSize: '20px', color: '#2FDD92'}}></i> Higher Compare to Previous Month</Typography>
-        <Typography style={{fontSize: '10px', fontWeight: 'bold'}}> <i class="ri-arrow-down-circle-fill" style={{fontSize: '20px', color: '#D23737'}}></i> Lower Compare to Previous Month</Typography>
-        <Typography style={{fontSize: '10px', fontWeight: 'bold'}}> <i class="ri-subtract-line" style={{fontSize: '16px', color: '#fcfcfcff', backgroundColor:'#FF8440', borderRadius: '5px', marginRight: '3px'}}></i> Equal Compare to Previous Month</Typography>
-      </Box>
+      
     </Box>
   );
 };
@@ -523,6 +519,31 @@ const SpiritualWellbeing = () => {
                             }}
                         >
 
+
+                          <Box
+                              sx={{
+                                  width: '100%',
+                                  display: 'flex',
+                                  justifyContent: 'center',
+                                  alignItems: 'stretch',
+                                  boxSizing: 'border-box',
+                                  padding: 2,
+                                  gap: 3,
+                                  border: '5px solid #778AD5',
+                                  backgroundColor: '#f4f4f4',
+                                  borderRadius: 4,
+                              }}
+                          >
+
+                            <Box sx={{ width: '100%', borderRadius: '50%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
+                              <Typography style={{fontSize: '1rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px'}}> <i class="ri-arrow-up-circle-fill" style={{fontSize: '60px', color: '#2FDD92'}}></i> Higher Compare to Previous Month</Typography>
+                              <Typography style={{fontSize: '1rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px'}}> <i class="ri-arrow-down-circle-fill" style={{fontSize: '60px', color: '#D23737'}}></i> Lower Compare to Previous Month</Typography>
+                              <Typography style={{fontSize: '1rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px'}}> <i class="ri-subtract-line" style={{fontSize: '37px', color: '#fcfcfcff', backgroundColor:'#FF8440', borderRadius: '5px'}}></i> Equal Compare to Previous Month</Typography>
+                            </Box>
+                            
+                              
+                      </Box>
+
                           
                             <Box
                                     sx={{
@@ -550,7 +571,7 @@ const SpiritualWellbeing = () => {
                                             p: 3,
                                             flex: 1,
                                             textAlign: 'center',
-                                            minHeight: 400,
+                                            minHeight: 300,
                                             borderRadius: 4,
                                             backgroundColor: 'transparent',
                                             boxShadow: 'none',
