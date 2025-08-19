@@ -282,10 +282,6 @@ useEffect(() => {
     const fetchData = async () => {
       const data = await get_impact_index_data();
       if (data) {
-        
-
-        
-        
 
         const contributionScore = data.contribution_score_a || 0;
         const contributionScoreb = data.contribution_score_b || 0;
@@ -419,7 +415,7 @@ useEffect(() => {
 
                 {/* Reach Score */}
                 <Box sx={{ flex: 1 }} display={'flex'} flexDirection={'column'} gap={1}>
-                  <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 400, borderRadius: 4 }}>
+                  <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 400, borderRadius: 4, border: '5px solid #778AD5', }}>
 
                     {renderGaugeChartContributionReachScore(
                         reachScoreValue,
@@ -435,13 +431,13 @@ useEffect(() => {
                    
                   </Paper>
 
-                  <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center" }} mt={2}>
+                  <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center", border: '5px solid #778AD5', backgroundColor: '#E5EAFB' }} mt={2}>
                       <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem", fontWeight:"bold" }}>
-                      It is estimated that {locationDashboardName} is reaching{" "}
+                      It is estimated that <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>{locationDashboardName}</span> is <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>reaching{" "}
                       <span style={{ fontWeight: "bold" }}>
                         {reachScoreValue}%
                       </span>{" "}
-                      of {targetPopulation}.
+                      of {targetPopulation}.</span>
                     </Typography>
                   </Paper>
 
@@ -449,7 +445,7 @@ useEffect(() => {
                 {/* Wide Score */}
                 <Box sx={{ flex: 1 }} display={'flex'} flexDirection={'column'} gap={1}>
                       {/* Speedometer */}
-                      <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 400,borderRadius: 4  }}>
+                      <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 400,borderRadius: 4 , border: '5px solid #778AD5', }}>
 
                       {renderGaugeChartContribution(
                         wideScoreValue,
@@ -463,16 +459,16 @@ useEffect(() => {
                         
                       </Paper>
 
-                      <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center" }} mt={2}>
+                      <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center" , border: '5px solid #778AD5', backgroundColor: '#E5EAFB'}} mt={2}>
                           <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem", fontWeight:"bold" }}>
-                            The Impact Index estimates that {locationDashboardName} contributes an improvement of {wideScoreAA}% to {targetPopulation}'s overall wellbeing, resulting in a score of {wideScore}%.
+                            The Impact Index estimates that <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>{locationDashboardName}</span> contributes an <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>improvement of {wideScoreAA}% to {targetPopulation}'s overall wellbeing</span>, resulting in a score of <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>{wideScore}%</span>.
                           </Typography>
                       </Paper>
 
                 </Box>
                 {/* Contribution Score */}
                 <Box sx={{ flex: 1 }}  display={'flex'} flexDirection={'column'} gap={1}>
-                     <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 400 , borderRadius: 4 }}>
+                     <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 400 , borderRadius: 4, border: '5px solid #778AD5', }}>
                       {renderGaugeChartContribution(
                         contributionScoreValue,
                         'Contribution Score',
@@ -483,9 +479,9 @@ useEffect(() => {
                         
                       )}
                     </Paper>
-                    <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center"}}>
+                    <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center", border: '5px solid #778AD5', backgroundColor: '#E5EAFB'}}>
                            <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem", fontWeight:"bold" }}>
-                            The Impact Index estimates that {locationDashboardName} contributes an improvement of {contributionScoreb}% to {locationDashboardName} community's overall wellbeing, resulting in a Contribution Score of  {contributionScore}%.
+                            The Impact Index estimates that <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>{locationDashboardName}</span> contributes an <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>improvement of {contributionScoreb}% to {locationDashboardName} community's</span> overall wellbeing, resulting in a Contribution Score of  <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>{contributionScore}%</span>.
                           </Typography>
                     </Paper>
                 </Box>
