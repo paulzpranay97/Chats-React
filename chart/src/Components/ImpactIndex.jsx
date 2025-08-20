@@ -229,6 +229,8 @@ const renderGaugeChartContribution = (value, title,  color, max, min, mid) => {
 const ImpactIndex = () => {
 
    
+    const [totalRecords, setTotalRecords] = useState(0);
+
     const [reachScore, setReachScore] = useState(0);
     const [wideScore, setWideScore] = useState(0);
     const [wideScoreAA, setWideScoreAA] = useState(0);
@@ -311,6 +313,7 @@ useEffect(() => {
         setlocationName(data.ghl_location_name || "")
         setTargetPopulation(data.target_population || "")
         setLocationDashboardName(data.location_dashboard_name || "")
+        setTotalRecords(data.total_records || 0)
 
         setContributionScoreMid(c_mid);
         setContributionScoreLow(c_low);
@@ -488,6 +491,33 @@ useEffect(() => {
                
          
       </Box>
+
+         <Box
+                                            sx={{
+                                                width: '100%',
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'stretch',
+                                                boxSizing: 'border-box',
+                                                padding: 2,
+                                                gap: 3,
+                                                border: '5px solid #778AD5',
+                                                backgroundColor: '#f4f4f4',
+                                                borderRadius: 4,
+                                            }}
+                                            mt={2}
+                                        >
+        
+                                          <Box sx={{ width: '100%', borderRadius: '50%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
+                                            <Typography style={{fontSize: '1rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px'}}>Scores based on {totalRecords} responses from {locationDashboardName} community.</Typography>
+                                            {/* <Box sx={{ width: '100%', borderRadius: '50%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }} >
+                                              <Typography style={{fontSize: '1rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px'}}></Typography>
+                                              <Typography style={{fontSize: '1rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px'}}></Typography>
+                                            </Box> */}
+                                          </Box>
+                                          
+                                            
+                                    </Box>
     </Box>
   );
 };
