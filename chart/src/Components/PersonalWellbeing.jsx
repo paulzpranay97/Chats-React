@@ -390,13 +390,10 @@ const PersonalWellbeing = () => {
   }, [get_personal_wellbeing_data, startDate, endDate]);
 
   const handleApply = async () => {
-    
     if (startDate && endDate && startDate.isAfter(endDate)) {
       alert("Start Date cannot be after End Date!");
       return;
     }
-
-  
     const data = await get_personal_wellbeing_data(startDate, endDate);
     if (data) {
 

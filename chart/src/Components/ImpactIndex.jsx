@@ -1,10 +1,16 @@
-import React, {  useEffect, useState} from 'react';
+import React, {  useEffect, useState, useCallback} from 'react';
 import { useLocation } from 'react-router-dom';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import ReactSpeedometer from 'react-d3-speedometer'; 
 
-import { Box, Paper, Typography, Grid } from '@mui/material';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import moment from 'moment';
+
+
+import { Box, Paper, Typography, Grid,Button, TextField } from '@mui/material';
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -228,6 +234,9 @@ const renderGaugeChartContribution = (value, title,  color, max, min, mid) => {
 
 const ImpactIndex = () => {
 
+    const [startDate, setStartDate] = useState(moment().subtract(1, 'month').startOf('month'));
+    const [endDate, setEndDate] = useState(moment().subtract(1, 'month').endOf('month'));
+
    
     const [totalRecords, setTotalRecords] = useState(0);
 
@@ -277,12 +286,36 @@ const ImpactIndex = () => {
     
    
 
+ const get_impact_index_data = useCallback(async (start, end) => {
 
-    
+   try {
+      const formattedStartDate = start ? start.format('YYYY-MM-DD') : '';
+      const formattedEndDate = end ? end.format('YYYY-MM-DD') : '';
+
+      let url = new URL("https://score.impactindex.app/impact_index/");
+      if(locationId){
+        url.searchParams.append("location_id", locationId);
+      }
+      if (formattedStartDate) url.searchParams.append("start_date", formattedStartDate);
+      if (formattedEndDate) url.searchParams.append("end_date", formattedEndDate);
+        const response = await fetch(url.toString(), {
+          method: "GET",
+          headers: {
+            "Accept": "application/json",
+          },
+        });
+        const jsonData = await response.json();
+        return jsonData;
+      } catch (error) {
+        console.error("Error fetching impact index data:", error);
+        return null;
+      }
+    }, [locationId]);
+
 
 useEffect(() => {
     const fetchData = async () => {
-      const data = await get_impact_index_data();
+      const data = await get_impact_index_data(startDate, endDate);
       if (data) {
 
         const contributionScore = data.contribution_score_a || 0;
@@ -374,28 +407,110 @@ useEffect(() => {
     };
 
     fetchData();
-  }, []);
+  }, [get_impact_index_data, startDate, endDate]);
 
-    const get_impact_index_data = async () => {
+   
 
-      let url = new URL("https://score.impactindex.app/impact_index/");
-      if(locationId){
-        url.searchParams.append("location_id", locationId);
+
+    
+  const handleApply = async () => {
+    if (startDate && endDate && startDate.isAfter(endDate)) {
+      alert("Start Date cannot be after End Date!");
+      return;
+    }
+    const data = await get_impact_index_data(startDate, endDate);
+    if (data) {
+
+      if (data) {
+
+        const contributionScore = data.contribution_score_a || 0;
+        const contributionScoreb = data.contribution_score_b || 0;
+        const c_low = data.contribution_lower || 0;
+        const c_mid = data.contribution_mid || 0;
+        const c_high = data.contribution_upper_bound || 0;
+
+        const reachScore = data.width_score || 0;
+        const r_low = data.reach_lower || 0;
+        const r_mid = data.reach_mid || 0;
+        const r_high = data.reach_upper || 0;
+
+        // const r_low_color = data.color_reach_lower || '#00C699';
+        // const r_mid_color = data.color_reach_mid || '#008A6B';
+        // const r_high_color = data.color_reach_upper || '#004f3dcb';
+        const r_low_color =  '#00C699';
+        const r_mid_color = '#008A6B';
+        const r_high_color = '#004f3dcb';
+      
+
+        const wideScore = data.impact_index_b || 0;
+        const wideScoreAA = data.impact_index_a || 0;
+        const w_low = data.impact_lower || 0;
+        const w_mid = data.impact_mid || 0;
+        const w_high = data.impact_upper || 0;
+
+        setlocationName(data.ghl_location_name || "")
+        setTargetPopulation(data.target_population || "")
+        setLocationDashboardName(data.location_dashboard_name || "")
+        setTotalRecords(data.total_records || 0)
+
+        setContributionScoreMid(c_mid);
+        setContributionScoreLow(c_low);
+        setContributionScoreHigh(c_high);
+        setContributionScore(contributionScore);
+        setContributionScoreb(contributionScoreb);
+
+        setReachScoreMidColor(r_mid_color);
+        setReachScoreLowColor(r_low_color);
+        setReachScoreHighColor(r_high_color);
+
+        setReachScoreMid(r_mid);
+        setReachScoreLow(r_low);
+        setReachScoreHigh(r_high);
+        setReachScore(reachScore);
+
+
+        setWideScoreMid(w_mid);
+        setWideScoreLow(w_low);
+        setWideScoreHigh(w_high);
+        setWideScore(wideScore);
+        setWideScoreAA(wideScoreAA);
+
+        if (contributionScore < c_low) {
+          setConColor('#DC0050');
+        } else if (contributionScore >= c_low && contributionScore < c_mid) {
+          setConColor('#F3BB44');
+        } else if (contributionScore >= c_mid && contributionScore <= c_high) {
+          setConColor('#00C699');
+        } else {
+          // Handle case where score is greater than high bound
+          setConColor('blue'); // or some other color
+        }
+
+
+        if (reachScore < r_low) {
+          setReachColor(r_low_color);
+        } else if (reachScore >= r_low && reachScore < r_mid) {
+          setReachColor(r_mid_color);
+        } else if (reachScore >= r_mid && reachScore <= r_high) {
+          setReachColor(r_high_color);
+        } else {
+          // Handle case where score is greater than high bound
+          setReachColor('blue'); // or some other color
+        }
+
+        if (wideScore < w_low) {
+          setWideColor('#DC0050');
+        } else if (wideScore >= w_low && wideScore < w_mid) {
+          setWideColor('#F3BB44');
+        } else if (wideScore >= w_mid && wideScore <= w_high) {
+          setWideColor('#00C699');
+        } else {
+          // Handle case where score is greater than high bound
+          setWideColor('blue'); // or some other color
+        }
       }
-      try {
-        const response = await fetch(url.toString(), {
-          method: "GET",
-          headers: {
-            "Accept": "application/json",
-          },
-        });
-        const jsonData = await response.json();
-        return jsonData;
-      } catch (error) {
-        console.error("Error fetching impact index data:", error);
-        return null;
-      }
-    };
+    }
+  };
 
 
   
@@ -403,7 +518,64 @@ useEffect(() => {
 
   return (
     <Box sx={{ width: '95vw',  bgcolor: '#F8FAFC', p: {lg:4, md:4, xs:1}, boxSizing: 'border-box', backgroundColor: '#E5EAFB',}}>
-   
+       <Box
+              sx={{
+                display: 'flex',
+                height: 'auto',
+                flexDirection: { xs: 'row', md: 'row' },
+                justifyContent: 'center',
+                alignItems: 'center',
+                mb: 2,
+                gap: 2,
+                
+              }}
+            >
+      
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <Box
+                sx={{
+                  width: { lg: '50%', md: '80%', xs: '100%' },
+                  display: 'flex',
+                  flexDirection: { xs: 'column', md: 'row' },
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  mb: 2,
+                  gap: 2,
+                }}
+              >
+                <DatePicker
+                  views={['year', 'month']}
+                  label="Select Month"
+                  minDate={moment().subtract(5, 'years')}
+                  maxDate={moment()}
+                  value={startDate}
+                  onChange={(newValue) => {
+                    if (newValue) {
+                      const start = moment(newValue).startOf('month');
+                      const end = moment(newValue).endOf('month');
+                      setStartDate(start);
+                      setEndDate(end);
+                    }
+                  }}
+                  renderInput={(params) => <TextField {...params} sx={{ width: '100%' }} />}
+                />
+      
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleApply}
+                  sx={{
+                    mt: { xs: 2, md: 0 },
+                    width: { xs: '100%', md: 'auto', lg: '20%' },
+                    height: 55,
+                  }}
+                >
+                  Apply
+                </Button>
+              </Box>
+            </LocalizationProvider>
+            
+      </Box>
       {/* Charts Row 3 */}
       <Box
         mt={{md:3, sm:3, xs: 3}}
