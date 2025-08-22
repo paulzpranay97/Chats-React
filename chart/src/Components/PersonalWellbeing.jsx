@@ -19,7 +19,7 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
 
        let main_buttonText = '';
 
-       if (buttonText === "INTELLECTUAL") {
+        if (buttonText === "INTELLECTUAL") {
           main_buttonText = "LEARNING";
         } else if (buttonText === "SAFETY") {
           main_buttonText = "ATMOSPHERE";
@@ -31,6 +31,8 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
           main_buttonText = "CHRISTIAN PRACTICES";
         } else if (buttonText === "COMMUNITY") {
           main_buttonText = "CHRISTIAN COMMUNITY";
+        } else if (buttonText === "FAITH STATUS") {
+          main_buttonText = "FAITH JOURNEY";
         } else {
           main_buttonText = buttonText;
         }
@@ -125,7 +127,8 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
 
       let main_title = '';
 
-       if (title === "INTELLECTUAL") {
+       
+        if (title === "INTELLECTUAL") {
           main_title = "LEARNING";
         } else if (title === "SAFETY") {
           main_title = "ATMOSPHERE";
@@ -137,9 +140,12 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
           main_title = "CHRISTIAN PRACTICES";
         } else if (title === "COMMUNITY") {
           main_title = "CHRISTIAN COMMUNITY";
+        } else if (title === "FAITH STATUS") {
+          main_title = "FAITH JOURNEY";
         } else {
           main_title = title;
         }
+
 
 
        
@@ -380,7 +386,7 @@ const PersonalWellbeing = () => {
         const data = await get_personal_wellbeing_data(startDate, endDate);
         if (data) {
           
-            console.log(data);
+         
             
 
             setPersonalWellbeingData(data);
@@ -581,14 +587,14 @@ const PersonalWellbeing = () => {
                                   <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #67aab2'}}>
                                     {renderGaugeChart2(
                                                 personalWellbeingData?.circle_score,
-                                                'Core Personal Score',
+                                                `${personalWellbeingData?.location_dashboard_name} Personal Score`,
                                                 '#67aab2'
                                               )}
                                     </Paper>
                                     <Paper sx={{width: {lg:'25%', md:'50%', xs: '100%'}, p: 3, flex: 1, textAlign: 'center', minHeight: 100,borderRadius: 4 , backgroundColor: '#f4f4f4', border: '5px solid #67aab2'}}>
                                     {renderGaugeChart2(
                                                 personalWellbeingData?.core_score,
-                                                'Core Overall Score',
+                                                `${personalWellbeingData?.location_dashboard_name} Overall Score`,
                                                 '#67aab2'
                                               )}
                                     </Paper>
