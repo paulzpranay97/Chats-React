@@ -395,9 +395,9 @@ useEffect(() => {
 
         if (wideScore < w_low) {
           setWideColor('#DC0050');
-        } else if (wideScore >= w_low && wideScore < w_mid) {
+        } else if (wideScore >= w_low && wideScore <= w_mid) {
           setWideColor('#F3BB44');
-        } else if (wideScore >= w_mid && wideScore <= w_high) {
+        } else if (wideScore > w_mid && wideScore <= w_high) {
           setWideColor('#00C699');
         } else {
           // Handle case where score is greater than high bound
