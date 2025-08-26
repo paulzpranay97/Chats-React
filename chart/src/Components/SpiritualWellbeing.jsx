@@ -574,9 +574,9 @@ const SpiritualWellbeing = () => {
                                     */}
 
                                     <Box sx={{ width: '100%', borderRadius: '50%', display: 'flex', flexDirection:{md: 'row', xs: 'column'}, alignItems: 'center', justifyContent: 'center', gap: '50px' }} >
-                                      <Typography style={{fontSize: '0.7rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px'}}> <i class="ri-arrow-up-circle-fill" style={{fontSize: '25px', color: '#2FDD92'}}></i> Higher Compare to Previous Month</Typography>
-                                      <Typography style={{fontSize: '0.7rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px'}}> <i class="ri-arrow-down-circle-fill" style={{fontSize: '25px', color: '#D23737'}}></i> Lower Compare to Previous Month</Typography>
-                                      <Typography style={{fontSize: '0.7rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px'}}> <i class="ri-subtract-line" style={{fontSize: '15px', color: '#fcfcfcff', backgroundColor:'#FF8440', borderRadius: '5px'}}></i> Equal Compare to Previous Month</Typography>
+                                      <Typography style={{fontSize: '0.7rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px'}}> <i class="ri-arrow-up-circle-fill" style={{fontSize: '25px', color: '#2FDD92'}}></i> Higher compare to previous month</Typography>
+                                      <Typography style={{fontSize: '0.7rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px'}}> <i class="ri-arrow-down-circle-fill" style={{fontSize: '25px', color: '#D23737'}}></i> Lower compare to previous month</Typography>
+                                      <Typography style={{fontSize: '0.7rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px'}}> <i class="ri-subtract-line" style={{fontSize: '15px', color: '#fcfcfcff', backgroundColor:'#FF8440', borderRadius: '5px'}}></i> Equal compare to previous month</Typography>
                                     </Box>
                                     
                             </Box>
