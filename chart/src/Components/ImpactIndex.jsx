@@ -636,7 +636,7 @@ useEffect(() => {
 
                       <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center" , border: '5px solid #778AD5', backgroundColor: '#E5EAFB'}} mt={2}>
                           <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem", fontWeight:"bold" }}>
-                            The Impact Index estimates that <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>{locationDashboardName}</span> contributes an <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>improvement of {wideScoreAA} to {targetPopulation}'s overall wellbeing</span>, resulting in a score of <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>{wideScore}</span>.
+                            The Impact Index estimates that <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>{locationDashboardName}</span> contributes an <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>improvement of {wideScoreAA}% to {targetPopulation}'s overall wellbeing</span>, resulting in a score of <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>{wideScore}</span>.
                           </Typography>
                       </Paper>
 
@@ -656,7 +656,7 @@ useEffect(() => {
                     </Paper>
                     <Paper sx={{ p: 3, flex: 1, textAlign: 'center', minHeight: 140, borderRadius: 4, display: 'flex', justifyContent:'center', alignItems: "center", border: '5px solid #778AD5', backgroundColor: '#E5EAFB'}}>
                            <Typography variant="body2" textAlign="center" sx={{ fontSize: "1.2rem", fontWeight:"bold" }}>
-                            The Impact Index estimates that <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>{locationDashboardName}</span> contributes an <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>improvement of {contributionScoreb} to {locationDashboardName} community's</span> overall wellbeing, resulting in a Contribution Score of  <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>{contributionScore}</span>.
+                            The Impact Index estimates that <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>{locationDashboardName}</span> contributes an <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>improvement of {contributionScoreb}% to {locationDashboardName} community's</span> overall wellbeing, resulting in a Contribution Score of  <span style={{ fontWeight: "bold" , color: '#3753c4ff' }}>{contributionScore}</span>.
                           </Typography>
                     </Paper>
                 </Box>
